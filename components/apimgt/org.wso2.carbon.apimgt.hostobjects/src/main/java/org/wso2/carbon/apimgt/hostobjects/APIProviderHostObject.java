@@ -419,6 +419,7 @@ public class APIProviderHostObject extends ScriptableObject {
         String responseCache = (String) apiData.get("responseCache", apiData);
         String corsConfiguraion = (String) apiData.get("corsConfiguration", apiData);
         String additionalProperties = (String) apiData.get("additionalProperties", apiData);
+        String schemaValidation = (String) apiData.get("jsonSchemaStatus", apiData);
         JSONObject properties = null;
         if (!StringUtils.isEmpty(additionalProperties)) {
             JSONParser parser = new JSONParser();
@@ -477,6 +478,7 @@ public class APIProviderHostObject extends ScriptableObject {
 
         String productionTps = (String) apiData.get("productionTps", apiData);
         String sandboxTps = (String) apiData.get("sandboxTps", apiData);
+        api.setEnableSchemaValidation("schemaValidation".equals(schemaValidation));
 
         if (!"none".equals(productionTps)) {
             api.setProductionMaxTps(productionTps);
@@ -1201,6 +1203,7 @@ public class APIProviderHostObject extends ScriptableObject {
         String publisherAccessControl = (String) apiData.get(APIConstants.ACCESS_CONTROL_PARAMETER, apiData);
         String publisherAccessControlRoles = "";
         String additionalProperties = (String) apiData.get("additionalProperties", apiData);
+        String schemaValidation = (String) apiData.get("schemaValidation", apiData);
         JSONObject properties = null;
         if (!StringUtils.isEmpty(additionalProperties)) {
             JSONParser parser = new JSONParser();
@@ -1503,6 +1506,7 @@ public class APIProviderHostObject extends ScriptableObject {
         api.setResponseCache(responseCache);
         api.setCacheTimeout(cacheTimeOut);
         api.setAsDefaultVersion("default_version".equals(defaultVersion));
+        api.setEnableSchemaValidation("schemaValidation".equals(schemaValidation));
 
         api.setProductionMaxTps((String) apiData.get("productionTps", apiData));
         api.setSandboxMaxTps((String) apiData.get("sandboxTps", apiData));
@@ -2809,6 +2813,7 @@ public class APIProviderHostObject extends ScriptableObject {
                 myn.put(54, myn, checkValue((api.getAccessControlRoles())));
                 myn.put(55, myn, checkValue(api.getAdditionalProperties().toJSONString()));
                 myn.put(56, myn, checkValue(api.getAuthorizationHeader()));
+                myn.put(57, myn, checkValue(Boolean.toString(api.isEnabledSchemaValidation())));
             } else {
                 handleException("Cannot find the requested API- " + apiName +
                         "-" + version);

@@ -122,6 +122,19 @@ public class API implements Serializable {
     private JSONObject additionalProperties;
 
     /**
+     *  Property to hold the enable/disable json schema validation status.
+     */
+    private boolean enableSchemaValidation = false;
+
+    public boolean isEnabledSchemaValidation() {
+        return enableSchemaValidation;
+    }
+
+    public void setEnableSchemaValidation(boolean enableSchemaValidation) {
+        this.enableSchemaValidation = enableSchemaValidation;
+    }
+
+    /**
      * To get the additional properties
      *
      * @return additional properties of the API
