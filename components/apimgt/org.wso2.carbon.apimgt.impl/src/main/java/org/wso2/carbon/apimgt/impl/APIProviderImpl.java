@@ -93,12 +93,7 @@ import org.wso2.carbon.apimgt.impl.template.APITemplateBuilder;
 import org.wso2.carbon.apimgt.impl.template.APITemplateBuilderImpl;
 import org.wso2.carbon.apimgt.impl.template.APITemplateException;
 import org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder;
-import org.wso2.carbon.apimgt.impl.utils.APIAuthenticationAdminClient;
-import org.wso2.carbon.apimgt.impl.utils.APINameComparator;
-import org.wso2.carbon.apimgt.impl.utils.APIStoreNameComparator;
-import org.wso2.carbon.apimgt.impl.utils.APIUtil;
-import org.wso2.carbon.apimgt.impl.utils.APIVersionComparator;
-import org.wso2.carbon.apimgt.impl.utils.StatUpdateClusterMessage;
+import org.wso2.carbon.apimgt.impl.utils.*;
 import org.wso2.carbon.apimgt.impl.workflow.APIStateWorkflowDTO;
 import org.wso2.carbon.apimgt.impl.workflow.WorkflowConstants;
 import org.wso2.carbon.apimgt.impl.workflow.WorkflowException;
@@ -139,11 +134,10 @@ import org.wso2.carbon.user.api.UserStoreException;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 import org.wso2.carbon.utils.multitenancy.MultitenantUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -168,6 +162,13 @@ import java.util.regex.Pattern;
 import javax.cache.Cache;
 import javax.cache.Caching;
 import javax.xml.namespace.QName;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.apache.xml.serialize.OutputFormat;
+import org.xml.sax.SAXException;
+import org.apache.xml.serialize.XMLSerializer;
+
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
 import static org.wso2.carbon.apimgt.impl.utils.APIUtil.isAllowDisplayAPIsWithMultipleStatus;
@@ -4107,6 +4108,60 @@ class APIProviderImpl extends AbstractAPIManager implements APIProvider {
             PrivilegedCarbonContext.endTenantFlow();
         }
     }
+
+    @Override
+    public void addSwaggerToLocalEntry(API api, String jsonText) {
+
+        Map<String, Environment> environments;
+        APIManagerConfiguration config = ServiceReferenceHolder.getInstance()
+                .getAPIManagerConfigurationService()
+                .getAPIManagerConfiguration();
+        environments = config.getApiGatewayEnvironments();
+
+        LocalEntryAdminClient localEntryAdminClient = null;
+        for (String environmentName : api.getEnvironments()) {
+            Environment environment = environments.get(environmentName);
+            api.getEnvironments();
+            try {
+                localEntryAdminClient = new LocalEntryAdminClient(api.getId(), environment);
+            } catch (AxisFault axisFault) {
+                axisFault.printStackTrace();
+            }
+            try {
+                localEntryAdminClient.deleteEntry(api.getId().toString());
+                localEntryAdminClient.addLocalEntry("<localEntry key=\"" + api.getId() + "\">" + jsonText.replaceAll("&(?!amp;)", "&amp;") + "</localEntry>");
+
+            } catch (AxisFault axisFault) {
+                axisFault.printStackTrace();
+            }
+        }
+    }
+
+        private String validateXML(String xml) {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            Writer out = new StringWriter();
+            try {
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                InputSource is = new InputSource(new StringReader(xml));
+               Document document = db.parse(is);
+                OutputFormat format = new OutputFormat(document);
+                format.setLineWidth(65);
+                format.setIndenting(true);
+                format.setIndent(2);
+                XMLSerializer serializer = new XMLSerializer(out, format);
+                serializer.serialize(document);
+
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return out.toString();
+        }
+
+
 
     public APIStateChangeResponse changeLifeCycleStatus(APIIdentifier apiIdentifier, String action)
             throws APIManagementException, FaultGatewaysException {

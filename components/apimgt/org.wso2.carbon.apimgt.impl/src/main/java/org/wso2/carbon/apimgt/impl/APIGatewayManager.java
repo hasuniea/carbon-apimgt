@@ -16,6 +16,7 @@
 
 package org.wso2.carbon.apimgt.impl;
 
+import net.sf.cglib.core.Local;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.axis2.AxisFault;
@@ -34,6 +35,8 @@ import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.template.APITemplateBuilder;
 import org.wso2.carbon.apimgt.impl.utils.APIGatewayAdminClient;
 import org.wso2.carbon.apimgt.impl.utils.APIUtil;
+
+import org.wso2.carbon.apimgt.impl.utils.LocalEntryAdminClient;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.governance.api.exception.GovernanceException;
 import org.wso2.carbon.governance.api.generic.dataobjects.GenericArtifact;
@@ -97,7 +100,7 @@ public class APIGatewayManager {
             APIGatewayAdminClient client;
             try {
                 client = new APIGatewayAdminClient(api.getId(), environment);
-			String operation;
+                String operation;
 			// If the API exists in the Gateway
 			if (client.getApi(tenantDomain, api.getId()) != null) {
 
@@ -169,7 +172,7 @@ public class APIGatewayManager {
 					}
                     //Deploy the fault sequence first since it has to be available by the time the API is deployed.
                     deployAPIFaultSequence(api, tenantDomain, environment);
-
+                    LocalEntryAdminClient localEntryAdminClient = new LocalEntryAdminClient(api.getId(),environment);
                     if(!APIConstants.APIType.WS.toString().equals(api.getType())) {
                         //Add the API
                         if (APIConstants.IMPLEMENTATION_TYPE_INLINE.equalsIgnoreCase(api.getImplementation())) {
@@ -197,6 +200,8 @@ public class APIGatewayManager {
 
 				}
 			}
+
+
             } catch (AxisFault axisFault) {
                 /*
                 didn't throw this exception to handle multiple gateway publishing

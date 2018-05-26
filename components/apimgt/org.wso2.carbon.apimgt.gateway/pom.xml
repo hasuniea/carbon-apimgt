@@ -131,6 +131,10 @@
 			<artifactId>org.wso2.carbon.rest.api.stub</artifactId>
 		</dependency>
         <dependency>
+            <groupId>org.wso2.carbon.mediation</groupId>
+            <artifactId>org.wso2.carbon.localentry.stub</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-kernel</artifactId>
         </dependency>
@@ -250,6 +254,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java2wsdl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <className>
+                        org.wso2.carbon.apimgt.gateway.service.APILocalEntryAdmin
+                    </className>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
@@ -281,6 +301,7 @@
                             !javax.servlet.http,
                             !org.wso2.carbon.apimgt.gateway.internal,
                             !org.wso2.carbon.apimgt.gateway.stub.*,
+                            !org.wso2.carbon.apimgt.localentry.stub.*,
                             org.wso2.carbon.apimgt.gateway.*;version="${carbon.apimgt.version}",
                             org.wso2.throttle.*
                         </Export-Package>
@@ -329,6 +350,7 @@
                             org.osgi.framework.*,
                             org.wso2.carbon.rest.api.stub.*,
                             org.wso2.carbon.sequences.stub.types,
+                            org.wso2.carbon.localentry.stub.*,
                             org.wso2.carbon.context,
                             org.wso2.carbon.mediation.*; version="${carbon.mediation.imp.pkg.version}",
                             *;resolution:=optional

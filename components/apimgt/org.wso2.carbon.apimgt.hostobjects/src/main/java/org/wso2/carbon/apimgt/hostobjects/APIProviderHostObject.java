@@ -558,9 +558,12 @@ public class APIProviderHostObject extends ScriptableObject {
                 handleException("Error while reading tenant information ", e);
             }
 
-
+          String swagger =  (String) apiData.get("swagger", apiData);
             //Save swagger in the registry
             apiProvider.saveSwagger20Definition(api.getId(), (String) apiData.get("swagger", apiData));
+            if (api.isEnabledSchemaValidation()) {
+                apiProvider.addSwaggerToLocalEntry(api, (String) apiData.get("swagger", apiData));
+            }
         }
 
         //get new key manager instance for  resource registration.

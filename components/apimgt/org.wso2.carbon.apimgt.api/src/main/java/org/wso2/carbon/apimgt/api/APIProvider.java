@@ -624,6 +624,8 @@ public interface APIProvider extends APIManager {
      */
     void saveSwagger20Definition(APIIdentifier apiId, String jsonText) throws APIManagementException;
 
+    void addSwaggerToLocalEntry(API apiId, String jsonText);
+
     /**
      * This method is used to initiate the web service calls and cluster messages related to stats publishing status
      *
