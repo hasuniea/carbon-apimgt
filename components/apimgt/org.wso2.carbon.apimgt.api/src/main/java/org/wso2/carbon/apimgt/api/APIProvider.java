@@ -624,7 +624,18 @@ public interface APIProvider extends APIManager {
      */
     void saveSwagger20Definition(APIIdentifier apiId, String jsonText) throws APIManagementException;
 
+    /**
+     * This method create a local entry by adding the swagger file content.
+     * @param apiId Id of the APIIdentifier
+     * @param jsonText json text to be saved in the registry
+     */
     void addSwaggerToLocalEntry(API apiId, String jsonText);
+
+    /**
+     * This method remove the local entry from from the synapse local entries.
+     * @param apiId API Identifier
+     */
+    void deleteSwaggerLocalEntry(APIIdentifier apiId);
 
     /**
      * This method is used to initiate the web service calls and cluster messages related to stats publishing status

@@ -83,11 +83,30 @@ public class APIMgtGatewayConstants {
     public static final String THREAT_MSG = "THREAT_MSG";
     public static final String THREAT_DESC = "THREAT_DESC";
     public static final String BAD_REQUEST = "Bad Request";
+    public static final String BAD_RESPONSE = "Bad Response";
     public static final String THREAT_TYPE = "threatType";
     public static final String THREAT_FAULT = "_threat_fault_";
     public static final String XML_VALIDATION = "xmlValidation";
     public static final String SCHEMA_VALIDATION = "schemaValidation";
     public static final String XSD_URL = "xsdURL";
+
+    /**
+     * Constants for swagger schema validator
+     */
+    public static final String API_ELECTED_RESOURCE = "API_ELECTED_RESOURCE";
+    public static final String LOCAL_ENTRY = "localentry";
+    public static final String ELECTED_REQUEST_METHOD ="api.ut.HTTP_METHOD";
+    public static final String SWAGGER_PATH = "paths";
+    public static final String RESPONSE = "responses";
+    public static final String SUCCESS_RESPONSE = "200";
+    public static final String SCHEMA = "schema";
+    public static final String SCHEMA_REFERENCE = "$ref";
+    public static final char LAST_INDEX = '/';
+    public static final String DEFINITIONS = "definitions";
+    public static final String KEY_WORD_ALLOF = "allOf";
+    public static final String REST_URL = "REST_URL_POSTFIX";
+    public static final String PARAMETERS = "parameters";
+
 
 }
 

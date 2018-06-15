@@ -1390,6 +1390,17 @@
                 <artifactId>siddhi-query-api</artifactId>
                 <version>${ballerina.lang.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.json.wso2</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.orbit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.everit.json</groupId>
+                <artifactId>org.everit.json.schema</artifactId>
+                <version>${everit.version}</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1584,6 +1595,8 @@
         <httpcore.version>4.3.3.wso2v1</httpcore.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <ballerina.lang.version>0.970.0</ballerina.lang.version>
+        <everit.version>1.5.0.wso2.v1</everit.version>
+        <json.orbit.version>3.0.0.wso2v1</json.orbit.version>
     </properties>
 </project>
 

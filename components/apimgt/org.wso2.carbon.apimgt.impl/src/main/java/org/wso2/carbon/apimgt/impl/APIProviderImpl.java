@@ -38,39 +38,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.wso2.carbon.CarbonConstants;
-import org.wso2.carbon.apimgt.api.APIManagementException;
-import org.wso2.carbon.apimgt.api.APIProvider;
-import org.wso2.carbon.apimgt.api.FaultGatewaysException;
-import org.wso2.carbon.apimgt.api.PolicyDeploymentFailureException;
-import org.wso2.carbon.apimgt.api.UnsupportedPolicyTypeException;
-import org.wso2.carbon.apimgt.api.WorkflowResponse;
+import org.wso2.carbon.apimgt.api.*;
 import org.wso2.carbon.apimgt.api.dto.CertificateMetadataDTO;
 import org.wso2.carbon.apimgt.api.dto.UserApplicationAPIUsage;
-import org.wso2.carbon.apimgt.api.model.API;
-import org.wso2.carbon.apimgt.api.model.APIIdentifier;
-import org.wso2.carbon.apimgt.api.model.APIStateChangeResponse;
-import org.wso2.carbon.apimgt.api.model.APIStatus;
-import org.wso2.carbon.apimgt.api.model.APIStore;
-import org.wso2.carbon.apimgt.api.model.BlockConditionsDTO;
-import org.wso2.carbon.apimgt.api.model.CORSConfiguration;
-import org.wso2.carbon.apimgt.api.model.Documentation;
-import org.wso2.carbon.apimgt.api.model.DuplicateAPIException;
-import org.wso2.carbon.apimgt.api.model.LifeCycleEvent;
-import org.wso2.carbon.apimgt.api.model.Provider;
-import org.wso2.carbon.apimgt.api.model.ResourceFile;
-import org.wso2.carbon.apimgt.api.model.SubscribedAPI;
-import org.wso2.carbon.apimgt.api.model.Subscriber;
-import org.wso2.carbon.apimgt.api.model.Tier;
-import org.wso2.carbon.apimgt.api.model.URITemplate;
-import org.wso2.carbon.apimgt.api.model.Usage;
-import org.wso2.carbon.apimgt.api.model.policy.APIPolicy;
-import org.wso2.carbon.apimgt.api.model.policy.ApplicationPolicy;
-import org.wso2.carbon.apimgt.api.model.policy.Condition;
-import org.wso2.carbon.apimgt.api.model.policy.GlobalPolicy;
-import org.wso2.carbon.apimgt.api.model.policy.Pipeline;
-import org.wso2.carbon.apimgt.api.model.policy.Policy;
-import org.wso2.carbon.apimgt.api.model.policy.PolicyConstants;
-import org.wso2.carbon.apimgt.api.model.policy.SubscriptionPolicy;
+import org.wso2.carbon.apimgt.api.model.*;
+import org.wso2.carbon.apimgt.api.model.policy.*;
 import org.wso2.carbon.apimgt.impl.certificatemgt.CertificateManager;
 import org.wso2.carbon.apimgt.impl.certificatemgt.CertificateManagerImpl;
 import org.wso2.carbon.apimgt.impl.certificatemgt.GatewayCertificateManager;
@@ -78,11 +50,7 @@ import org.wso2.carbon.apimgt.impl.certificatemgt.ResponseCode;
 import org.wso2.carbon.apimgt.impl.clients.RegistryCacheInvalidationClient;
 import org.wso2.carbon.apimgt.impl.clients.TierCacheInvalidationClient;
 import org.wso2.carbon.apimgt.impl.dao.ApiMgtDAO;
-import org.wso2.carbon.apimgt.impl.dto.Environment;
-import org.wso2.carbon.apimgt.impl.dto.ThrottleProperties;
-import org.wso2.carbon.apimgt.impl.dto.TierPermissionDTO;
-import org.wso2.carbon.apimgt.impl.dto.WorkflowDTO;
-import org.wso2.carbon.apimgt.impl.dto.WorkflowProperties;
+import org.wso2.carbon.apimgt.impl.dto.*;
 import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.notification.NotificationDTO;
 import org.wso2.carbon.apimgt.impl.notification.NotificationExecutor;
@@ -94,11 +62,7 @@ import org.wso2.carbon.apimgt.impl.template.APITemplateBuilderImpl;
 import org.wso2.carbon.apimgt.impl.template.APITemplateException;
 import org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder;
 import org.wso2.carbon.apimgt.impl.utils.*;
-import org.wso2.carbon.apimgt.impl.workflow.APIStateWorkflowDTO;
-import org.wso2.carbon.apimgt.impl.workflow.WorkflowConstants;
-import org.wso2.carbon.apimgt.impl.workflow.WorkflowException;
-import org.wso2.carbon.apimgt.impl.workflow.WorkflowExecutor;
-import org.wso2.carbon.apimgt.impl.workflow.WorkflowExecutorFactory;
+import org.wso2.carbon.apimgt.impl.workflow.*;
 import org.wso2.carbon.apimgt.impl.workflow.WorkflowStatus;
 import org.wso2.carbon.apimgt.statsupdate.stub.GatewayStatsUpdateServiceAPIManagementExceptionException;
 import org.wso2.carbon.apimgt.statsupdate.stub.GatewayStatsUpdateServiceClusteringFaultException;
@@ -117,12 +81,7 @@ import org.wso2.carbon.governance.custom.lifecycles.checklist.util.CheckListItem
 import org.wso2.carbon.governance.custom.lifecycles.checklist.util.LifecycleBeanPopulator;
 import org.wso2.carbon.governance.custom.lifecycles.checklist.util.Property;
 import org.wso2.carbon.registry.common.CommonConstants;
-import org.wso2.carbon.registry.core.ActionConstants;
-import org.wso2.carbon.registry.core.Association;
-import org.wso2.carbon.registry.core.CollectionImpl;
-import org.wso2.carbon.registry.core.Registry;
-import org.wso2.carbon.registry.core.RegistryConstants;
-import org.wso2.carbon.registry.core.Resource;
+import org.wso2.carbon.registry.core.*;
 import org.wso2.carbon.registry.core.config.RegistryContext;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 import org.wso2.carbon.registry.core.jdbc.realm.RegistryAuthorizationManager;
@@ -134,42 +93,22 @@ import org.wso2.carbon.user.api.UserStoreException;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 import org.wso2.carbon.utils.multitenancy.MultitenantUtils;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.cache.Cache;
 import javax.cache.Caching;
 import javax.xml.namespace.QName;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.apache.xml.serialize.OutputFormat;
-import org.xml.sax.SAXException;
-import org.apache.xml.serialize.XMLSerializer;
-
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.rmi.RemoteException;
+import java.util.*;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.wso2.carbon.apimgt.impl.utils.APIUtil.isAllowDisplayAPIsWithMultipleStatus;
 
@@ -4111,6 +4050,9 @@ class APIProviderImpl extends AbstractAPIManager implements APIProvider {
 
     @Override
     public void addSwaggerToLocalEntry(API api, String jsonText) {
+        if (log.isDebugEnabled()) {
+            log.debug("Adding a new Local Entry");
+        }
 
         Map<String, Environment> environments;
         APIManagerConfiguration config = ServiceReferenceHolder.getInstance()
@@ -4118,50 +4060,48 @@ class APIProviderImpl extends AbstractAPIManager implements APIProvider {
                 .getAPIManagerConfiguration();
         environments = config.getApiGatewayEnvironments();
 
-        LocalEntryAdminClient localEntryAdminClient = null;
+        LocalEntryAdminClient localEntryAdminClient;
         for (String environmentName : api.getEnvironments()) {
             Environment environment = environments.get(environmentName);
             api.getEnvironments();
             try {
                 localEntryAdminClient = new LocalEntryAdminClient(api.getId(), environment);
-            } catch (AxisFault axisFault) {
-                axisFault.printStackTrace();
-            }
-            try {
                 localEntryAdminClient.deleteEntry(api.getId().toString());
-                localEntryAdminClient.addLocalEntry("<localEntry key=\"" + api.getId() + "\">" + jsonText.replaceAll("&(?!amp;)", "&amp;") + "</localEntry>");
+                localEntryAdminClient.addLocalEntry("<localEntry key=\"" + api.getId() + "\">" +
+                        jsonText.replaceAll("&(?!amp;)", "&amp;") + "</localEntry>");
 
-            } catch (AxisFault axisFault) {
-                axisFault.printStackTrace();
+            } catch (AxisFault e) {
+                log.error("Error occurred while Deleting the local entry ", e);
             }
         }
     }
 
-        private String validateXML(String xml) {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            Writer out = new StringWriter();
-            try {
-                DocumentBuilder db = dbf.newDocumentBuilder();
-                InputSource is = new InputSource(new StringReader(xml));
-               Document document = db.parse(is);
-                OutputFormat format = new OutputFormat(document);
-                format.setLineWidth(65);
-                format.setIndenting(true);
-                format.setIndent(2);
-                XMLSerializer serializer = new XMLSerializer(out, format);
-                serializer.serialize(document);
+    @Override
+    public void deleteSwaggerLocalEntry(APIIdentifier apiIdentifier) {
 
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return out.toString();
+        if (log.isDebugEnabled()) {
+            log.debug("Deleting the local entry: " + apiIdentifier);
         }
 
+        API api = new API(apiIdentifier);
+        Map<String, Environment> environments;
+        APIManagerConfiguration config = ServiceReferenceHolder.getInstance().getAPIManagerConfigurationService()
+                .getAPIManagerConfiguration();
+        environments = config.getApiGatewayEnvironments();
+        LocalEntryAdminClient localEntryAdminClient;
 
+        for (String environmentName : api.getEnvironments()) {
+            Environment environment = environments.get(environmentName);
+            api.getEnvironments();
+            try {
+                localEntryAdminClient = new LocalEntryAdminClient(apiIdentifier, environment);
+                localEntryAdminClient.deleteEntry(api.getId().toString());
+            } catch (AxisFault e) {
+                log.error("Error occurred while Deleting the local entry ", e);
+
+            }
+        }
+    }
 
     public APIStateChangeResponse changeLifeCycleStatus(APIIdentifier apiIdentifier, String action)
             throws APIManagementException, FaultGatewaysException {

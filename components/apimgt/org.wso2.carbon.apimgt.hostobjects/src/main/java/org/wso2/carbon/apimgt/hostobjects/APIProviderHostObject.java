@@ -4003,6 +4003,8 @@ public class APIProviderHostObject extends ScriptableObject {
             if (apiId.toString() != null) {
                 keyManager.deleteRegisteredResourceByAPIId(apiId.toString());
             }
+            // delete the local Entry
+            apiProvider.deleteSwaggerLocalEntry(apiId);
 
         } finally {
             if (isTenantFlowStarted) {
