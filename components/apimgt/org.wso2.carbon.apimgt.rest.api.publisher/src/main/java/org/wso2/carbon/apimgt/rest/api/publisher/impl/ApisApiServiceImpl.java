@@ -36,10 +36,10 @@ import org.wso2.carbon.apimgt.api.APIProvider;
 import org.wso2.carbon.apimgt.api.FaultGatewaysException;
 import org.wso2.carbon.apimgt.api.model.API;
 import org.wso2.carbon.apimgt.api.model.APIIdentifier;
-import org.wso2.carbon.apimgt.api.model.APIStatus;
 import org.wso2.carbon.apimgt.api.model.Documentation;
 import org.wso2.carbon.apimgt.api.model.DuplicateAPIException;
 import org.wso2.carbon.apimgt.api.model.KeyManager;
+import org.wso2.carbon.apimgt.api.model.Label;
 import org.wso2.carbon.apimgt.api.model.Mediation;
 import org.wso2.carbon.apimgt.api.model.ResourceFile;
 import org.wso2.carbon.apimgt.api.model.Scope;
@@ -49,16 +49,18 @@ import org.wso2.carbon.apimgt.api.model.URITemplate;
 import org.wso2.carbon.apimgt.api.model.policy.APIPolicy;
 import org.wso2.carbon.apimgt.api.model.policy.PolicyConstants;
 import org.wso2.carbon.apimgt.impl.APIConstants;
+import org.wso2.carbon.apimgt.impl.GZIPUtils;
 import org.wso2.carbon.apimgt.impl.definitions.APIDefinitionFromOpenAPISpec;
 import org.wso2.carbon.apimgt.impl.factory.KeyManagerHolder;
 import org.wso2.carbon.apimgt.impl.utils.APIUtil;
 import org.wso2.carbon.apimgt.rest.api.publisher.ApisApiService;
-import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIDTO;
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIDetailedDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIListDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIListPaginationDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.DocumentDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.DocumentListDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.FileInfoDTO;
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.LabelDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.MediationDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.MediationListDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.WsdlDTO;
@@ -74,6 +76,7 @@ import org.wso2.carbon.registry.core.RegistryConstants;
 import org.wso2.carbon.utils.multitenancy.MultitenantUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -108,7 +111,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @return matched APIs for the given search condition
      */
     @Override
-    public Response apisGet(Integer limit, Integer offset, String query, String accept, String ifNoneMatch) {
+    public Response apisGet(Integer limit, Integer offset, String query, String accept, String ifNoneMatch, Boolean expand) {
         List<API> allMatchedApis = new ArrayList<>();
         APIListDTO apiListDTO;
 
@@ -117,6 +120,7 @@ public class ApisApiServiceImpl extends ApisApiService {
         limit = limit != null ? limit : RestApiConstants.PAGINATION_LIMIT_DEFAULT;
         offset = offset != null ? offset : RestApiConstants.PAGINATION_OFFSET_DEFAULT;
         query = query == null ? "" : query;
+        expand = (expand != null && expand) ? true : false;
         try {
             String newSearchQuery = APIUtil.constructNewSearchQuery(query);
             APIProvider apiProvider = RestApiUtil.getLoggedInUserProvider();
@@ -130,7 +134,7 @@ public class ApisApiServiceImpl extends ApisApiService {
             Set<API> apis = (Set<API>) result.get("apis");
             allMatchedApis.addAll(apis);
 
-            apiListDTO = APIMappingUtil.fromAPIListToDTO(allMatchedApis);
+            apiListDTO = APIMappingUtil.fromAPIListToDTO(allMatchedApis, expand);
             APIMappingUtil.setPaginationParams(apiListDTO, query, offset, limit, allMatchedApis.size());
 
             //Add pagination section in the response
@@ -145,7 +149,18 @@ public class ApisApiServiceImpl extends ApisApiService {
             paginationDTO.setTotal(length);
             apiListDTO.setPagination(paginationDTO);
 
-            return Response.ok().entity(apiListDTO).build();
+            if (APIConstants.APPLICATION_GZIP.equals(accept)) {
+                try {
+                    File zippedResponse = GZIPUtils.constructZippedResponse(apiListDTO);
+                    return Response.ok().entity(zippedResponse)
+                            .header("Content-Disposition", "attachment").
+                                    header("Content-Encoding", "gzip").build();
+                } catch (APIManagementException e) {
+                    RestApiUtil.handleInternalServerError(e.getMessage(), e, log);
+                }
+            } else {
+                return Response.ok().entity(apiListDTO).build();
+            }
         } catch (APIManagementException e) {
             String errorMessage = "Error while retrieving APIs";
             RestApiUtil.handleInternalServerError(errorMessage, e, log);
@@ -161,13 +176,13 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @return created API
      */
     @Override
-    public Response apisPost(APIDTO body,String contentType){
+    public Response apisPost(APIDetailedDTO body, String contentType){
         URI createdApiUri;
-        APIDTO createdApiDTO;
+        APIDetailedDTO createdApiDTO;
         try {
             APIProvider apiProvider = RestApiUtil.getLoggedInUserProvider();
             String username = RestApiUtil.getLoggedInUsername();
-            boolean isWSAPI = APIDTO.TypeEnum.WS == body.getType();
+            boolean isWSAPI = APIDetailedDTO.TypeEnum.WS == body.getType();
 
             // validate web socket api endpoint configurations
             if (isWSAPI) {
@@ -198,14 +213,10 @@ public class ApisApiServiceImpl extends ApisApiService {
                 RestApiUtil.handleBadRequest("Context cannot end with '/' character", log);
             }
 
-            //The UI validation is added to prevent creating apis with same name to solve APIMANAGER-3226.
-            // But logically we should allow to create api with same name and different version using the api post of
-            // publisher rest api. Hence commenting out the validation for name already exist until we find a proper
-            // solution. UI validation will be remained as it is to prevent creating apis with same name.
-            /*if(apiProvider.isApiNameExist(body.getName())) {
-                RestApiUtil.handleBadRequest("Error occurred while adding API. API with name " +
-                        body.getName() + " already exists." , log);
-            }*/
+            if (apiProvider.isApiNameWithDifferentCaseExist(body.getName())) {
+                RestApiUtil.handleBadRequest("Error occurred while adding API. API with name " + body.getName()
+                        + " already exists.", log);
+            }
 
             //Get all existing versions of  api been adding
             List<String> apiVersions = apiProvider.getApiVersionsMatchingApiName(body.getName(), username);
@@ -251,7 +262,7 @@ public class ApisApiServiceImpl extends ApisApiService {
 
             List<String> tiersFromDTO = body.getTiers();
             //If tiers are not defined, the api should be a PROTOTYPED one,
-            if (!APIStatus.PROTOTYPED.toString().equals(body.getStatus()) &&
+            if (!APIConstants.PROTOTYPED.equals(body.getStatus()) &&
                     (tiersFromDTO == null || tiersFromDTO.isEmpty())) {
                 RestApiUtil.handleBadRequest("No tier defined for the API", log);
             }
@@ -270,12 +281,15 @@ public class ApisApiServiceImpl extends ApisApiService {
             API apiToAdd = APIMappingUtil.fromDTOtoAPI(body, provider);
             //Overriding some properties:
             //only allow CREATED as the stating state for the new api if not status is PROTOTYPED
-            if (!APIStatus.PROTOTYPED.equals(apiToAdd.getStatus())) {
-                apiToAdd.setStatus(APIStatus.CREATED);
+            if (!APIConstants.PROTOTYPED.equals(apiToAdd.getStatus())) {
+                apiToAdd.setStatus(APIConstants.CREATED);
             }
             //we are setting the api owner as the logged in user until we support checking admin privileges and assigning
             //  the owner as a different user
             apiToAdd.setApiOwner(provider);
+
+            //attach micro-geteway labels
+            apiToAdd = assignLabelsToDTO(body,apiToAdd);
 
             //adding the api
             apiProvider.addAPI(apiToAdd);
@@ -372,7 +386,7 @@ public class ApisApiServiceImpl extends ApisApiService {
     @Override
     public Response apisCopyApiPost(String newVersion, String apiId) {
         URI newVersionedApiUri;
-        APIDTO newVersionedApi;
+        APIDetailedDTO newVersionedApi;
         try {
             APIProvider apiProvider = RestApiUtil.getLoggedInUserProvider();
             String tenantDomain = RestApiUtil.getLoggedInUserTenantDomain();
@@ -421,7 +435,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      */
     @Override
     public Response apisApiIdGet(String apiId, String accept, String ifNoneMatch, String ifModifiedSince) {
-        APIDTO apiToReturn;
+        APIDetailedDTO apiToReturn;
         try {
             String tenantDomain = RestApiUtil.getLoggedInUserTenantDomain();
             API api = APIMappingUtil.getAPIFromApiIdOrUUID(apiId, tenantDomain);
@@ -778,9 +792,9 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @return Updated API
      */
     @Override
-    public Response apisApiIdPut(String apiId, APIDTO body, String contentType, String ifMatch,
+    public Response apisApiIdPut(String apiId, APIDetailedDTO body, String contentType, String ifMatch,
                                  String ifUnmodifiedSince) {
-        APIDTO updatedApiDTO;
+        APIDetailedDTO updatedApiDTO;
         try {
             String username = RestApiUtil.getLoggedInUsername();
             String tenantDomain = RestApiUtil.getLoggedInUserTenantDomain();
@@ -794,8 +808,8 @@ public class ApisApiServiceImpl extends ApisApiService {
             body.setVersion(apiIdentifier.getVersion());
             body.setProvider(apiIdentifier.getProviderName());
             body.setContext(apiInfo.getContextTemplate());
-            body.setStatus(apiInfo.getStatus().getStatus());
-            body.setType(APIDTO.TypeEnum.valueOf(apiInfo.getType()));
+            body.setStatus(apiInfo.getStatus());
+            body.setType(APIDetailedDTO.TypeEnum.valueOf(apiInfo.getType()));
             //Since there is separate API to change the thumbnail, set the existing thumbnail URL
             //If user needs to remove the thumbnail url, this will give the flexibility to do it via an empty string value
             String thumbnailUrl = body.getThumbnailUri();
@@ -829,6 +843,10 @@ public class ApisApiServiceImpl extends ApisApiService {
                 }
             }
             API apiToUpdate = APIMappingUtil.fromDTOtoAPI(body, apiIdentifier.getProviderName());
+
+            //attach micro-geteway labels
+            apiToUpdate = assignLabelsToDTO(body,apiToUpdate);
+
             apiProvider.updateAPI(apiToUpdate);
 
             if (!isWSAPI) {
@@ -853,6 +871,30 @@ public class ApisApiServiceImpl extends ApisApiService {
             RestApiUtil.handleInternalServerError(errorMessage, e, log);
         }
         return null;
+    }
+
+
+    /**
+     * This method is used to assign micro gateway labels to the DTO
+     *
+     * @param apiDTO API DTO
+     * @param api the API object
+     * @return the API object with labels
+     */
+    private API assignLabelsToDTO(APIDetailedDTO apiDTO, API api) {
+
+        if (apiDTO.getLabels() != null) {
+            List<LabelDTO> dtoLabels = apiDTO.getLabels();
+            List<Label> labelList = new ArrayList<>();
+            for (LabelDTO labelDTO : dtoLabels) {
+                Label label = new Label();
+                label.setName(labelDTO.getName());
+                label.setDescription(labelDTO.getDescription());
+                labelList.add(label);
+            }
+            api.setGatewayLabels(labelList);
+        }
+        return api;
     }
 
     /**

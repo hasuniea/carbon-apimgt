@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.wso2.carbon.apimgt.rest.api.store.dto.APIBusinessInformationDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.APIEndpointURLsDTO;
+import org.wso2.carbon.apimgt.rest.api.store.dto.LabelDTO;
 
 import io.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.*;
@@ -54,6 +55,9 @@ public class APIDTO  {
   private List<String> transport = new ArrayList<String>();
   
   
+  private String authorizationHeader = null;
+  
+  
   private List<String> tags = new ArrayList<String>();
   
   
@@ -70,6 +74,9 @@ public class APIDTO  {
   
   
   private APIBusinessInformationDTO businessInformation = null;
+  
+  
+  private List<LabelDTO> labels = new ArrayList<LabelDTO>();
 
   private String lastUpdatedTime = null;
 
@@ -241,6 +248,19 @@ public class APIDTO  {
 
   
   /**
+   * Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used. \n
+   **/
+  @ApiModelProperty(value = "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used. \n")
+  @JsonProperty("authorizationHeader")
+  public String getAuthorizationHeader() {
+    return authorizationHeader;
+  }
+  public void setAuthorizationHeader(String authorizationHeader) {
+    this.authorizationHeader = authorizationHeader;
+  }
+
+  
+  /**
    * Search keywords related to the API
    **/
   @ApiModelProperty(value = "Search keywords related to the API")
@@ -315,6 +335,19 @@ public class APIDTO  {
   }
 
   
+  /**
+   * Labels of micro-gateway environments attached to the API.\n
+   **/
+  @ApiModelProperty(value = "Labels of micro-gateway environments attached to the API.\n")
+  @JsonProperty("labels")
+  public List<LabelDTO> getLabels() {
+    return labels;
+  }
+  public void setLabels(List<LabelDTO> labels) {
+    this.labels = labels;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -332,12 +365,14 @@ public class APIDTO  {
     sb.append("  status: ").append(status).append("\n");
     sb.append("  isDefaultVersion: ").append(isDefaultVersion).append("\n");
     sb.append("  transport: ").append(transport).append("\n");
+    sb.append("  authorizationHeader: ").append(authorizationHeader).append("\n");
     sb.append("  tags: ").append(tags).append("\n");
     sb.append("  tiers: ").append(tiers).append("\n");
     sb.append("  thumbnailUrl: ").append(thumbnailUrl).append("\n");
     sb.append("  additionalProperties: ").append(additionalProperties).append("\n");
     sb.append("  endpointURLs: ").append(endpointURLs).append("\n");
     sb.append("  businessInformation: ").append(businessInformation).append("\n");
+    sb.append("  labels: ").append(labels).append("\n");
     sb.append("}\n");
     return sb.toString();
   }

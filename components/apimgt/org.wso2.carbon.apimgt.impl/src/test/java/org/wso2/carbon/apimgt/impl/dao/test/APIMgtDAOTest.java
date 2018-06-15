@@ -22,7 +22,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.io.FileUtils;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -115,8 +115,8 @@ public class APIMgtDAOTest {
 
     public static ApiMgtDAO apiMgtDAO;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         String dbConfigPath = System.getProperty("APIManagerDBConfigurationPath");
         APIManagerConfiguration config = new APIManagerConfiguration();
         initializeDatabase(dbConfigPath);
@@ -192,16 +192,7 @@ public class APIMgtDAOTest {
         assertNotNull(subscribers);
         assertTrue(subscribers.size() > 0);
     }
-    @Test
-    public void testAccessKeyForAPI() throws Exception {
-        APIInfoDTO apiInfoDTO = new APIInfoDTO();
-        apiInfoDTO.setApiName("API1");
-        apiInfoDTO.setProviderId("SUMEDHA");
-        apiInfoDTO.setVersion("V1.0.0");
-        String accessKey = apiMgtDAO.getAccessKeyForAPI("SUMEDHA", "APPLICATION1", apiInfoDTO, "PRODUCTION");
-        assertNotNull(accessKey);
-        assertTrue(accessKey.length() > 0);
-    }
+
     @Test
     public void testGetSubscribedAPIsOfUser() throws Exception {
         APIInfoDTO[] apis = apiMgtDAO.getSubscribedAPIsOfUser("SUMEDHA");
@@ -329,7 +320,7 @@ public class APIMgtDAOTest {
         LifeCycleEvent event = events.get(0);
         assertEquals(apiId, event.getApi());
         assertNull(event.getOldStatus());
-        assertEquals(APIStatus.CREATED.toString(), event.getNewStatus());
+        assertEquals(APIConstants.CREATED, event.getNewStatus());
         assertEquals("hiranya", event.getUserId());
 
         apiMgtDAO.recordAPILifeCycleEvent(apiId, APIStatus.CREATED, APIStatus.PUBLISHED, "admin", -1234);
@@ -1032,7 +1023,8 @@ public class APIMgtDAOTest {
         assertTrue(apiPolicy.getPolicyName().equals(apiMgtDAO.getAPILevelTier(apiMgtDAO.getAPIID(apiId, null))));
         apiMgtDAO.recordAPILifeCycleEvent(apiId, "CREATED", "PUBLISHED", "testCreateApplicationRegistrationEntry",
                 -1234);
-        apiMgtDAO.updateDefaultAPIPublishedVersion(apiId, APIStatus.PUBLISHED, APIStatus.CREATED);
+        apiMgtDAO.updateDefaultAPIPublishedVersion(apiId, APIConstants.PUBLISHED, APIConstants.CREATED);
+        assertTrue(apiMgtDAO.getConsumerKeys(apiId).length > 0);
         apiMgtDAO.removeAllSubscriptions(apiId);
         assertTrue(apiMgtDAO.getAPINamesMatchingContext(api.getContext()).size() > 0);
         apiMgtDAO.deleteAPI(apiId);
@@ -1207,6 +1199,8 @@ public class APIMgtDAOTest {
         api.setContextTemplate("/testAddAndGetApi/{version}");
         api.setUriTemplates(getUriTemplateSet());
         api.setScopes(getScopes());
+        api.setStatus(APIConstants.PUBLISHED);
+        api.setAsDefaultVersion(true);
         apiMgtDAO.addAPI(api, -1234);
         apiMgtDAO.updateAPI(api, -1234);
         Set<APIStore> apiStoreSet = new HashSet<APIStore>();

@@ -23,6 +23,7 @@ import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wso2.carbon.apimgt.api.APIConsumer;
 import org.wso2.carbon.apimgt.api.APIManagementException;
@@ -33,12 +34,15 @@ import org.wso2.carbon.apimgt.api.model.OAuthApplicationInfo;
 import org.wso2.carbon.apimgt.api.model.Subscriber;
 import org.wso2.carbon.apimgt.api.model.Tier;
 import org.wso2.carbon.apimgt.impl.APIConstants;
+import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
 import org.wso2.carbon.apimgt.impl.APIManagerFactory;
+import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.utils.APIUtil;
 import org.wso2.carbon.apimgt.rest.api.store.ApplicationsApiService;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ApplicationDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ApplicationKeyDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ApplicationKeyGenerateRequestDTO;
+import org.wso2.carbon.apimgt.rest.api.store.dto.ApplicationKeyReGenerateRequestDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ApplicationListDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ScopeListDTO;
 import org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils;
@@ -46,11 +50,18 @@ import org.wso2.carbon.apimgt.rest.api.store.utils.mappings.ApplicationKeyMappin
 import org.wso2.carbon.apimgt.rest.api.store.utils.mappings.ApplicationMappingUtil;
 import org.wso2.carbon.apimgt.rest.api.util.RestApiConstants;
 import org.wso2.carbon.apimgt.rest.api.util.utils.RestApiUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.wso2.carbon.user.api.UserStoreException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Iterator;
+import java.util.Set;
 import javax.ws.rs.core.Response;
 
 /**
@@ -135,6 +146,31 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
                 RestApiUtil.handleBadRequest("Throttling tier cannot be null", log);
             }
 
+            Object applicationAttributesFromUser = body.getAttributes();
+            Map<String, String> applicationAttributes =
+                    new ObjectMapper().convertValue(applicationAttributesFromUser,Map.class);
+
+            if (applicationAttributes!=null) {
+                JSONArray attributeKeysFromConfig = apiConsumer.getAppAttributesFromConfig(username);
+                Set<String> keySet = new HashSet<>();
+                Set attributeKeysFromUSer = applicationAttributes.keySet();
+
+                for (Object object : attributeKeysFromConfig) {
+                    JSONObject jsonObject = (JSONObject) object;
+                    Boolean isRequired = false;
+                    if (jsonObject.get(APIConstants.ApplicationAttributes.REQUIRED) != null) {
+                        isRequired = (Boolean) jsonObject.get(APIConstants.ApplicationAttributes.REQUIRED);
+                    }
+                    String key = (String) jsonObject.get(APIConstants.ApplicationAttributes.ATTRIBUTE);
+
+                    if (isRequired && !attributeKeysFromUSer.contains(key)) {
+                        RestApiUtil.handleBadRequest(key + " should be specified", log);
+                    }
+                    keySet.add(key);
+                }
+                body.setAttributes(validateApplicationAttributes(applicationAttributes, keySet));
+            }
+
             //subscriber field of the body is not honored. It is taken from the context
             Application application = ApplicationMappingUtil.fromDTOtoApplication(body, username);
 
@@ -165,6 +201,34 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
                 RestApiUtil.handleInternalServerError("Error while adding a new application for the user " + username,
                         e, log);
             }
+        }
+        return null;
+    }
+
+    /**
+     * Re generate consumer secret.
+     *
+     * @param body Request body containing application details.
+     * @param contentType Content-Type header value.
+     * @return A response object containing application keys.
+     */
+    @Override
+    public Response applicationsRegenerateConsumersecretPost(ApplicationKeyReGenerateRequestDTO body,
+                                                             String contentType) {
+
+        String username = RestApiUtil.getLoggedInUsername();
+        String clientId = body.getConsumerKey();
+        try {
+            APIConsumer apiConsumer = APIManagerFactory.getInstance().getAPIConsumer(username);
+            String clientSecret = apiConsumer.renewConsumerSecret(clientId);
+
+            ApplicationKeyDTO applicationKeyDTO = new ApplicationKeyDTO();
+            applicationKeyDTO.setConsumerKey(clientId);
+            applicationKeyDTO.setConsumerSecret(clientSecret);
+
+            return Response.ok().entity(applicationKeyDTO).build();
+        } catch (APIManagementException e) {
+            RestApiUtil.handleInternalServerError("Error while re generating the consumer secret ", e, log);
         }
         return null;
     }
@@ -280,6 +344,9 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
                 if (RestAPIStoreUtils.isUserAccessAllowedForApplication(application)) {
                     for (APIKey apiKey : application.getKeys()) {
                         if (keyType != null && keyType.equals(apiKey.getType())) {
+                            if(APIConstants.JWT.equals(application.getTokenType())){
+                                apiKey.setAccessToken("");
+                            }
                             ApplicationKeyDTO appKeyDTO = ApplicationKeyMappingUtil.fromApplicationKeyToDTO(apiKey);
                             return Response.ok().entity(appKeyDTO).build();
                         }
@@ -361,6 +428,20 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
             Application oldApplication = apiConsumer.getApplicationByUUID(applicationId);
             if (oldApplication != null) {
                 if (RestAPIStoreUtils.isUserOwnerOfApplication(oldApplication)) {
+                    Object applicationAttributesFromUser = body.getAttributes();
+                    Map<String, String> applicationAttributes = new ObjectMapper().convertValue(applicationAttributesFromUser, Map.class);
+
+                    JSONArray attributeKeysFromConfig = apiConsumer.getAppAttributesFromConfig(username);
+                    Set<String> keySet = new HashSet<>();
+
+                    for (Object object : attributeKeysFromConfig) {
+                        JSONObject jsonObject = (JSONObject) object;
+                        String key = (String) jsonObject.get(APIConstants.ApplicationAttributes.ATTRIBUTE);
+                        keySet.add(key);
+                    }
+                    if (applicationAttributes != null) {
+                        body.setAttributes(validateApplicationAttributes(applicationAttributes, keySet));
+                    }
                     //we do not honor the subscriber coming from the request body as we can't change the subscriber of the application
                     Application application = ApplicationMappingUtil.fromDTOtoApplication(body, username);
                     //groupId of the request body is not honored for now.
@@ -536,9 +617,29 @@ public class ApplicationsApiServiceImpl extends ApplicationsApiService {
     }
 
     @Override
+    public String applicationsRegenerateConsumersecretPostGetLastUpdatedTime(ApplicationKeyReGenerateRequestDTO body,
+                                                                             String contentType) {
+        /* The generated oauth keys are stored in the Key Manager side, implementing this method will be different
+         from Key Manager to Key Manager. */
+        return null;
+    }
+
+    @Override
     public String applicationsScopesApplicationIdGetGetLastUpdatedTime(String applicationId,
             Boolean filterByUserRoles, String ifNoneMatch, String ifModifiedSince) {
         return null;
     }
 
+    private Map<String, String> validateApplicationAttributes(Map<String, String> applicationAttributes, Set keys) {
+
+        Iterator iterator = applicationAttributes.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = (String) iterator.next();
+            if (!keys.contains(key)) {
+                iterator.remove();
+                applicationAttributes.remove(key);
+            }
+        }
+        return applicationAttributes;
+    }
 }

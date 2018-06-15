@@ -26,8 +26,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.wso2.carbon.apimgt.api.APIManagementException;
+import org.wso2.carbon.apimgt.api.model.Application;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
+import org.wso2.carbon.apimgt.impl.dao.ApiMgtDAO;
 import org.wso2.carbon.apimgt.impl.dto.APIKeyValidationInfoDTO;
 import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.token.ClaimsRetriever;
@@ -77,6 +79,7 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
 
     private static ConcurrentHashMap<Integer, Key> privateKeys = new ConcurrentHashMap<Integer, Key>();
     private static ConcurrentHashMap<Integer, Certificate> publicCerts = new ConcurrentHashMap<Integer, Certificate>();
+    private ApiMgtDAO dao = ApiMgtDAO.getInstance();
 
     private String userAttributeSeparator = APIConstants.MULTI_ATTRIBUTE_SEPARATOR_DEFAULT;
 
@@ -202,8 +205,7 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
                 standardClaims.putAll(customClaims);
             }
 
-            Map<String, Object> claims = new HashMap<String, Object>();
-            JWTClaimsSet claimsSet = new JWTClaimsSet();
+            JWTClaimsSet.Builder jwtClaimsSetBuilder = new JWTClaimsSet.Builder();
 
             if(standardClaims != null) {
                 Iterator<String> it = new TreeSet(standardClaims.keySet()).iterator();
@@ -219,17 +221,15 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
                                 claimList.add(attValue);
                             }
                         }
-                        claims.put(claimURI, claimList.toArray(new String[claimList.size()]));
+                        jwtClaimsSetBuilder.claim(claimURI, claimList);
                     } else if ("exp".equals(claimURI)) {
-                        claims.put("exp", new Date(Long.valueOf(standardClaims.get(claimURI))));
+                        jwtClaimsSetBuilder.expirationTime(new Date(Long.valueOf(standardClaims.get(claimURI))));
                     } else {
-                        claims.put(claimURI, claimVal);
+                        jwtClaimsSetBuilder.claim(claimURI, claimVal);
                     }
                 }
             }
-
-            claimsSet.setAllClaims(claims);
-            return claimsSet.toJSONObject().toJSONString();
+            return jwtClaimsSetBuilder.build().toJSONObject().toJSONString();
         }
         return null;
     }
@@ -347,7 +347,7 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
      * @param endUserName - The end user name
      * @throws APIManagementException
      */
-    private String addCertToHeader(String endUserName) throws APIManagementException {
+    protected String addCertToHeader(String endUserName) throws APIManagementException {
 
         try {
             //get tenant domain
@@ -463,7 +463,7 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
         }
     }
 
-    private String getMultiAttributeSeparator(int tenantId) {
+    protected String getMultiAttributeSeparator(int tenantId) {
         try {
             RealmConfiguration realmConfiguration = null;
             RealmService realmService = ServiceReferenceHolder.getInstance().getRealmService();
@@ -486,5 +486,18 @@ public abstract class AbstractJWTGenerator implements TokenGenerator {
                       "returned", e);
         }
         return null;
+    }
+
+    public Map<String, String> getApplicationAttributes(int applicationId) {
+
+        Map<String, String> applicationAttributes;
+        try {
+            Application application = dao.getApplicationById(applicationId);
+            applicationAttributes = application.getApplicationAttributes();
+            return applicationAttributes;
+        } catch (APIManagementException e) {
+            log.error("Error in retrieving application attributes of application with id: " + applicationId);
+            return null;
+        }
     }
 }

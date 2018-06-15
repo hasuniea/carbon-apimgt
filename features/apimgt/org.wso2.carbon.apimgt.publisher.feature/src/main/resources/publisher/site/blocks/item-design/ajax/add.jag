@@ -59,7 +59,9 @@ if(jagg.isCSRFTokenValid())
     var mod, obj, result, username,
 	action = request.getParameter("action"),
     site = require("/site/conf/site.json"),
-    msg = require("/site/conf/ui-messages.jag");
+    msg = require("/site/conf/ui-messages.jag"),
+    parser = new SwaggerParser(),
+    supportedHTTPMethods = ["get", "put", "post", "delete", "patch", "head", "options"];
 
     if(jagg.getUser() == null){
         print({
@@ -74,7 +76,6 @@ if(jagg.isCSRFTokenValid())
             var wsdl = null;
             var supportedSwaggerVersion = "2.0";
             var supportedOpenAPIVersion = "3.0.0";
-            var parser = new SwaggerParser();
             var apiDefinitionVersion = request.getParameter("apiDefinitionVersion");
 
             if(type == "rest"){
@@ -700,6 +701,8 @@ if(jagg.isCSRFTokenValid())
             }   else if(request.getParameter("schemaValidation") != null){
                 apiData.jsonSchemaStatus = request.getParameter("schemaValidation");
             }
+
+            apiData.gatewayLabels = request.getParameter("gatewayLabels", "UTF-8");
             var errorMsg = null;
             if(apiData.productionTps != null && apiData.productionTps != ""  && !isPositiveInteger(apiData.productionTps)){
                 errorMsg = "Invalid input for Production TPS";
@@ -921,6 +924,39 @@ if(jagg.isCSRFTokenValid())
             var apiDefinitionVersion = session.get("apiDefinitionVersion");
             session.put("apiDefinitionVersion", null);
             print(apiDefinitionVersion);
+        } else if (request.getMethod() === 'POST' && action === 'validateSwagger') {
+            var swagger = request.getParameter("swaggerDefinition");
+            var swaggerDeserializationResult = parser.readWithInfo(swagger);
+            var swaggerObj = swaggerDeserializationResult.getSwagger();
+            var swaggerErrors = swaggerDeserializationResult.getMessages();
+            if (swaggerErrors.size() > 0) {
+                print({
+                    error: true,
+                    message: "API swagger definition is invalid. Please fix the suggested validation issues"
+                });
+                return;
+            } else {
+                var swaggerJSON = JSON.parse(swagger);
+                if (swaggerJSON.paths) {
+                    var swaggerPaths = swaggerJSON.paths;
+                    for (var pathKey in swaggerPaths) {
+                        var path = swaggerPaths[pathKey];
+                        for(var httpMethod in path){
+                            if(supportedHTTPMethods.indexOf(httpMethod.toLowerCase()) === -1){
+                                print({
+                                    error: true,
+                                    message: "The HTTP method '" + httpMethod + "' provided for resource '" + pathKey + "' is invalid"
+
+                                });
+                                return;
+                            }
+                        }
+                    }
+                }
+                print({
+                    error: false
+                })
+            }
         } else {
             print({
                       error:true,

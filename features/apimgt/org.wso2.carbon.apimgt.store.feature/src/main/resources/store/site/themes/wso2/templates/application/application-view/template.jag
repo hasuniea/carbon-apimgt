@@ -10,11 +10,13 @@ for(var i=0;i < outputs.tiers.length; i++){
   }
 }
 %>
+
 <div class="page-header" id="Message">
     <h2 id="application_name"><%= encode.forHtml(application.name) %></h2>
 </div>
   <!-- Nav tabs -->
   <div class="white-wrapper">
+    <div id="jwt_modal_placeholder"></div>
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" id="details-tab" class="active"><a title="<%=i18n.localize("Details")%>" href="#details" aria-controls="profile" role="tab" data-toggle="tab"><%=i18n.localize("Details")%></a></li>
       <% if(application.status == "APPROVED"){ %>
@@ -73,8 +75,35 @@ for(var i=0;i < outputs.tiers.length; i++){
     <div class="col-sm-9">
       <p class="form-control-static"><%if(application.description){%><%=encode.forHtml(application.description) %><% }else{%><%=i18n.localize("Not Given")%><%}%></p>
     </div>
-  </div>  
-</form>      
+  </div>
+
+  <% var applicationAttributes = parse(application.applicationAttributes);
+
+    for (var prop in applicationAttributes) { %>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="attribute_<%=i%>" >
+                <%=encode.forHtml(i18n.localize(prop,prop)) %>
+            </label>
+            <div class="col-sm-6">
+            <p class="form-control-static"><%
+        if (applicationAttributes[prop]) { %>
+                    <%=encode.forHtml(applicationAttributes[prop])%>
+                <% } else { %>
+                    <%=i18n.localize("Not Given") %>
+                <% } %>
+            </p>
+            </div>
+        </div>
+    <% } %>
+
+    <div class="form-group">
+    <label class="col-sm-3 control-label"><%=i18n.localize("Token Type")%></label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%if(application.tokenType){%><%=encode.forHtml(i18n.localize(application.tokenType)) %><% }else{%><%=i18n.localize("DEFAULT")%><%}%></p>
+    </div>
+  </div>
+
+</form>
       </div>
       <% if(application.status == "APPROVED"){ %>
       <div role="tabpanel" class="tab-pane fade production-keys" id="production">
@@ -98,7 +127,9 @@ for(var i=0;i < outputs.tiers.length; i++){
             Scopes: outputs.scopes,
             ValidityTime: oauthapp.prodValidityTime,
             keyState: oauthapp.prodKeyState,
-            grants: prodGrants
+            grants: prodGrants,
+            tokenType: application.tokenType
+
         }
       %>
       </div>
@@ -122,7 +153,8 @@ for(var i=0;i < outputs.tiers.length; i++){
             Scopes: outputs.scopes,
             ValidityTime: oauthapp.sandValidityTime,
             keyState: oauthapp.sandboxKeyState,
-            grants:sandboxGrants
+            grants:sandboxGrants,
+            tokenType: application.tokenType
         }
       %>      
       <div role="tabpanel" class="tab-pane fade sandbox-keys" id="sandbox">

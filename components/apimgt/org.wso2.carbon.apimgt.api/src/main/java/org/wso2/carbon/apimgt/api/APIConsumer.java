@@ -19,6 +19,7 @@
 package org.wso2.carbon.apimgt.api;
 
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.wso2.carbon.apimgt.api.model.*;
 
 import java.util.List;
@@ -182,11 +183,12 @@ public interface APIConsumer extends APIManager {
      * @param clientId this is the consumer key of oAuthApplication
      * @param applicationName this is the APIM appication name.
      * @param keyType
+     * @param tokenType this is theApplication Token Type. This can be either default or jwt.
      * @return
      * @throws APIManagementException
      */
-    Map<String,Object> mapExistingOAuthClient(String jsonString, String userName, String clientId,
-                                                     String applicationName, String keyType) throws APIManagementException;
+    Map<String, Object> mapExistingOAuthClient(String jsonString, String userName, String clientId,
+            String applicationName, String keyType, String tokenType) throws APIManagementException;
 
     /**
      *This method will delete from application key mapping table and application registration table.
@@ -248,6 +250,19 @@ public interface APIConsumer extends APIManager {
             throws APIManagementException;
 
     /**
+     * Add new Subscriber with GroupId
+     *
+     * @param identifier    APIIdentifier
+     * @param userId        id of the user
+     * @param applicationId Application Id
+     * @param groupId       GroupId of user
+     * @return SubscriptionResponse subscription response object
+     * @throws APIManagementException if failed to add subscription details to database
+     */
+    SubscriptionResponse addSubscription(APIIdentifier identifier, String userId, int applicationId,String groupId)
+            throws APIManagementException;
+
+    /**
      * 
      * @param subscriptionId id of the subscription
      * @return
@@ -264,6 +279,18 @@ public interface APIConsumer extends APIManager {
      * @throws APIManagementException if failed to remove subscription details from database
      */
     void removeSubscription(APIIdentifier identifier, String userId, int applicationId) throws APIManagementException;
+
+    /**
+     * Unsubscribe the specified user from the specified API in the given application with GroupId
+     *
+     * @param identifier    APIIdentifier
+     * @param userId        id of the user
+     * @param applicationId Application Id
+     * @param groupId       groupId of user
+     * @throws APIManagementException if failed to remove subscription details from database
+     */
+    void removeSubscription(APIIdentifier identifier, String userId, int applicationId,String groupId) throws
+            APIManagementException;
 
     /** Removes a subscription specified by SubscribedAPI object
      * 
@@ -607,6 +634,15 @@ public interface APIConsumer extends APIManager {
                                      String[] requestedScopes, String jsonInput) throws
             APIManagementException;
 
+    /**
+     * Regenerate new consumer secret.
+     *
+     * @param clientId For which consumer key we need to regenerate consumer secret.
+     * @return New consumer secret.
+     * @throws APIManagementException This is the custom exception class for API management.
+     */
+    String renewConsumerSecret(String clientId) throws APIManagementException;
+
 	/**
 	 * Returns a set of scopes associated with a list of API identifiers.
 	 *
@@ -663,5 +699,14 @@ public interface APIConsumer extends APIManager {
      */
     String getWSDLDocument(String username, String tenantDomain, String resourceUrl, Map environmentDetails,
             Map apiDetails) throws APIManagementException;
+
+    /**
+     * Returns application attributes defined in configuration
+     *
+     * @param userId           user name of the logged in user
+     * @return Array of JSONObjects of key values from configuration
+     * @throws APIManagementException
+     */
+    JSONArray getAppAttributesFromConfig(String userId)  throws APIManagementException;
 
 }

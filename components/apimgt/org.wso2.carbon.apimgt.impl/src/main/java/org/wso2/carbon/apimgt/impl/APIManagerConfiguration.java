@@ -22,8 +22,11 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.util.JavaUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.wso2.carbon.apimgt.api.APIManagementException;
 import org.wso2.carbon.apimgt.api.model.APIPublisher;
 import org.wso2.carbon.apimgt.api.model.APIStore;
@@ -74,7 +77,9 @@ public class APIManagerConfiguration {
     public static final String  AUTH_URL_PORT = "auth.url.port";
     public static final String  JMS_PORT = "jms.port";
     public static final String CARBON_CONFIG_PORT_OFFSET_NODE = "Ports.Offset";
+    public static final String WEBSOCKET_DEFAULT_GATEWAY_URL = "ws://localhost:9099";
     private Map<String, Map<String, String>> loginConfiguration = new ConcurrentHashMap<String, Map<String, String>>();
+    private JSONArray applicationAttributes = new JSONArray();
 
     private SecretResolver secretResolver;
 
@@ -217,6 +222,14 @@ public class APIManagerConfiguration {
                     environment.setApiGatewayEndpoint(APIUtil.replaceSystemProperty(
                             environmentElem.getFirstChildWithName(new QName(
                                     APIConstants.API_GATEWAY_ENDPOINT)).getText()));
+                    OMElement websocketGatewayEndpoint = environmentElem
+                            .getFirstChildWithName(new QName(APIConstants.API_WEBSOCKET_GATEWAY_ENDPOINT));
+                    if (websocketGatewayEndpoint != null) {
+                        environment.setWebsocketGatewayEndpoint(
+                                APIUtil.replaceSystemProperty(websocketGatewayEndpoint.getText()));
+                    } else {
+                        environment.setWebsocketGatewayEndpoint(WEBSOCKET_DEFAULT_GATEWAY_URL);
+                    }
                     OMElement description =
                             environmentElem.getFirstChildWithName(new QName("Description"));
                     if (description != null) {
@@ -308,10 +321,35 @@ public class APIManagerConfiguration {
                 setThrottleProperties(serverConfig);
             } else if (APIConstants.WorkflowConfigConstants.WORKFLOW.equals(localName)){
                 setWorkflowProperties(serverConfig);
+            } else if (APIConstants.ApplicationAttributes.APPLICATION_ATTRIBUTES.equals(localName)){
+                Iterator iterator = element.getChildrenWithLocalName(APIConstants.ApplicationAttributes.ATTRIBUTE);
+                while (iterator.hasNext()) {
+                    OMElement omElement = (OMElement) iterator.next();
+                    Iterator attributes = omElement.getChildElements();
+                    JSONObject jsonObject = new JSONObject();
+                    while(attributes.hasNext()){
+                        OMElement attribute = (OMElement) attributes.next();
+                        if(attribute.getLocalName().equals("Name")){
+                            jsonObject.put(APIConstants.ApplicationAttributes.ATTRIBUTE,attribute.getText());
+                        }
+                        else if(attribute.getLocalName().equals("Description")){
+                            jsonObject.put(APIConstants.ApplicationAttributes.DESCRIPTION,attribute.getText());
+                        }
+                    }
+                    String isRequired = omElement.getAttributeValue(new QName("required"));
+                    if (isRequired != null) {
+                        jsonObject.put(APIConstants.ApplicationAttributes.REQUIRED, Boolean.parseBoolean(isRequired));
+                    }
+                    applicationAttributes.add(jsonObject);
+                }
             }
             readChildElements(element, nameStack);
             nameStack.pop();
         }
+    }
+
+    public JSONArray getApplicationAttributes() {
+        return applicationAttributes;
     }
 
     /**

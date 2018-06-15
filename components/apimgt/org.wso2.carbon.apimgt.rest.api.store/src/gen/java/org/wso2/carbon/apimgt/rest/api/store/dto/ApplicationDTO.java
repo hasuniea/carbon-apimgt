@@ -43,6 +43,9 @@ public class ApplicationDTO  {
   
   
   private List<ApplicationKeyDTO> keys = new ArrayList<ApplicationKeyDTO>();
+  
+  
+  private Object attributes = null;
 
   private String lastUpdatedTime = null;
 
@@ -181,6 +184,18 @@ public class ApplicationDTO  {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("attributes")
+  public Object getAttributes() {
+    return attributes;
+  }
+  public void setAttributes(Object attributes) {
+    this.attributes = attributes;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -196,6 +211,7 @@ public class ApplicationDTO  {
     sb.append("  status: ").append(status).append("\n");
     sb.append("  groupId: ").append(groupId).append("\n");
     sb.append("  keys: ").append(keys).append("\n");
+    sb.append("  attributes: ").append(attributes).append("\n");
     sb.append("}\n");
     return sb.toString();
   }

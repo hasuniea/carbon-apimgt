@@ -27,8 +27,8 @@ import org.wso2.carbon.apimgt.api.APIManagementException;
 import org.wso2.carbon.apimgt.api.APIProvider;
 import org.wso2.carbon.apimgt.api.model.API;
 import org.wso2.carbon.apimgt.api.model.APIIdentifier;
-import org.wso2.carbon.apimgt.api.model.APIStatus;
 import org.wso2.carbon.apimgt.api.model.CORSConfiguration;
+import org.wso2.carbon.apimgt.api.model.Label;
 import org.wso2.carbon.apimgt.api.model.Scope;
 import org.wso2.carbon.apimgt.api.model.Tier;
 import org.wso2.carbon.apimgt.api.model.URITemplate;
@@ -38,10 +38,11 @@ import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.utils.APIUtil;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIBusinessInformationDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APICorsConfigurationDTO;
-import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIDTO;
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIDetailedDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIEndpointSecurityDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIInfoDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIListDTO;
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.LabelDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIMaxTpsDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.SequenceDTO;
 import org.wso2.carbon.apimgt.rest.api.util.RestApiConstants;
@@ -154,11 +155,11 @@ public class APIMappingUtil {
         return api;
     }
 
-    public static APIDTO fromAPItoDTO(API model) throws APIManagementException {
+    public static APIDetailedDTO fromAPItoDTO(API model) throws APIManagementException {
 
         APIProvider apiProvider = RestApiUtil.getLoggedInUserProvider();
 
-        APIDTO dto = new APIDTO();
+        APIDetailedDTO dto = new APIDetailedDTO();
         dto.setName(model.getId().getApiName());
         dto.setVersion(model.getId().getVersion());
         String providerName = model.getId().getProviderName();
@@ -221,7 +222,7 @@ public class APIMappingUtil {
 
         dto.setSequences(sequences);
 
-        dto.setStatus(model.getStatus().getStatus());
+        dto.setStatus(model.getStatus());
 
         String subscriptionAvailability = model.getSubscriptionAvailability();
         if (subscriptionAvailability != null) {
@@ -254,12 +255,12 @@ public class APIMappingUtil {
 
         //APIs created with type set to "NULL" will be considered as "HTTP"
         if (model.getType() == null || model.getType().toLowerCase().equals("null")) {
-            dto.setType(APIDTO.TypeEnum.HTTP);
+            dto.setType(APIDetailedDTO.TypeEnum.HTTP);
         } else {
-            dto.setType(APIDTO.TypeEnum.valueOf(model.getType()));
+            dto.setType(APIDetailedDTO.TypeEnum.valueOf(model.getType()));
         }
 
-        if (!model.getType().equals(APIConstants.APIType.WS)) {
+        if (!APIConstants.APIType.WS.equals(model.getType())) {
             dto.setTransport(Arrays.asList(model.getTransports().split(",")));
         }
         dto.setVisibility(mapVisibilityFromAPItoDTO(model.getVisibility()));
@@ -283,8 +284,8 @@ public class APIMappingUtil {
         }
 
         dto.setAccessControl(APIConstants.API_RESTRICTED_VISIBILITY.equals(model.getAccessControl()) ?
-                APIDTO.AccessControlEnum.RESTRICTED :
-                APIDTO.AccessControlEnum.NONE);
+                APIDetailedDTO.AccessControlEnum.RESTRICTED :
+                APIDetailedDTO.AccessControlEnum.NONE);
         if (model.getAccessControlRoles() != null) {
             dto.setAccessControlRoles(Arrays.asList(model.getAccessControlRoles().split(",")));
         }
@@ -314,6 +315,20 @@ public class APIMappingUtil {
         setEndpointSecurityFromModelToApiDTO(model, dto);
         setMaxTpsFromModelToApiDTO(model, dto);
 
+        //setting micro-gateway labels if there are any
+        if (model.getGatewayLabels() != null) {
+            List<LabelDTO> labels = new ArrayList<>();
+            List<Label> gatewayLabels = model.getGatewayLabels();
+            for (Label label : gatewayLabels) {
+                LabelDTO labelDTO = new LabelDTO();
+                labelDTO.setName(label.getName());
+                labelDTO.setDescription(label.getDescription());
+                labels.add(labelDTO);
+            }
+            dto.setLabels(labels);
+        }
+        dto.setAuthorizationHeader(model.getAuthorizationHeader());
+
         return dto;
     }
 
@@ -322,11 +337,11 @@ public class APIMappingUtil {
      *
      * @param sequenceName mediation sequence name
      * @param direction    in/out/fault
-     * @param dto          APIDTO contains details of the exporting API
+     * @param dto          APIDetailedDTO contains details of the exporting API
      * @return UUID of sequence or null
      */
     private static String getSequenceId(String sequenceName, String direction,
-                                        APIDTO dto) {
+                                        APIDetailedDTO dto) {
         APIIdentifier apiIdentifier = new APIIdentifier(dto.getProvider(), dto.getName(),
                 dto.getVersion());
         String tenantDomain = RestApiUtil.getLoggedInUserTenantDomain();
@@ -350,10 +365,10 @@ public class APIMappingUtil {
      *
      * @param sequenceName mediation sequence name
      * @param sequenceType in/out/faul
-     * @param dto          APIDTO contains details of the exporting API
+     * @param dto          APIDetailedDTO contains details of the exporting API
      * @return true, if the mediation sequnce is a shared resource
      */
-    private static boolean getSharedStatus(String sequenceName, String sequenceType, APIDTO dto) {
+    private static boolean getSharedStatus(String sequenceName, String sequenceType, APIDetailedDTO dto) {
         String tenantDomain = RestApiUtil.getLoggedInUserTenantDomain();
         try {
             int tenantId = ServiceReferenceHolder.getInstance().getRealmService().getTenantManager()
@@ -372,7 +387,7 @@ public class APIMappingUtil {
         return false;
     }
 
-    public static API fromDTOtoAPI(APIDTO dto, String provider) throws APIManagementException {
+    public static API fromDTOtoAPI(APIDetailedDTO dto, String provider) throws APIManagementException {
 
         APIDefinition apiDefinitionFromOpenAPISpec = new APIDefinitionFromOpenAPISpec();
 
@@ -411,7 +426,7 @@ public class APIMappingUtil {
         model.setThumbnailUrl(dto.getThumbnailUri());
 
         if (dto.getStatus() != null) {
-            model.setStatus(mapStatusFromDTOToAPI(dto.getStatus()));
+            model.setStatus((dto.getStatus() != null) ? dto.getStatus().toUpperCase() : null);
         }
         model.setAsDefaultVersion(dto.getIsDefaultVersion());
         model.setResponseCache(dto.getResponseCaching());
@@ -528,7 +543,7 @@ public class APIMappingUtil {
         model.setCorsConfiguration(corsConfiguration);
         setEndpointSecurityFromApiDTOToModel(dto, model);
         setMaxTpsFromApiDTOToModel(dto, model);
-
+        model.setAuthorizationHeader(dto.getAuthorizationHeader());
         return model;
     }
 
@@ -562,14 +577,19 @@ public class APIMappingUtil {
      * Converts a List object of APIs into a DTO
      *
      * @param apiList List of APIs
+     * @param expand defines whether APIListDTO should contain APIINFODTOs or APIDTOs
      * @return APIListDTO object containing APIDTOs
      */
-    public static APIListDTO fromAPIListToDTO(List<API> apiList) {
+    public static APIListDTO fromAPIListToDTO(List<API> apiList, boolean expand) throws APIManagementException {
         APIListDTO apiListDTO = new APIListDTO();
         List<APIInfoDTO> apiInfoDTOs = apiListDTO.getList();
-        if (apiList != null) {
+        if (apiList != null && !expand) {
             for (API api : apiList) {
                 apiInfoDTOs.add(fromAPIToInfoDTO(api));
+            }
+        } else if (apiList != null && expand) {
+            for (API api : apiList) {
+                apiInfoDTOs.add(fromAPItoDTO(api));
             }
         }
         apiListDTO.setCount(apiInfoDTOs.size());
@@ -635,7 +655,7 @@ public class APIMappingUtil {
         return apiInfoDTO;
     }
 
-    private static void setEndpointSecurityFromApiDTOToModel (APIDTO dto, API api) {
+    private static void setEndpointSecurityFromApiDTOToModel (APIDetailedDTO dto, API api) {
         APIEndpointSecurityDTO securityDTO = dto.getEndpointSecurity();
         if (dto.getEndpointSecurity() != null && securityDTO.getType() != null) {
             api.setEndpointSecured(true);
@@ -647,12 +667,12 @@ public class APIMappingUtil {
         }
     }
 
-    private static void setEndpointSecurityFromModelToApiDTO(API api, APIDTO dto) {
+    private static void setEndpointSecurityFromModelToApiDTO(API api, APIDetailedDTO dto) {
         if (api.isEndpointSecured()) {
             APIEndpointSecurityDTO securityDTO = new APIEndpointSecurityDTO();
             securityDTO.setType(APIEndpointSecurityDTO.TypeEnum.basic); //set default as basic
             securityDTO.setUsername(api.getEndpointUTUsername());
-            securityDTO.setPassword(api.getEndpointUTPassword());
+            securityDTO.setPassword(""); // Do not expose password
             if (api.isEndpointAuthDigest()) {
                 securityDTO.setType(APIEndpointSecurityDTO.TypeEnum.digest);
             }
@@ -660,7 +680,7 @@ public class APIMappingUtil {
         }
     }
 
-    private static void setMaxTpsFromApiDTOToModel(APIDTO dto, API api) {
+    private static void setMaxTpsFromApiDTOToModel(APIDetailedDTO dto, API api) {
         APIMaxTpsDTO maxTpsDTO = dto.getMaxTps();
         if (maxTpsDTO != null) {
             if (maxTpsDTO.getProduction() != null) {
@@ -672,7 +692,7 @@ public class APIMappingUtil {
         }
     }
 
-    private static void setMaxTpsFromModelToApiDTO(API api, APIDTO dto) {
+    private static void setMaxTpsFromModelToApiDTO(API api, APIDetailedDTO dto) {
         if (StringUtils.isBlank(api.getProductionMaxTps()) && StringUtils.isBlank(api.getSandboxMaxTps())) {
             return;
         }
@@ -691,25 +711,8 @@ public class APIMappingUtil {
         }
     }
 
-    private static APIStatus mapStatusFromDTOToAPI(String apiStatus) {
-        // switch case statements are not working as APIStatus.<STATUS>.toString() or APIStatus.<STATUS>.getStatus()
-        //  is not a constant
-        if (apiStatus.equals(APIStatus.BLOCKED.toString())) {
-            return APIStatus.BLOCKED;
-        } else if (apiStatus.equals(APIStatus.CREATED.toString())) {
-            return APIStatus.CREATED;
-        } else if (apiStatus.equals(APIStatus.PUBLISHED.toString())) {
-            return APIStatus.PUBLISHED;
-        } else if (apiStatus.equals(APIStatus.DEPRECATED.toString())) {
-            return APIStatus.DEPRECATED;
-        } else if (apiStatus.equals(APIStatus.PROTOTYPED.toString())) {
-            return APIStatus.PROTOTYPED;
-        } else {
-            return null; // how to handle this?
-        }
-    }
 
-    private static String mapVisibilityFromDTOtoAPI(APIDTO.VisibilityEnum visibility) {
+    private static String mapVisibilityFromDTOtoAPI(APIDetailedDTO.VisibilityEnum visibility) {
         switch (visibility) {
             case PUBLIC:
                 return APIConstants.API_GLOBAL_VISIBILITY;
@@ -724,31 +727,31 @@ public class APIMappingUtil {
         }
     }
 
-    private static APIDTO.VisibilityEnum mapVisibilityFromAPItoDTO(String visibility) {
+    private static APIDetailedDTO.VisibilityEnum mapVisibilityFromAPItoDTO(String visibility) {
         switch (visibility) { //public, private,controlled, restricted
             case APIConstants.API_GLOBAL_VISIBILITY :
-                return APIDTO.VisibilityEnum.PUBLIC;
+                return APIDetailedDTO.VisibilityEnum.PUBLIC;
             case APIConstants.API_PRIVATE_VISIBILITY :
-                return APIDTO.VisibilityEnum.PRIVATE;
+                return APIDetailedDTO.VisibilityEnum.PRIVATE;
             case APIConstants.API_RESTRICTED_VISIBILITY :
-                return APIDTO.VisibilityEnum.RESTRICTED;
+                return APIDetailedDTO.VisibilityEnum.RESTRICTED;
             case APIConstants.API_CONTROLLED_VISIBILITY :
-                return APIDTO.VisibilityEnum.CONTROLLED;
+                return APIDetailedDTO.VisibilityEnum.CONTROLLED;
             default:
                 return null; // how to handle this?
         }
     }
 
-    private static APIDTO.SubscriptionAvailabilityEnum mapSubscriptionAvailabilityFromAPItoDTO(
+    private static APIDetailedDTO.SubscriptionAvailabilityEnum mapSubscriptionAvailabilityFromAPItoDTO(
             String subscriptionAvailability) {
 
         switch (subscriptionAvailability) {
             case APIConstants.SUBSCRIPTION_TO_CURRENT_TENANT :
-                return APIDTO.SubscriptionAvailabilityEnum.current_tenant;
+                return APIDetailedDTO.SubscriptionAvailabilityEnum.current_tenant;
             case APIConstants.SUBSCRIPTION_TO_ALL_TENANTS :
-                return APIDTO.SubscriptionAvailabilityEnum.all_tenants;
+                return APIDetailedDTO.SubscriptionAvailabilityEnum.all_tenants;
             case APIConstants.SUBSCRIPTION_TO_SPECIFIC_TENANTS :
-                return APIDTO.SubscriptionAvailabilityEnum.specific_tenants;
+                return APIDetailedDTO.SubscriptionAvailabilityEnum.specific_tenants;
             default:
                 return null; // how to handle this?
         }
@@ -756,7 +759,7 @@ public class APIMappingUtil {
     }
 
     private static String mapSubscriptionAvailabilityFromDTOtoAPI(
-            APIDTO.SubscriptionAvailabilityEnum subscriptionAvailability) {
+            APIDetailedDTO.SubscriptionAvailabilityEnum subscriptionAvailability) {
         switch (subscriptionAvailability) {
             case current_tenant:
                 return APIConstants.SUBSCRIPTION_TO_CURRENT_TENANT;
