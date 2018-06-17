@@ -642,7 +642,7 @@
     "Error while retrieving the selected mediation policy": "Error while retrieving the selected mediation policy.",
     "Schema Validation:": "Schema Validation:",
     "JSON": "JSON",
-    "Marking an API is to be validated from the schema": "Marking an API is to be validated from the schema"
+    "Marking an API is to be validated from the schema": "Marking an API is to be validated from the schema",
     "API swagger definition is invalid" : "API swagger definition is invalid",
     "Error while updating API swagger definition" : "Error while updating API swagger definition",
     "Delete Task" : "Delete Task",
