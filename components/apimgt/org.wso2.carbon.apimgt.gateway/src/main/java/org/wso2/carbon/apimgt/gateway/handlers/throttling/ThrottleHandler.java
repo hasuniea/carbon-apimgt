@@ -221,7 +221,6 @@ public class ThrottleHandler extends AbstractHandler implements ManagedLifecycle
             } else {
                 subscriberTenantDomain = authContext.getSubscriberTenantDomain();
                 applicationLevelThrottleKey = applicationId + ":" + authorizedUser;
-                //TODO API level throttle key need to replace with API_PRODUCT Throttle key.
                 apiLevelThrottleKey = apiContext + ":" + apiVersion;
                 stopOnQuotaReach = authContext.isStopOnQuotaReach();
                 //If request is not blocked then only we perform throttling.
@@ -235,7 +234,6 @@ public class ThrottleHandler extends AbstractHandler implements ManagedLifecycle
 
                 applicationLevelTier = authContext.getApplicationTier();
                 subscriptionLevelTier = authContext.getTier();
-                //TODO Resource level key no need to consider for API Product Concept.
                 resourceLevelThrottleKey = verbInfoDTO.getRequestKey();
                 apiLevelTier = authContext.getApiTier();
                 resourceLevelTier = verbInfoDTO.getThrottling();
@@ -355,7 +353,6 @@ public class ThrottleHandler extends AbstractHandler implements ManagedLifecycle
                     //if resource level not throttled then move to subscription level
                     if (!isResourceLevelThrottled) {
                         //Subscription Level Throttling
-                        //TODO need to add logic for get API product Details as users are subscribe to product now and not API.
                         subscriptionLevelThrottleKey = authContext.getApplicationId() + ":" + apiContext + ":"
                                                        + apiVersion;
                         isSubscriptionLevelThrottled = getThrottleDataHolder().

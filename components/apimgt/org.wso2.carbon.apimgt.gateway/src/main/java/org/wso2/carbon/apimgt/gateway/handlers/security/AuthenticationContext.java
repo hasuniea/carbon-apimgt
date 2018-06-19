@@ -43,16 +43,6 @@ public class AuthenticationContext {
     private String spikeArrestUnit;
     private boolean stopOnQuotaReach;
 
-    public String getApiProductID() {
-        return apiProductID;
-    }
-
-    public void setApiProductID(String apiProductID) {
-        this.apiProductID = apiProductID;
-    }
-
-    private String apiProductID;
-
     public List<String> getThrottlingDataList() {
         return throttlingDataList;
     }
