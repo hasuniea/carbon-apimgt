@@ -153,6 +153,7 @@ public class APIKeyValidatorClient {
         dto.setSpikeArrestUnit(generatedDto.getSpikeArrestUnit());
         dto.setSubscriberTenantDomain(generatedDto.getSubscriberTenantDomain());
         dto.setStopOnQuotaReach(generatedDto.getStopOnQuotaReach());
+        dto.setProductID(generatedDto.getProductID());
         return dto;
     }
 

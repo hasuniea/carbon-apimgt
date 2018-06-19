@@ -223,6 +223,7 @@ public class OAuthAuthenticator implements Authenticator {
             } else {
                 authContext.setUsername(APIConstants.END_USER_ANONYMOUS);
             }
+            authContext.setApiProductID(info.getProductID());
             authContext.setCallerToken(info.getEndUserToken());
             authContext.setApplicationId(info.getApplicationId());
             authContext.setApplicationName(info.getApplicationName());
