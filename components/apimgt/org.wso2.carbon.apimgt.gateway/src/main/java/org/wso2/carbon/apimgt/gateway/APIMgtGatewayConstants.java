@@ -106,6 +106,7 @@ public class APIMgtGatewayConstants {
     public static final String KEY_WORD_ALLOF = "allOf";
     public static final String REST_URL = "REST_URL_POSTFIX";
     public static final String PARAMETERS = "parameters";
+    public static final String UTF = "UTF-8";
 
 
 }
