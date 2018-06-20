@@ -28,6 +28,7 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import org.apache.synapse.transport.nhttp.NhttpConstants;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
+import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.wso2.carbon.apimgt.gateway.utils.GatewayUtils;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 
@@ -139,7 +140,10 @@ public class RegularExpressionProtector extends AbstractMediator {
             try {
                 parameter = java.net.URLDecoder.decode(queryParams, APIMgtGatewayConstants.UTF);
             } catch (UnsupportedEncodingException e) {
-                logger.error("Error occurred while decoding the query/path parameters: " + parameter);
+                String message = "Error occurred while decoding the query/path parameters: " + parameter;
+                logger.error(message, e);
+                GatewayUtils.handleThreat(messageContext, ThreatProtectorConstants.HTTP_SC_CODE,
+                message + e.getMessage());
             }
             if (pattern != null && parameter != null && pattern.matcher(parameter).find()) {
                 if (logger.isDebugEnabled()) {

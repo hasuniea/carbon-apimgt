@@ -1,0 +1,1285 @@
+2018-06-20 15:34:50,999 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:34:50,999 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevelDefault(ThrottlePolicyTemplateBuilder.java:176)
+	at org.wso2.carbon.apimgt.impl.APIProviderImpl.updatePolicy(APIProviderImpl.java:4728)
+	at org.wso2.carbon.apimgt.impl.APIProviderImplWrapper.updatePolicy(APIProviderImplWrapper.java:40)
+	at org.wso2.carbon.apimgt.impl.APIProviderImplTest.testUpdatePolicy_APITypeErrorWhileDeploying(APIProviderImplTest.java:2858)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:68)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:326)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:89)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:97)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:310)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:131)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.access$100(PowerMockJUnit47RunnerDelegateImpl.java:59)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner$TestExecutorStatement.evaluate(PowerMockJUnit47RunnerDelegateImpl.java:147)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.evaluateStatement(PowerMockJUnit47RunnerDelegateImpl.java:107)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:82)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:298)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:87)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:50)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:218)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:160)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:134)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:136)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:121)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:57)
+	at org.powermock.modules.junit4.PowerMockRunner.run(PowerMockRunner.java:59)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.powermock.core.classloader.MockClassLoader.loadModifiedClass(MockClassLoader.java:202)
+	at org.powermock.core.classloader.DeferSupportingClassLoader.loadClass1(DeferSupportingClassLoader.java:89)
+	at org.powermock.core.classloader.DeferSupportingClassLoader.loadClass(DeferSupportingClassLoader.java:79)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 56 more
+2018-06-20 15:34:51,001 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:34:51,002 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:34:51,002 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:34:51,002 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:34:51,003 - Do unicode file recognition:  false
+2018-06-20 15:34:51,003 - FileResourceLoader : adding path '.'
+2018-06-20 15:34:51,003 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:34:51,005 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:34:51,005 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:34:51,005 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:34:51,006 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:34:51,006 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:34:51,008 - Created '20' parsers.
+2018-06-20 15:34:51,008 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:34:51,009 - Velocimacro : Default library not found.
+2018-06-20 15:34:51,009 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:34:51,009 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:34:51,009 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:34:51,010 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:34:51,013 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource_default.xml
+2018-06-20 15:34:51,013 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource_default.xml
+2018-06-20 15:34:51,018 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource_default.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,422 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,423 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,423 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,423 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,423 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAppLevel(ThrottlePolicyTemplateBuilder.java:295)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAppLevel(ThrottlingPolicyTemplateBuilderTest.java:73)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,425 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,425 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,426 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,428 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,429 - Do unicode file recognition:  false
+2018-06-20 15:35:36,429 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,434 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,435 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,436 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,436 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,437 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,437 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,458 - Created '20' parsers.
+2018-06-20 15:35:36,459 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,459 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,459 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,459 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,459 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,459 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,467 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_app.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,476 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,476 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,476 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,476 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,476 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,476 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,476 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,476 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,476 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForGlobalLevel(ThrottlePolicyTemplateBuilder.java:245)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForGlobalLevel(ThrottlingPolicyTemplateBuilderTest.java:67)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,476 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForGlobalLevel(ThrottlePolicyTemplateBuilder.java:245)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForGlobalLevel(ThrottlingPolicyTemplateBuilderTest.java:67)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,477 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,477 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,477 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,477 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,477 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,477 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,477 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,477 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,477 - Do unicode file recognition:  false
+2018-06-20 15:35:36,477 - Do unicode file recognition:  false
+2018-06-20 15:35:36,477 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,477 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,477 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,477 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,477 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,477 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,479 - Created '20' parsers.
+2018-06-20 15:35:36,479 - Created '20' parsers.
+2018-06-20 15:35:36,479 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,479 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,479 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,479 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,479 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,479 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,479 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,479 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,479 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,479 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,479 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,479 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,480 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_global.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,480 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_global.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,483 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,483 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,483 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,483 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,483 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,483 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,483 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,483 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,483 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,483 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForSubscriptionLevel(ThrottlePolicyTemplateBuilder.java:339)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForSubscriptionLevelperUser(ThrottlingPolicyTemplateBuilderTest.java:79)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,483 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForSubscriptionLevel(ThrottlePolicyTemplateBuilder.java:339)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForSubscriptionLevelperUser(ThrottlingPolicyTemplateBuilderTest.java:79)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,483 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForSubscriptionLevel(ThrottlePolicyTemplateBuilder.java:339)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForSubscriptionLevelperUser(ThrottlingPolicyTemplateBuilderTest.java:79)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,483 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,484 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,484 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,484 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,484 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,484 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,484 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,484 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,484 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,484 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,484 - Do unicode file recognition:  false
+2018-06-20 15:35:36,484 - Do unicode file recognition:  false
+2018-06-20 15:35:36,484 - Do unicode file recognition:  false
+2018-06-20 15:35:36,484 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,484 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,484 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,484 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,484 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,484 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,484 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,485 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,485 - Created '20' parsers.
+2018-06-20 15:35:36,485 - Created '20' parsers.
+2018-06-20 15:35:36,485 - Created '20' parsers.
+2018-06-20 15:35:36,486 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,486 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,486 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,486 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,486 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,486 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,486 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,486 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,486 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,486 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,486 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,486 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,486 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,487 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,487 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,487 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,488 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,488 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,488 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml
+2018-06-20 15:35:36,498 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,498 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,498 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_sub.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,503 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,503 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,503 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,503 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,503 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,503 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,503 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,503 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,503 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,503 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,503 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,503 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,503 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,503 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,503 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,503 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,504 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerAPI(ThrottlingPolicyTemplateBuilderTest.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,504 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerAPI(ThrottlingPolicyTemplateBuilderTest.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,504 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerAPI(ThrottlingPolicyTemplateBuilderTest.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,504 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerAPI(ThrottlingPolicyTemplateBuilderTest.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,504 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,504 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,504 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,504 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,504 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,504 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,504 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,504 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,504 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,504 - Do unicode file recognition:  false
+2018-06-20 15:35:36,504 - Do unicode file recognition:  false
+2018-06-20 15:35:36,504 - Do unicode file recognition:  false
+2018-06-20 15:35:36,504 - Do unicode file recognition:  false
+2018-06-20 15:35:36,504 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,504 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,504 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,504 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,504 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,504 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,504 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,504 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,505 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,506 - Created '20' parsers.
+2018-06-20 15:35:36,506 - Created '20' parsers.
+2018-06-20 15:35:36,506 - Created '20' parsers.
+2018-06-20 15:35:36,506 - Created '20' parsers.
+2018-06-20 15:35:36,506 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,506 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,506 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,506 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,506 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,506 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,506 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,506 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,506 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,506 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,506 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,506 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,506 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,506 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,506 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,506 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,506 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,508 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,508 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,512 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,512 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,512 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,512 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,518 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,518 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,518 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,518 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,518 - Log4JLogChute initialized using file 'velocity.log'
+2018-06-20 15:35:36,518 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,518 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,518 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,518 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,518 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2018-06-20 15:35:36,518 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,518 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,518 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,518 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,518 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2018-06-20 15:35:36,518 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,518 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,518 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,518 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,518 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-06-20 15:35:36,518 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerUser(ThrottlingPolicyTemplateBuilderTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,518 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerUser(ThrottlingPolicyTemplateBuilderTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,518 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerUser(ThrottlingPolicyTemplateBuilderTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,518 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerUser(ThrottlingPolicyTemplateBuilderTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,518 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder.getThrottlePolicyForAPILevel(ThrottlePolicyTemplateBuilder.java:105)
+	at org.wso2.carbon.apimgt.impl.template.ThrottlingPolicyTemplateBuilderTest.testGetThrottlePolicyForAPILevelPerUser(ThrottlingPolicyTemplateBuilderTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:108)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:78)
+	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:54)
+	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:144)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 46 more
+2018-06-20 15:35:36,519 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-06-20 15:35:36,519 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,519 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,519 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,519 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,519 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2018-06-20 15:35:36,519 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,519 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,519 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,519 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,519 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,519 - Do unicode file recognition:  false
+2018-06-20 15:35:36,519 - Do unicode file recognition:  false
+2018-06-20 15:35:36,519 - Do unicode file recognition:  false
+2018-06-20 15:35:36,519 - Do unicode file recognition:  false
+2018-06-20 15:35:36,519 - Do unicode file recognition:  false
+2018-06-20 15:35:36,519 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,519 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,519 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,519 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,519 - FileResourceLoader : adding path '.'
+2018-06-20 15:35:36,519 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,519 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,519 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,519 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,519 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,520 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-06-20 15:35:36,520 - Created '20' parsers.
+2018-06-20 15:35:36,520 - Created '20' parsers.
+2018-06-20 15:35:36,520 - Created '20' parsers.
+2018-06-20 15:35:36,520 - Created '20' parsers.
+2018-06-20 15:35:36,520 - Created '20' parsers.
+2018-06-20 15:35:36,521 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,521 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,521 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,521 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,521 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-06-20 15:35:36,521 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,521 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,521 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,521 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,521 - Velocimacro : Default library not found.
+2018-06-20 15:35:36,521 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,521 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,521 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,521 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,521 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,521 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-06-20 15:35:36,521 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,521 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,521 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,521 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,521 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-06-20 15:35:36,523 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getKey(  ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,523 - Velocimacro : added #getRule(  policy ) : source = src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml
+2018-06-20 15:35:36,527 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,527 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,527 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,527 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-06-20 15:35:36,527 - ResourceManager : found src/test/resources/repository/resources/policy_templates/throttle_policy_template_resource.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
