@@ -30,9 +30,9 @@ import org.apache.synapse.transport.nhttp.NhttpConstants;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
 import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.wso2.carbon.apimgt.gateway.utils.GatewayUtils;
-import org.wso2.carbon.apimgt.impl.APIConstants;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -138,7 +138,7 @@ public class RegularExpressionProtector extends AbstractMediator {
         if (enabledCheckPathParam) {
             String queryParams = (String) axis2MC.getProperty(NhttpConstants.REST_URL_POSTFIX);
             try {
-                parameter = java.net.URLDecoder.decode(queryParams, APIMgtGatewayConstants.UTF);
+                parameter = URLDecoder.decode(queryParams, APIMgtGatewayConstants.UTF8);
             } catch (UnsupportedEncodingException e) {
                 String message = "Error occurred while decoding the query/path parameters: " + parameter;
                 logger.error(message, e);
