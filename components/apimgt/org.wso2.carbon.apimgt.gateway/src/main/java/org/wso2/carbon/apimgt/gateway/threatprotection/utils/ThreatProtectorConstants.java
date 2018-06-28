@@ -25,7 +25,9 @@ public class ThreatProtectorConstants {
 
     public static final String CONTENT_TYPE = "synapse.internal.rest.contentType";
     public static final String SOAP_CONTENT_TYPE = "ContentType";
+    public static final String REST_CONTENT_TYPE = "ContentType";
     public static final String HTTP_REQUEST_METHOD = "HTTP_METHOD_OBJECT";
+    public static final String HTTP_RESPONSE_METHOD = "api.ut.HTTP_METHOD";
     public static final String HTTP_METHOD = "HTTP_METHOD";
     public static final String API_CONTEXT = "REST_API_CONTEXT";
     public static final String TEXT_XML = "text/xml";

@@ -18,14 +18,18 @@
 
 package org.wso2.carbon.apimgt.gateway.mediators;
 
+import com.jayway.jsonpath.JsonPath;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
+import org.apache.axis2.transport.http.util.RESTUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
+import org.apache.synapse.config.Entry;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.apache.synapse.rest.RESTUtils;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -34,8 +38,10 @@ import org.json.JSONObject;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
 import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.wso2.carbon.apimgt.gateway.utils.GatewayUtils;
+import org.wso2.carbon.apimgt.gateway.utils.SchemaCacheUtils;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 
+import java.util.EnumMap;
 import java.util.Iterator;
 
 
@@ -55,21 +61,113 @@ public class SwaggerSchemaValidator extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext messageContext) {
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Swagger SchemaValidator mediator is activated...");
-        }
-        Object localEntry = messageContext.getProperty(APIMgtGatewayConstants.LOCAL_ENTRY);
+        String ID = messageContext.getProperty("LocalentryID").toString();
+        Entry localEntryObj = (Entry) messageContext.getConfiguration()
+                .getLocalRegistry().get(ID);
+        org.apache.axis2.context.MessageContext axis2MC = ((Axis2MessageContext)
+                messageContext).getAxis2MessageContext();
+        String contentType = axis2MC.getProperty(ThreatProtectorConstants.REST_CONTENT_TYPE).toString();
+        if (contentType != null && ThreatProtectorConstants.APPLICATION_JSON.equals(contentType)) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Swagger SchemaValidator mediator is activated...");
+            }
+            if (localEntryObj != null) {
+                swagger = localEntryObj.getValue().toString();
+            }
 
-        if (localEntry != null) {
-            swagger = localEntry.toString();
-        }
-        jsonSchemaSetter = new JSONObject(swagger);
-        paths = jsonSchemaSetter.getJSONObject(APIMgtGatewayConstants.SWAGGER_PATH);
-        definition = jsonSchemaSetter.getJSONObject(APIMgtGatewayConstants.DEFINITIONS);
-        if (messageContext.isResponse()) {
-            validateResponse(messageContext);
-        } else {
-            validateRequest(messageContext);
+            jsonSchemaSetter = new JSONObject(swagger);
+            paths = jsonSchemaSetter.getJSONObject(APIMgtGatewayConstants.SWAGGER_PATH);
+            // check there any def and cache each definition
+
+            if (jsonSchemaSetter.has(APIMgtGatewayConstants.DEFINITIONS)) {
+
+                definition = jsonSchemaSetter.getJSONObject(APIMgtGatewayConstants.DEFINITIONS);
+
+                JSONArray allOfKeys;
+                // get each definition
+                JSONArray jsonSchemal = definition.names();
+
+                String schemaObj = null;
+
+                // iterate each definition
+
+                for (int x = 0; x < jsonSchemal.length(); x++) {
+
+                    String obj = jsonSchemal.get(x).toString();
+                    String allOfStr;
+                    JSONArray schemaDefinitions = null;
+
+                    if (definition != null) {
+                        schemaDefinitions = definition.names();
+                    }
+                    JSONObject defString = null;
+
+                    EnumMap<APIMgtGatewayConstants.CombineSchema, String> combineSchema =
+                            new EnumMap<>(APIMgtGatewayConstants.CombineSchema.class);
+                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ALL_OF, "allOf");
+                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ANY_OF, "anyOf");
+                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ONE_OF, "oneOf");
+                    for (int y = 0; y <= definition.getJSONObject(obj).names().length() - 1; y++) {
+                        if (combineSchema.containsValue(definition.getJSONObject(obj).names().get(y))) {
+                            if (definition.getJSONObject(obj).has("allOf")) {
+                                allOfKeys = definition.getJSONObject(obj).getJSONArray(APIMgtGatewayConstants.KEY_WORD_ALLOF);
+                                for (int n = 0; n < allOfKeys.length(); n++) {
+                                    if (allOfKeys.isNull(n)) {
+                                        allOfKeys.remove(n);
+                                        n = n - 1;
+                                    } else {
+                                        String allOfSchema = allOfKeys.get(n).toString();
+                                        if (allOfSchema.contains(APIMgtGatewayConstants.SCHEMA_REFERENCE)) {
+                                            JSONObject allOfObject = new JSONObject(allOfSchema);
+                                            // get the reference
+                                            allOfStr = allOfObject.get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
+                                            for (int l = 0; l <= allOfKeys.length(); l++) {
+
+                                                String allOfSchemav = allOfKeys.get(n).toString();
+
+                                                if (allOfSchemav.contains(APIMgtGatewayConstants.SCHEMA_REFERENCE)) {
+                                                    allOfKeys.remove(l);
+                                                }
+                                            }
+
+                                            int index = 0;
+                                            if (allOfStr != null) {
+                                                index = allOfStr.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX);
+                                            }
+                                            if (allOfStr != null) {
+                                                schemaObj = allOfStr.substring(index + 1);
+                                            }
+
+                                            for (int k = 0; k < schemaDefinitions.length(); k++) {
+                                                String schemaDef = schemaDefinitions.get(k).toString();
+                                                if (schemaObj != null && schemaObj.matches(schemaDef)) {
+                                                    defString = definition.getJSONObject(schemaObj);
+                                                    allOfKeys.put(k, defString);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (SchemaCacheUtils.getCacheSchema(obj) == null) {
+                        SchemaCacheUtils.putCache(obj, definition.getJSONObject(obj).toString());
+                    }
+                }
+
+                if (messageContext.isResponse()) {
+                    String reqMethod = messageContext.getProperty(APIMgtGatewayConstants.ELECTED_REQUEST_METHOD).toString();
+                    if (!reqMethod.equals("GET")) {
+                        validateResponse(messageContext);
+                    }
+                } else {
+                    String requestMethod = messageContext.getProperty(APIMgtGatewayConstants.ELECTED_REQUEST_METHOD).toString();
+                    if (!requestMethod.equals("GET")) {
+                        validateRequest(messageContext);
+                    }
+                }
+            }
         }
         return true;
     }
@@ -94,6 +192,7 @@ public class SwaggerSchemaValidator extends AbstractMediator {
 
         JSONObject responsePayload = getMessageContent(messageContext);
 
+
         Iterator swaggerPaths = null;
         JSONObject response = null;
         if (paths != null) {
@@ -106,93 +205,50 @@ public class SwaggerSchemaValidator extends AbstractMediator {
         if (swaggerPaths != null) {
             while (swaggerPaths.hasNext()) {
                 resourceKey = (String) swaggerPaths.next();
-                if (resourceKey.matches(electedResource)) {
+                if (resourceKey.equals(electedResource)) {
                     JSONObject resource = paths.getJSONObject(resourceKey);
                     if (resource != null) {
                         response = resource.getJSONObject(
                                 reqMethod.toLowerCase()).getJSONObject(APIMgtGatewayConstants.RESPONSE);
                     }
+                    EnumMap<APIMgtGatewayConstants.HttpStatusCode, String> map =
+                            new EnumMap<APIMgtGatewayConstants.HttpStatusCode, String>(APIMgtGatewayConstants.HttpStatusCode.class);
+
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.OK, "200");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.ACCEPTED, "202 ");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.CREATED, "201");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.NON_AUTHORITATIVE_INFORMATION, "203");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.NO_CONTENT, "204");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.RESET_CONTENT, "205");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.PARTIAL_CONTENT, "206");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.MULTI_STATUS, "207");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.ALREADY_REPORTED, "208");
+                    map.put(APIMgtGatewayConstants.HttpStatusCode.IM_USED, "226");
+
                     if (response != null) {
-                        schemaReference = response.getJSONObject(
-                                APIMgtGatewayConstants.SUCCESS_RESPONSE).get(APIMgtGatewayConstants.SCHEMA).
-                                toString();
-                    }
-                    JSONObject rev = new JSONObject(schemaReference);
-                    schema = rev.get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
-                }
-            }
-        }
+                        response.names();
+                        for (int z = 0; z < response.names().length(); z++) {
+                            if (map.containsValue(response.names().get(z))) {
+                                if (response.getJSONObject(response.names().get(z).toString()).has(APIMgtGatewayConstants.SCHEMA)) {
+                                    schemaReference = response.getJSONObject(response.names().get(z).toString()).get(APIMgtGatewayConstants.SCHEMA).
+                                            toString();
+                                    JSONObject rev = new JSONObject(schemaReference);
+                                    schema = rev.get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
+                                    int referenceSchemaObject = schema != null ? schema.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX) : 0;
+                                    String schemaObject = schema != null ? schema.substring(referenceSchemaObject + 1) : null;
 
-        int referenceSchemaObject = schema != null ? schema.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX) : 0;
-        String schemaObject = schema != null ? schema.substring(referenceSchemaObject + 1) : null;
-
-        JSONObject defString = null;
-        String allOfStr = null;
-        String schemaObj = null;
-        JSONArray schemaDefinitions = null;
-
-        definition = jsonSchemaSetter.getJSONObject(APIMgtGatewayConstants.DEFINITIONS);
-        if (definition != null) {
-            schemaDefinitions = definition.names();
-        }
-        if (schemaDefinitions != null) {
-            for (int i = 0; i < schemaDefinitions.length(); i++) {
-                String definitionObject = schemaDefinitions.get(i).toString();
-
-                if (schemaObject != null && schemaObject.matches(definitionObject)) {
-                    JSONArray definitionArray = definition.getJSONObject(definitionObject).names();
-
-                    for (int x = 0; x <= definitionArray.length(); x++) {
-
-                        String subDefinitions = definitionArray.get(x).toString();
-                        // here only support allOf
-                        if (subDefinitions.matches(APIMgtGatewayConstants.KEY_WORD_ALLOF)) {
-                            JSONArray allOfKeys = definition.getJSONObject(definitionObject).getJSONArray
-                                    (APIMgtGatewayConstants.KEY_WORD_ALLOF);
-
-                            for (int y = 0; y <= allOfKeys.length(); y++) {
-
-                                String allOfSchema = allOfKeys.get(x).toString();
-
-                                if (allOfSchema.contains(APIMgtGatewayConstants.SCHEMA_REFERENCE)) {
-                                    JSONObject allOfObject = new JSONObject(allOfSchema);
-                                    allOfStr = allOfObject.get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
+                                    String  defString = SchemaCacheUtils.getCacheSchema(schemaObject);
+                                    JSONObject payloadObject = getMessageContent(messageContext);
+                                    String schemaString = defString != null ? defString.toString() : null;
+                                    validateContent(payloadObject, schemaString, messageContext);
                                 }
                             }
-                            int index = 0;
-                            if (allOfStr != null) {
-                                index = allOfStr.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX);
-                            }
-                            if (allOfStr != null) {
-                                schemaObj = allOfStr.substring(index + 1);
-                            }
-
-                            for (int k = 0; k < schemaDefinitions.length(); k++) {
-                                String schemaDef = schemaDefinitions.get(k).toString();
-                                if (schemaObj != null && schemaObj.matches(schemaDef)) {
-                                    defString = definition.getJSONObject(schemaObj);
-                                }
-                            }
-                            String SchemaString = defString != null ? defString.toString() : null;
-                            validateContent(responsePayload, SchemaString, messageContext);
-
-
-                        } else {
-                            for (int m = 0; m < definitionArray.length(); m++) {
-                                String obj = definitionArray.get(m).toString();
-                                if (schemaObject.matches(obj)) {
-                                    defString = definition.getJSONObject(obj);
-                                }
-                            }
-                            JSONObject payloadObject = getMessageContent(messageContext);
-                            String schemaString = defString != null ? defString.toString() : null;
-                            validateContent(payloadObject, schemaString, messageContext);
                         }
                     }
                 }
             }
-        }
 
+        }
     }
 
     /**
@@ -227,8 +283,7 @@ public class SwaggerSchemaValidator extends AbstractMediator {
 
         org.apache.axis2.context.MessageContext axis2MC = ((Axis2MessageContext)
                 messageContext).getAxis2MessageContext();
-
-        String path = axis2MC.getProperty(APIMgtGatewayConstants.REST_URL).toString();
+        String path = messageContext.getProperty(APIMgtGatewayConstants.API_ELECTED_RESOURCE).toString();
         String requestMethod = axis2MC.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD).toString();
         String schemaReference = null;
 
@@ -238,34 +293,39 @@ public class SwaggerSchemaValidator extends AbstractMediator {
         while (resourcePaths.hasNext()) {
             pathKey = (String) resourcePaths.next();
             if (pathKey.matches(path)) {
-                JSONObject parameterObject = paths.getJSONObject(pathKey).getJSONObject(requestMethod.toLowerCase());
-                if (parameterObject != null) {
-                    parameters = parameterObject.getJSONArray(APIMgtGatewayConstants.PARAMETERS);
-                }
-                if (parameters != null) {
-                    for (int i = 0; i < parameters.length(); i++) {
-                        JSONObject jsonobject = parameters.getJSONObject(i);
-                        schemaReference = jsonobject.getJSONObject(APIMgtGatewayConstants.SCHEMA
-                        ).get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
+
+                JSONArray jsonArray = paths.getJSONObject(pathKey).names();
+                for (int i = 0; i< jsonArray.length(); i++) {
+                    if (requestMethod.toLowerCase().equals(jsonArray.get(i))) {
+
+                        JSONObject parameterObject = paths.getJSONObject(pathKey).getJSONObject(requestMethod.toLowerCase());
+                        if (parameterObject != null) {
+                            parameters = parameterObject.getJSONArray(APIMgtGatewayConstants.PARAMETERS);
+                        }
+                        if (parameters != null) {
+                            for (int x = 0; x < parameters.length(); x++) {
+                                JSONObject jsonobject = parameters.getJSONObject(i);
+                                schemaReference = jsonobject.getJSONObject(APIMgtGatewayConstants.SCHEMA
+                                ).get(APIMgtGatewayConstants.SCHEMA_REFERENCE).toString();
+                            }
+                        }
+
+
+                        int index = schemaReference != null ? schemaReference.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX) : 0;
+                        String schemaObject = schemaReference != null ? schemaReference.substring(index + 1) : null;
+                        // use the string def name to get  the schema
+                        String schema = SchemaCacheUtils.getCacheSchema(schemaObject);
+                        JSONObject payloadObject = getMessageContent(messageContext);
+                        String refSchema = schema != null ? schema.toString() : null;
+                        if (refSchema != null)
+                            validateContent(payloadObject, refSchema, messageContext);
                     }
+
                 }
             }
 
         }
-        int index = schemaReference != null ? schemaReference.lastIndexOf(APIMgtGatewayConstants.LAST_INDEX) : 0;
-        String schemaObject = schemaReference != null ? schemaReference.substring(index + 1) : null;
-        JSONObject defString = null;
-        JSONArray jsonSchemal = definition.names();
-        for (int i = 0; i < jsonSchemal.length(); i++) {
-            String obj = jsonSchemal.get(i).toString();
-            if (obj.matches(schemaObject)) {
-                defString = definition.getJSONObject(obj);
-            }
-        }
-        JSONObject payloadObject = getMessageContent(messageContext);
-        String refSchema = defString != null ? defString.toString() : null;
-        if (refSchema != null)
-            validateContent(payloadObject, refSchema, messageContext);
+
 
     }
 
@@ -279,7 +339,13 @@ public class SwaggerSchemaValidator extends AbstractMediator {
 
         org.apache.axis2.context.MessageContext axis2MC = ((Axis2MessageContext)
                 messageContext).getAxis2MessageContext();
-        String requestMethod = axis2MC.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD).toString();
+        String requestMethod;
+        if (messageContext.isResponse()) {
+            requestMethod = messageContext.getProperty(ThreatProtectorConstants.HTTP_RESPONSE_METHOD).toString();
+        } else {
+            requestMethod = axis2MC.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD).toString();
+
+        }
 
         JSONObject payloadObject = null;
         if (!APIConstants.SupportedHTTPVerbs.GET.name().equalsIgnoreCase(requestMethod) && messageContext.getEnvelope().

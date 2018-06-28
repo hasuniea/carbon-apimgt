@@ -109,6 +109,49 @@ public class APIMgtGatewayConstants {
     public static final String PARAMETERS = "parameters";
     public static final String UTF = "UTF-8";
     public static final String SCHEMA_HANDLER = "_json_schema_validator_handler_";
+    public static final String API_SWAGGER_SCHEMA = "swaggerSchemaCache";
+
+    public enum HttpStatusCode {
+        OK("200"),
+        CREATED("201"),
+        ACCEPTED("202"),
+        NON_AUTHORITATIVE_INFORMATION("203"),
+        NO_CONTENT("204"),
+        RESET_CONTENT("205"),
+        PARTIAL_CONTENT("206"),
+        MULTI_STATUS("207"),
+        ALREADY_REPORTED("208"),
+        IM_USED("226");
+
+        private final String code;
+
+        HttpStatusCode(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return this.code;
+        }
+
+    }
+
+    public enum CombineSchema {
+        ALL_OF("allOf"),
+        ANY_OF("anyOf"),
+        ONE_OF("oneOf");
+
+        private final String code;
+
+        CombineSchema(String code) {this.code = code; }
+
+        public String getCode() { return this.code; }
+
+    }
+
+
+
+
+
 
 
 }

@@ -3,19 +3,30 @@ package org.wso2.carbon.apimgt.gateway.handlers.security.validator;
 import org.apache.synapse.Mediator;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.rest.AbstractHandler;
-import org.apache.synapse.rest.RESTConstants;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
 
-import java.util.Map;
-
 /**
- * Created by hasunie on 6/20/18.
+ * Schema validator to validate Json request/response.
  */
 public class SchemaValidator extends AbstractHandler {
 
-    public boolean mediate(MessageContext messageContext, String direction) {
+    private String localentry;
+
+    public String getLocalentry() {
+        return localentry;
+    }
+
+    public void setLocalentry(String localentry) {
+        this.localentry = localentry;
+    }
+
+    public boolean mediate(MessageContext messageContext) {
+
+       String apiId = getLocalentry();
+        messageContext.setProperty("LocalentryID", apiId);
 
         Mediator sequence = messageContext.getSequence(APIMgtGatewayConstants.SCHEMA_HANDLER);
+        ///messageContext.getProperty(messag)
         // Invoke the custom error handler specified by the user
         if (sequence != null ) {
             sequence.mediate(messageContext);
@@ -25,11 +36,12 @@ public class SchemaValidator extends AbstractHandler {
     }
     @Override
     public boolean handleRequest(MessageContext messageContext) {
-        return false;
+       return mediate(messageContext);
     }
 
     @Override
     public boolean handleResponse(MessageContext messageContext) {
-        return false;
+        return mediate(messageContext);
     }
+
 }
