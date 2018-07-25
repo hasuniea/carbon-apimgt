@@ -22,8 +22,8 @@ public class SchemaValidator extends AbstractHandler {
 
     public boolean mediate(MessageContext messageContext) {
 
-       String apiId = getLocalentry();
-        messageContext.setProperty("LocalentryID", apiId);
+        String apiId = getLocalentry();
+        messageContext.setProperty("LocalEntryId", apiId);
 
         Mediator sequence = messageContext.getSequence(APIMgtGatewayConstants.SCHEMA_HANDLER);
         ///messageContext.getProperty(messag)

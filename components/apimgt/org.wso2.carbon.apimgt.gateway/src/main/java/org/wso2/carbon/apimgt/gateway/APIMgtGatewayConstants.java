@@ -19,6 +19,8 @@
 
 package org.wso2.carbon.apimgt.gateway;
 
+import java.util.EnumMap;
+
 public class APIMgtGatewayConstants {
 
     public static final String CONSUMER_KEY = "api.ut.consumerKey";
@@ -105,11 +107,17 @@ public class APIMgtGatewayConstants {
     public static final char LAST_INDEX = '/';
     public static final String DEFINITIONS = "definitions";
     public static final String KEY_WORD_ALLOF = "allOf";
+    public static final String KEY_WORD_ONEOF = "oneOf";
+    public static final String KEY_WORD_ANYOF = "anyOf";
     public static final String REST_URL = "REST_URL_POSTFIX";
     public static final String PARAMETERS = "parameters";
+    public static final String REQUEST_BODY = "requestBody";
     public static final String UTF = "UTF-8";
     public static final String SCHEMA_HANDLER = "_json_schema_validator_handler_";
     public static final String API_SWAGGER_SCHEMA = "swaggerSchemaCache";
+    public static final String COMPONENTS = "components";
+    public static final String SCHEMAS = "schemas";
+    public static final String CONTENT = "content";
 
     public enum HttpStatusCode {
         OK("200"),
@@ -147,6 +155,13 @@ public class APIMgtGatewayConstants {
         public String getCode() { return this.code; }
 
     }
+
+
+
+    public static EnumMap<CombineSchema, String> combineSchema = new EnumMap<>(APIMgtGatewayConstants.CombineSchema.class);
+//                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ALL_OF, "allOf");
+//                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ANY_OF, "anyOf");
+//                    combineSchema.put(APIMgtGatewayConstants.CombineSchema.ONE_OF, "oneOf");
 
 
 

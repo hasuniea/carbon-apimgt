@@ -425,7 +425,6 @@ public class APIProviderHostObject extends ScriptableObject {
         String responseCache = (String) apiData.get("responseCache", apiData);
         String corsConfiguraion = (String) apiData.get("corsConfiguration", apiData);
         String additionalProperties = (String) apiData.get("additionalProperties", apiData);
-        String schemaValidation = (String) apiData.get("jsonSchemaStatus", apiData);
         JSONObject properties = null;
         if (!StringUtils.isEmpty(additionalProperties)) {
             JSONParser parser = new JSONParser();
@@ -490,7 +489,6 @@ public class APIProviderHostObject extends ScriptableObject {
 
         String productionTps = (String) apiData.get("productionTps", apiData);
         String sandboxTps = (String) apiData.get("sandboxTps", apiData);
-        api.setEnableSchemaValidation("schemaValidation".equals(schemaValidation));
 
         if (!"none".equals(productionTps)) {
             api.setProductionMaxTps(productionTps);
@@ -893,6 +891,7 @@ public class APIProviderHostObject extends ScriptableObject {
         String techOwnerEmail = (String) apiData.get("techOwnerEmail", apiData);
         String bizOwner = (String) apiData.get("bizOwner", apiData);
         String bizOwnerEmail = (String) apiData.get("bizOwnerEmail", apiData);
+        String schemaValidation = (String) apiData.get("jsonSchemaStatus", apiData);
 //        String context = contextVal.startsWith("/") ? contextVal : ("/" + contextVal);
 //        String providerDomain = MultitenantUtils.getTenantDomain(provider);
 
@@ -984,6 +983,7 @@ public class APIProviderHostObject extends ScriptableObject {
         deletedTags.removeAll(tag);
         api.removeTags(deletedTags);
         api.addTags(tag);
+        api.setEnableSchemaValidation("schemaValidation".equals(schemaValidation));
         api.setType(type);
         api.setBusinessOwner(bizOwner);
         api.setBusinessOwnerEmail(bizOwnerEmail);

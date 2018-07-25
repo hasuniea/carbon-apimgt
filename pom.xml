@@ -1596,6 +1596,7 @@
         <ballerina.lang.version>0.970.0</ballerina.lang.version>
         <everit.version>1.5.0.wso2.v1</everit.version>
         <json.orbit.version>3.0.0.wso2v1</json.orbit.version>
+        <flatterner.version>0.1.0</flatterner.version>
     </properties>
 </project>
 
