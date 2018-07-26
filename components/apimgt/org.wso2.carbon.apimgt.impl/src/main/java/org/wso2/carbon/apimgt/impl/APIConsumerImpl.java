@@ -2582,11 +2582,10 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
             handleApplicationNameContainSpacesException("Application name " +
                                                             "cannot contain leading or trailing white spaces");
         }
-
-        String regex = "[~!#$;%^*+={}\\|\\\\<>\\\"\\'\\/,]";
+        String regex = "^[a-zA-Z0-9 ._-]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(application.getName());
-        if (matcher.find()) {
+        if (!matcher.find()) {
             handleApplicationNameContainsInvalidCharactersException("Application name contains invalid characters");
         }
 
@@ -2698,10 +2697,10 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
                     "cannot contain leading or trailing white spaces");
         }
 
-        String regex = "[~!#$;%^*+={}\\|\\\\<>\\\"\\'\\/,]";
+        String regex = "^[a-zA-Z0-9 ._-]*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(application.getName());
-        if (matcher.find()) {
+        if (!matcher.find()) {
             handleApplicationNameContainsInvalidCharactersException("Application name contains invalid characters");
         }
 
@@ -3258,10 +3257,24 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
      */
     @Override
     public Set<String> getDeniedTiers() throws APIManagementException {
+        // '0' is passed as argument whenever tenant id of logged in user is needed
+        return getDeniedTiers(0);
+    }
+
+    /**
+     * Returns a list of tiers denied
+     * @param apiProviderTenantId tenant id of API provider
+     * @return Set<Tier>
+     */
+    @Override
+    public Set<String> getDeniedTiers(int apiProviderTenantId) throws APIManagementException {
         Set<String> deniedTiers = new HashSet<String>();
         String[] currentUserRoles;
+        if (apiProviderTenantId == 0) {
+            apiProviderTenantId = tenantId;
+        }
         try {
-            if (tenantId != 0) {
+            if (apiProviderTenantId != 0) {
                 /* Get the roles of the Current User */
                 currentUserRoles = ((UserRegistry) ((UserAwareAPIConsumer) this).registry).
                         getUserRealm().getUserStoreManager().getRoleListOfUser(((UserRegistry) this.registry)
@@ -3269,10 +3282,10 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
 
                 Set<TierPermissionDTO> tierPermissions;
 
-                if(APIUtil.isAdvanceThrottlingEnabled()){
-                    tierPermissions = apiMgtDAO.getThrottleTierPermissions(tenantId);
-                }else{
-                    tierPermissions = apiMgtDAO.getTierPermissions(tenantId);
+                if (APIUtil.isAdvanceThrottlingEnabled()) {
+                    tierPermissions = apiMgtDAO.getThrottleTierPermissions(apiProviderTenantId);
+                } else {
+                    tierPermissions = apiMgtDAO.getTierPermissions(apiProviderTenantId);
                 }
 
                 for (TierPermissionDTO tierPermission : tierPermissions) {
@@ -3533,7 +3546,9 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
             if (oAuthApplicationInfo != null) {
                 apiKey.setConsumerSecret(oAuthApplicationInfo.getClientSecret());
                 apiKey.setCallbackUrl(oAuthApplicationInfo.getCallBackURL());
-                apiKey.setGrantTypes(oAuthApplicationInfo.getParameter(APIConstants.JSON_GRANT_TYPES).toString());
+                if (oAuthApplicationInfo.getParameter(APIConstants.JSON_GRANT_TYPES) != null) {
+                    apiKey.setGrantTypes(oAuthApplicationInfo.getParameter(APIConstants.JSON_GRANT_TYPES).toString());
+                }
             }
             if (tokenInfo != null) {
                 apiKey.setAccessToken(tokenInfo.getAccessToken());
@@ -3877,10 +3892,13 @@ class APIConsumerImpl extends AbstractAPIManager implements APIConsumer {
         if (userRoles != null) {
             for (String userRole : userRoles) {
                 rolesQuery.append(" OR ");
-                rolesQuery.append(ClientUtils.escapeQueryChars(userRole.toLowerCase()));
+                rolesQuery.append(ClientUtils.escapeQueryChars(APIUtil.sanitizeUserRole(userRole.toLowerCase())));
             }
         }
         rolesQuery.append(")");
+        if(log.isDebugEnabled()) {
+        	log.debug("User role list solr query " + APIConstants.STORE_VIEW_ROLES + "=" + rolesQuery.toString());
+        }
         return  APIConstants.STORE_VIEW_ROLES + "=" + rolesQuery.toString();
     }
 

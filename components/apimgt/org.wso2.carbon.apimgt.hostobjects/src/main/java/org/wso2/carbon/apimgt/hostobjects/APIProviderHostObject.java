@@ -926,7 +926,7 @@ public class APIProviderHostObject extends ScriptableObject {
         if (publisherAccessControl != null && publisherAccessControl.equals(APIConstants.API_RESTRICTED_VISIBILITY)) {
             publisherAccessControlRoles = (String) apiData.get(APIConstants.ACCESS_CONTROL_ROLES_PARAMETER, apiData);
             if (publisherAccessControlRoles != null) {
-                publisherAccessControlRoles = publisherAccessControlRoles.toLowerCase().trim();
+                publisherAccessControlRoles = publisherAccessControlRoles.trim();
             }
         }
 
@@ -968,16 +968,6 @@ public class APIProviderHostObject extends ScriptableObject {
             }
         }
 
-        if (apiData.get("swagger", apiData) != null) {
-            // Read URI Templates from swagger resource and set it to api object
-            Set<URITemplate> uriTemplates = definitionFromOpenAPISpec.getURITemplates(api,
-                    (String) apiData.get("swagger", apiData));
-            api.setUriTemplates(uriTemplates);
-
-            // Save the swagger definition in the registry
-            apiProvider.saveSwagger20Definition(api.getId(), (String) apiData.get("swagger", apiData));
-        }
-
         api.setDescription(StringEscapeUtils.unescapeHtml(description));
         HashSet<String> deletedTags = new HashSet<String>(api.getTags());
         deletedTags.removeAll(tag);
@@ -994,6 +984,16 @@ public class APIProviderHostObject extends ScriptableObject {
         api.setLastUpdated(new Date());
         api.setAccessControl(publisherAccessControl);
         api.setAccessControlRoles(publisherAccessControlRoles);
+
+        if (apiData.get("swagger", apiData) != null) {
+            // Read URI Templates from swagger resource and set it to api object
+            Set<URITemplate> uriTemplates = definitionFromOpenAPISpec.getURITemplates(api,
+                    (String) apiData.get("swagger", apiData));
+            api.setUriTemplates(uriTemplates);
+
+            // Save the swagger definition in the registry
+            apiProvider.saveSwaggerDefinition(api, (String) apiData.get("swagger", apiData));
+        }
         return saveAPI(apiProvider, api, fileHostObject, false);
     }
 

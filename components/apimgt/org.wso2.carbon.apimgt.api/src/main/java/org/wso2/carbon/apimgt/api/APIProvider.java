@@ -662,6 +662,14 @@ public interface APIProvider extends APIManager {
      */
     void deleteSwaggerLocalEntry(APIIdentifier apiId);
 
+     /**
+     * This method updates the swagger definition in registry
+     *
+     * @param api   API
+     * @param jsonText    openAPI definition
+     * @throws APIManagementException
+     */
+    void saveSwaggerDefinition(API api, String jsonText) throws APIManagementException;
     /**
      * This method is used to initiate the web service calls and cluster messages related to stats publishing status
      *
