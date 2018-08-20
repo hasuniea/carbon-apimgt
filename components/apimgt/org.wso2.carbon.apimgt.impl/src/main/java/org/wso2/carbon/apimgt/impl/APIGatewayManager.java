@@ -171,7 +171,7 @@ public class APIGatewayManager {
 					}
                     //Deploy the fault sequence first since it has to be available by the time the API is deployed.
                     deployAPIFaultSequence(api, tenantDomain, environment);
-                    LocalEntryAdminClient localEntryAdminClient = new LocalEntryAdminClient(api.getId(),environment);
+                   // LocalEntryAdminClient localEntryAdminClient = new LocalEntryAdminClient(api.getId(),environment);
                     if(!APIConstants.APIType.WS.toString().equals(api.getType())) {
                         //Add the API
                         if (APIConstants.IMPLEMENTATION_TYPE_INLINE.equalsIgnoreCase(api.getImplementation())) {
