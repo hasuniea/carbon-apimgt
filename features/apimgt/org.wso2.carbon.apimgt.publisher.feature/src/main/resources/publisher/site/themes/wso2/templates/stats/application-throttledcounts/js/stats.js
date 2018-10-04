@@ -20,21 +20,25 @@ $( document ).ready(function() {
 
                     //day picker
                     $('#today-btn').on('click', function () {
+                        currentDay = getDate();
                         getDateTime(currentDay, currentDay - 86400000);
                     });
 
                     //hour picker
                     $('#hour-btn').on('click', function () {
+                        currentDay = getDate();
                         getDateTime(currentDay, currentDay - 3600000);
                     });
 
                     //week picker
                     $('#week-btn').on('click', function () {
+                        currentDay = getDate();
                         getDateTime(currentDay, currentDay - 604800000);
                     });
 
                     //month picker
                     $('#month-btn').on('click', function () {
+                        currentDay = getDate();
                         getDateTime(currentDay, currentDay - (604800000 * 4));
                     });
 
@@ -76,10 +80,7 @@ $( document ).ready(function() {
                         appName = this.value;
                         getDateTime(to, from);
                     });
-                } else if (json.usage && json.usage.length == 0 && statsEnabled) {
-                        $('.stat-page').html("");
-                        showNoDataAnalyticsMsg();
-                } else{
+                } else {
                     $('.stat-page').html("");
                     showEnableAnalyticsMsg();
                 }
@@ -101,7 +102,7 @@ var populateAppList = function() {
                 var  apps = '';
 
                 if (json.usage.length == 0) {
-                    apps = '<option data-hidden="true">' + i18n.t('No Apps Available')+ '</option>';
+                    apps = '<option data-hidden="true">' + i18n.t('No apps available')+ '</option>';
                 }
                 for ( var i=0; i < json.usage.length ; i++){
                     if ( i == 0){
@@ -141,7 +142,8 @@ var drawThrottledTimeGraph = function (fromDate, toDate) {
     if(appName == ""){
         return;
     }
-
+    fromDate = convertTimeStringUTC(fromDate);
+    toDate = convertTimeStringUTC(toDate);
     jagg.post("/site/blocks/stats/application-throttledcounts/ajax/stats.jag", { action: "getThrottleDataOfApplication", currentLocation : currentLocation, appName : appName, fromDate: fromDate, toDate: toDate, apiFilter: apiFilter },
 
         function (json) {

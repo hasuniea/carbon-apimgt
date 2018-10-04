@@ -3,8 +3,7 @@ var statsEnabled = isDataPublishingEnabled();
 
     currentLocation=window.location.pathname;
     jagg.post("/site/blocks/stats/topUsers/ajax/stats.jag", { action:"getFirstAccessTime",currentLocation:currentLocation  },
-        function (json) {            
-
+        function (json) {
             if (!json.error) {
                 if( json.usage && json.usage.length > 0){
                     var d = new Date();
@@ -13,21 +12,25 @@ var statsEnabled = isDataPublishingEnabled();
 
                     //day picker
                     $('#today-btn').on('click',function(){
+                        currentDay = getDate();
                         getDateTime(currentDay,currentDay-86400000);
                     });
 
                     //hour picker
                     $('#hour-btn').on('click',function(){
+                        currentDay = getDate();
                         getDateTime(currentDay,currentDay-3600000);
                     })
 
                     //week picker
                     $('#week-btn').on('click',function(){
+                        currentDay = getDate();
                         getDateTime(currentDay,currentDay-604800000);
                     })
 
                     //month picker
                     $('#month-btn').on('click',function(){
+                        currentDay = getDate();
                         getDateTime(currentDay,currentDay-(604800000*4));
                     });
 
@@ -64,14 +67,7 @@ var statsEnabled = isDataPublishingEnabled();
                         $(this).addClass('active');
                         $(this).siblings().removeClass('active');
                     });
-                }
-
-                else if (json.usage && json.usage.length == 0 && statsEnabled) {
-                    $('.stat-page').html("");
-                    showNoDataAnalyticsMsg();
-                }
-
-                else{
+                } else {
                     $('.stat-page').html("");
                     showEnableAnalyticsMsg();
                 }
@@ -99,8 +95,8 @@ $(document).ready(function(){
 });
 
 var drawTopUsersGraph = function(from,to){
-    var fromDate = from;
-    var toDate = to;
+    var fromDate = convertTimeStringUTC(from);
+    var toDate = convertTimeStringUTC(to);
     jagg.post("/site/blocks/stats/topUsers/ajax/stats.jag", { action:"getTopAppUsers",currentLocation:currentLocation,fromDate:fromDate,toDate:toDate  },
         function (json) {
             $('#topUsersSpinner').hide();

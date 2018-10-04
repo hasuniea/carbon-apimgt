@@ -61,6 +61,8 @@ if(jagg.isCSRFTokenValid())
     site = require("/site/conf/site.json"),
     msg = require("/site/conf/ui-messages.jag"),
     parser = new SwaggerParser(),
+    supportedSwaggerVersion = "2.0",
+    supportedOpenAPIVersion = "3.0.0",
     supportedHTTPMethods = ["get", "put", "post", "delete", "patch", "head", "options"];
 
     if(jagg.getUser() == null){
@@ -74,8 +76,6 @@ if(jagg.isCSRFTokenValid())
             var type = request.getParameter("type");
             var swagger = null;
             var wsdl = null;
-            var supportedSwaggerVersion = "2.0";
-            var supportedOpenAPIVersion = "3.0.0";
             var apiDefinitionVersion = request.getParameter("apiDefinitionVersion");
 
             if(type == "rest"){
@@ -123,18 +123,18 @@ if(jagg.isCSRFTokenValid())
                                 errorMsg = getSwaggerError(swaggerErrors);
                                 print({
                                     error: true,
-                                    message: "<div><div> Input URL contains invalid swagger definition" + "</div>" +
+                                    message: "<div><div> Input URL contains an invalid swagger definition." + "</div>" +
                                     errorMsg
                                 });
                                 return;
                             }
                         } else {
-                            print({error: true, message: "Input URL contains invalid swagger definition"});
+                            print({error: true, message: "Input URL contains an invalid swagger definition."});
                             return;
                         }
 
                     } catch (e) {
-                        print({error: true, message: "Input URL contains invalid swagger definition"});
+                        print({error: true, message: "Input URL contains an invalid swagger definition."});
                         return;
                     }
                 }
@@ -185,16 +185,16 @@ if(jagg.isCSRFTokenValid())
                                 errorMsg = getSwaggerError(swaggerErrors);
                                 print({
                                     error: true,
-                                    message: "<div><div>" + file.getName() + " contains invalid swagger definition" + "</div>" + errorMsg
+                                    message: "<div><div>" + file.getName() + " contains an invalid swagger definition." + "</div>" + errorMsg
                                 });
                                 return;
                             }
                         } else {
-                            print({error: true, message: file.getName() + " contains invalid swagger definition"});
+                            print({error: true, message: file.getName() + " contains an invalid swagger definition."});
                             return;
                         }
                     } catch (e) {
-                        print({error: true, message: file.getName() + " contains invalid swagger definition"});
+                        print({error: true, message: file.getName() + " contains an invalid swagger definition."});
                         return;
                     }
                 } else {
@@ -490,7 +490,16 @@ if(jagg.isCSRFTokenValid())
 
             //If API not exist create
             result = mod.checkIfResourceExists(apiData);
-            if(!result){
+            if (!result) {
+                // Check logged in user try to create api with different user name.
+                if (jagg.getUser().username != apiData.provider) {
+                    obj = {
+                        error:true,
+                        message:"Not allowed to add APIs with different provider name other than logged in user."
+                    };
+                    print(obj);
+                    return;
+                }
                 result = mod.createAPI(apiData);
                 if (result.error==true) {
                     obj = {
@@ -531,8 +540,10 @@ if(jagg.isCSRFTokenValid())
                 }
                 if(isSoapToRestApi) {
                     mappingJson = session.get("mappingJson");
-                    var sequenceGenerator = Packages.org.wso2.carbon.apimgt.impl.soaptorest.SequenceGenerator;
-                    sequenceGenerator.generateSequences(stringify(apiData), stringify(mappingJson));
+                    if (mappingJson) {
+                        var sequenceGenerator = Packages.org.wso2.carbon.apimgt.impl.soaptorest.SequenceGenerator;
+                        sequenceGenerator.generateSequences(stringify(apiData), stringify(mappingJson));
+                    }
                 }
             }
             if (result.error == true) {
@@ -929,37 +940,90 @@ if(jagg.isCSRFTokenValid())
             print(apiDefinitionVersion);
         } else if (request.getMethod() === 'POST' && action === 'validateSwagger') {
             var swagger = request.getParameter("swaggerDefinition");
-            var swaggerDeserializationResult = parser.readWithInfo(swagger);
-            var swaggerObj = swaggerDeserializationResult.getSwagger();
-            var swaggerErrors = swaggerDeserializationResult.getMessages();
-            if (swaggerErrors.size() > 0) {
-                print({
-                    error: true,
-                    message: "API swagger definition is invalid. Please fix the suggested validation issues"
-                });
-                return;
-            } else {
-                var swaggerJSON = JSON.parse(swagger);
-                if (swaggerJSON.paths) {
-                    var swaggerPaths = swaggerJSON.paths;
-                    for (var pathKey in swaggerPaths) {
-                        var path = swaggerPaths[pathKey];
-                        for(var httpMethod in path){
-                            if(supportedHTTPMethods.indexOf(httpMethod.toLowerCase()) === -1){
+            var apiDefinition = parseSwaggerDefinition(swagger);
+
+            if (apiDefinition.swagger) {
+                var swaggerDeserializationResult = parser.readWithInfo(swagger);
+                var swaggerObj = swaggerDeserializationResult.getSwagger();
+                var swaggerErrors = swaggerDeserializationResult.getMessages();
+
+                //Supported swagger version check
+                if (swaggerObj.swagger != supportedSwaggerVersion) {
+                    print({
+                        error: true,
+                        message: "Unsupported swagger version provided. Please re-import with swagger " + supportedSwaggerVersion
+                    });
+                    return;
+                }
+
+                if (swaggerErrors.size() > 0) {
+                    print({
+                        error: true,
+                        message: "API swagger definition is invalid. Please fix the suggested validation issues"
+                    });
+                    return;
+                } else {
+                    var swaggerJSON = JSON.parse(swagger);
+                    if (swaggerJSON.paths) {
+                        var swaggerPaths = swaggerJSON.paths;
+                        for (var pathKey in swaggerPaths) {
+                            var path = swaggerPaths[pathKey];
+                            var globalParametersDefined = false;
+                            var httpMethodsDefined = false;
+                            for (var httpMethod in path) {
+                                if (httpMethod == "parameters") {
+                                    globalParametersDefined = true;
+                                    continue;
+                                } else if (supportedHTTPMethods.indexOf(httpMethod.toLowerCase()) === -1) {
+                                    print({
+                                        error: true,
+                                        message: "The HTTP method '" + httpMethod + "' provided for resource '" + pathKey + "' is invalid"
+
+                                    });
+                                    return;
+                                } else {
+                                    httpMethodsDefined = true;
+                                }
+                            }
+                            if (globalParametersDefined && !httpMethodsDefined) {
                                 print({
                                     error: true,
                                     message: "The HTTP method '" + httpMethod + "' provided for resource '" + pathKey + "' is invalid"
-
                                 });
                                 return;
                             }
                         }
                     }
+                    print({
+                        error: false
+                    })
+                }
+            } else if (apiDefinition.openapi){
+                //Supported Open API Version check
+                if (apiDefinition.openapi.trim() != supportedOpenAPIVersion) {
+                    print({
+                        error: true,
+                        message: "Unsupported OpenAPI version provided. Please re-import with OpenAPI " +
+                        supportedOpenAPIVersion
+                    });
+                    return;
+                }
+
+                if (apiDefinition.info == null || apiDefinition.paths == null) {
+                    print({
+                        error: true,
+                        message: "Required property 'info' or 'paths' are not provided"
+                    });
+                    return;
                 }
                 print({
                     error: false
                 })
+            } else {
+                print({error: true, message: "Invalid Open API definition provided"});
+                return;
             }
+
         } else {
             print({
                       error:true,

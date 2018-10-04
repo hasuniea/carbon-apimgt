@@ -4989,8 +4989,7 @@ public class ApiMgtDAO {
             prepStmt = connection.prepareStatement(query);
             prepStmt.setString(1, workflowDTO.getStatus().toString());
             prepStmt.setString(2, workflowDTO.getWorkflowDescription());
-            prepStmt.setTimestamp(3, updatedTimeStamp);
-            prepStmt.setString(4, workflowDTO.getExternalWorkflowReference());
+            prepStmt.setString(3, workflowDTO.getExternalWorkflowReference());
 
             prepStmt.execute();
 
@@ -10987,7 +10986,7 @@ public class ApiMgtDAO {
             ps.setString(1, context);
 
             rs = ps.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 apiName = rs.getString("API_NAME");
                 apiProvider = rs.getString("API_PROVIDER");
             }
@@ -11791,10 +11790,10 @@ public class ApiMgtDAO {
 
         try {
             connection = APIMgtDBUtil.getConnection();
+            connection.setAutoCommit(false);
             ps = connection.prepareStatement(SQLConstants.REMOVE_APPLICATION_ATTRIBUTES_BY_ATTRIBUTE_NAME_SQL);
             ps.setString(1, attributeKey);
             ps.setInt(2, applicationId);
-
             ps.execute();
             connection.commit();
         } catch (SQLException e) {

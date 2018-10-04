@@ -249,7 +249,7 @@ function APIDesigner(){
             }
         });
         if(vc==0){
-            jagg.message({content: i18n.t("You should select at least one HTTP verb."), type: "error"});
+            jagg.message({content: i18n.t("You must select at least one HTTP verb."), type: "error"});
             return;
         }
         event.data.add_resource(resource, path);
@@ -298,7 +298,7 @@ APIDesigner.prototype.load_api_base_document = function (api_doc_version) {
 
 APIDesigner.prototype.is_openapi3 = function () {
     var isOpenAPI3 = false;
-    if (this.api_doc.openapi != undefined && this.api_doc.openapi == supportedOpenAPI3Version) {
+    if (this.api_doc.openapi != undefined && this.api_doc.openapi.trim() == supportedOpenAPI3Version) {
         isOpenAPI3 = true;
     }
     return isOpenAPI3;
@@ -1387,7 +1387,7 @@ $(document).ready(function(){
             jagg.message({
                 content: i18n.t("At least one resource should be specified. Do you want to add a wildcard resource (/*)?"),
                 type:"confirm",
-                title: i18n.t("Resource not specified"),
+                title: i18n.t("Resource Not Specified"),
                 anotherDialog:true,
                 okCallback:function(){
                     var designer = APIDesigner();
@@ -1468,7 +1468,7 @@ $(document).ready(function(){
 
             if(tagName.length > 30){
                 $tag.val(tagName.substring(0, 30));
-                $('.tags-error').html(i18n.t('The tag can only have a maximum of 30 characters.'));
+                $('.tags-error').html(i18n.t('A tag can have a maximum of 30 characters.'));
             }
 
         });
