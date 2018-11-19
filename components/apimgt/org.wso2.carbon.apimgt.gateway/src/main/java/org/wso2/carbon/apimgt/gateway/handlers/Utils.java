@@ -53,7 +53,7 @@ public class Utils {
 
         axis2MC.setProperty(NhttpConstants.HTTP_SC, status);
         messageContext.setResponse(true);
-        messageContext.setProperty("RESPONSE", "true");
+        messageContext.setProperty("RESPONSES", "true");
         messageContext.setTo(null);        
         axis2MC.removeProperty("NO_ENTITY_BODY");
 

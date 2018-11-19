@@ -106,28 +106,22 @@ public class APIMgtGatewayConstants {
      * Constants for swagger schema validator
      */
     public static final String API_ELECTED_RESOURCE = "API_ELECTED_RESOURCE";
-    public static final String LOCAL_ENTRY = "localentry";
     public static final String ELECTED_REQUEST_METHOD = "api.ut.HTTP_METHOD";
     public static final String SWAGGER_PATH = "paths";
-    public static final String RESPONSE = "responses";
-    public static final String SUCCESS_RESPONSE = "200";
+    public static final String RESPONSES = "responses";
     public static final String SCHEMA = "schema";
-    public static final String DEFINITION = "definition";
     public static final String SCHEMA_REFERENCE = "$ref";
     public static final char LAST_INDEX = '/';
     public static final String DEFINITIONS = "definitions";
-    public static final String KEY_WORD_ALLOF = "allOf";
-    public static final String KEY_WORD_ONEOF = "oneOf";
-    public static final String KEY_WORD_ANYOF = "anyOf";
-    public static final String REST_URL = "REST_URL_POSTFIX";
     public static final String PARAMETERS = "parameters";
     public static final String REQUEST_BODY = "requestBody";
-    public static final String UTF = "UTF-8";
     public static final String SCHEMA_HANDLER = "_json_schema_validator_handler_";
     public static final String API_SWAGGER_SCHEMA = "swaggerSchemaCache";
     public static final String COMPONENTS = "components";
     public static final String SCHEMAS = "schemas";
     public static final String CONTENT = "content";
+    public static final String REQUEST = "REQUEST";
+    public static final String RESPONSE = "RESPONSE";
 
     public enum HttpStatusCode {
         OK("200"),
@@ -143,21 +137,6 @@ public class APIMgtGatewayConstants {
         private final String code;
 
         HttpStatusCode(String code) {
-            this.code = code;
-        }
-
-        public String getCode() {
-            return this.code;
-        }
-    }
-
-    public enum CombineSchema {
-        ALL_OF("allOf"),
-        ANY_OF("anyOf"),
-        ONE_OF("oneOf");
-        private final String code;
-
-        CombineSchema(String code) {
             this.code = code;
         }
 

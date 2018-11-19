@@ -1409,6 +1409,11 @@
                 <artifactId>org.wso2.carbon.apimgt.localentry.stub</artifactId>
                 <version>${carbon.apimgt.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.2.3</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
