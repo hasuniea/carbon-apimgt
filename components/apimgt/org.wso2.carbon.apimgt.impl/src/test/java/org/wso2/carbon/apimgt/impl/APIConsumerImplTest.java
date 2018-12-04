@@ -173,10 +173,10 @@ public class APIConsumerImplTest {
         Mockito.when(registryService.getGovernanceSystemRegistry(Mockito.anyInt())).thenReturn(userRegistry);
         Mockito.when(userRealm.getAuthorizationManager()).thenReturn(authorizationManager);
 
-        PowerMockito.when(APIUtil.replaceSystemProperty(anyString())).thenAnswer((Answer<String>) invocation -> {
-            Object[] args = invocation.getArguments();
-            return (String) args[0];
-        });
+//        PowerMockito.when(APIUtil.replaceSystemProperty(anyString())).thenAnswer((Answer<String>) invocation -> {
+//            Object[] args = invocation.getArguments();
+//            return (String) args[0];
+//        });
     }
 
     @Test

@@ -65,6 +65,12 @@ public class APIConfigContext extends ConfigContext {
         } else {
             context.put("apiIsBlocked", Boolean.FALSE);
         }
+        String apiSecurity = api.getApiSecurity();
+        if (apiSecurity == null || apiSecurity.contains(APIConstants.DEFAULT_API_SECURITY_OAUTH2)) {
+            context.put("apiIsOauthProtected", Boolean.TRUE);
+        } else {
+            context.put("apiIsOauthProtected", Boolean.FALSE);
+        }
         if (api.isEnabledSchemaValidation()) {
             context.put("EnableSchemaValidation", Boolean.TRUE);
         } else {

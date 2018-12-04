@@ -115,11 +115,8 @@ import org.wso2.carbon.apimgt.impl.dto.ThrottleProperties;
 import org.wso2.carbon.apimgt.impl.factory.KeyManagerHolder;
 import org.wso2.carbon.apimgt.impl.internal.APIManagerComponent;
 import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
-import org.wso2.carbon.apimgt.impl.reportgen.ReportGenerator;
 import org.wso2.carbon.apimgt.impl.template.APITemplateException;
 import org.wso2.carbon.apimgt.impl.template.ThrottlePolicyTemplateBuilder;
-import org.wso2.carbon.apimgt.impl.workflow.WorkflowException;
-import org.apache.xerces.util.SecurityManager;
 import org.wso2.carbon.apimgt.keymgt.client.SubscriberKeyMgtClient;
 import org.wso2.carbon.base.MultitenantConstants;
 import org.wso2.carbon.base.ServerConfiguration;
@@ -264,7 +261,6 @@ public final class APIUtil {
     public static final String DEFAULT_AND_LOCALHOST = "DefaultAndLocalhost";
     public static final String HOST_NAME_VERIFIER = "httpclient.hostnameVerifier";
     public static String multiGrpAppSharing = null;
-
 
     //Need tenantIdleTime to check whether the tenant is in idle state in loadTenantConfig method
     static {
@@ -462,6 +458,7 @@ public final class APIUtil {
             api.setEnvironments(extractEnvironmentsForAPI(environments));
             api.setCorsConfiguration(getCorsConfigurationFromArtifact(artifact));
             api.setAuthorizationHeader(artifact.getAttribute(APIConstants.API_OVERVIEW_AUTHORIZATION_HEADER));
+            api.setApiSecurity(artifact.getAttribute(APIConstants.API_OVERVIEW_API_SECURITY));
 
         } catch (GovernanceException e) {
             String msg = "Failed to get API for artifact ";
@@ -667,6 +664,7 @@ public final class APIUtil {
             api.setEnvironments(extractEnvironmentsForAPI(environments));
             api.setCorsConfiguration(getCorsConfigurationFromArtifact(artifact));
             api.setAuthorizationHeader(artifact.getAttribute(APIConstants.API_OVERVIEW_AUTHORIZATION_HEADER));
+            api.setApiSecurity(artifact.getAttribute(APIConstants.API_OVERVIEW_API_SECURITY));
             //get labels from the artifact and set to API object
             String[] labelArray = artifact.getAttributes(APIConstants.API_LABELS_GATEWAY_LABELS);
             if (labelArray != null && labelArray.length > 0) {
@@ -883,6 +881,7 @@ public final class APIUtil {
             api.setEnvironments(extractEnvironmentsForAPI(environments));
             api.setCorsConfiguration(getCorsConfigurationFromArtifact(artifact));
             api.setAuthorizationHeader(artifact.getAttribute(APIConstants.API_OVERVIEW_AUTHORIZATION_HEADER));
+            api.setApiSecurity(artifact.getAttribute(APIConstants.API_OVERVIEW_API_SECURITY));
 
             //get endpoint config string from artifact, parse it as a json and set the environment list configured with
             //non empty URLs to API object
@@ -1008,6 +1007,7 @@ public final class APIUtil {
             artifact.setAttribute(APIConstants.API_OVERVIEW_AUTHORIZATION_HEADER, api.getAuthorizationHeader());
             artifact.setAttribute(APIConstants.API_OVERVIEW_ENABLE_JSON_SCHEMA,
                     Boolean.toString(api.isEnabledSchemaValidation()));
+            artifact.setAttribute(APIConstants.API_OVERVIEW_API_SECURITY, api.getApiSecurity());
 
             //Validate if the API has an unsupported context before setting it in the artifact
             String tenantDomain = PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantDomain();
@@ -1084,6 +1084,10 @@ public final class APIUtil {
             //attaching micro-gateway labels to the API
             attachLabelsToAPIArtifact(artifact, api, tenantDomain);
 
+            String apiSecurity = artifact.getAttribute(APIConstants.API_OVERVIEW_API_SECURITY);
+            if (apiSecurity != null && !apiSecurity.contains(APIConstants.DEFAULT_API_SECURITY_OAUTH2)) {
+                artifact.setAttribute(APIConstants.API_OVERVIEW_TIER, "");
+            }
         } catch (GovernanceException e) {
             String msg = "Failed to create API for : " + api.getId().getApiName();
             log.error(msg, e);
@@ -3098,11 +3102,11 @@ public final class APIUtil {
                             isRoleEveryOne = true;
                         } else {
                             for (String role : roles) {
-                                if (APIConstants.EVERYONE_ROLE.equalsIgnoreCase(role)) {
+                                if (APIConstants.EVERYONE_ROLE.equalsIgnoreCase(role.trim())) {
                                     isRoleEveryOne = true;
                                 }
-                                authManager.authorizeRole(role, resourcePath, ActionConstants.GET);
-                                publisherAccessRoles.append(",").append(role.toLowerCase());
+                                authManager.authorizeRole(role.trim(), resourcePath, ActionConstants.GET);
+                                publisherAccessRoles.append(",").append(role.trim().toLowerCase());
                             }
                         }
                     }
@@ -3121,7 +3125,7 @@ public final class APIUtil {
                         authManager.denyRole(APIConstants.ANONYMOUS_ROLE, resourcePath, ActionConstants.GET);
                     } else {
                         for (String role : roles) {
-                            authManager.denyRole(role, resourcePath, ActionConstants.GET);
+                            authManager.denyRole(role.trim(), resourcePath, ActionConstants.GET);
 
                         }
                     }
@@ -3137,10 +3141,10 @@ public final class APIUtil {
                     boolean isRoleEveryOne = false;
                     if (roles != null) {
                         for (String role : roles) {
-                            if (APIConstants.EVERYONE_ROLE.equalsIgnoreCase(role)) {
+                            if (APIConstants.EVERYONE_ROLE.equalsIgnoreCase(role.trim())) {
                                 isRoleEveryOne = true;
                             }
-                            authorizationManager.authorizeRole(role, resourcePath, ActionConstants.GET);
+                            authorizationManager.authorizeRole(role.trim(), resourcePath, ActionConstants.GET);
                             publisherAccessRoles.append(",").append(role.toLowerCase());
                         }
                     }
@@ -3159,7 +3163,7 @@ public final class APIUtil {
                         authorizationManager.denyRole(APIConstants.ANONYMOUS_ROLE, resourcePath, ActionConstants.GET);
                     } else {
                         for (String role : roles) {
-                            authorizationManager.denyRole(role, resourcePath, ActionConstants.GET);
+                            authorizationManager.denyRole(role.trim(), resourcePath, ActionConstants.GET);
 
                         }
                     }
@@ -4028,6 +4032,15 @@ public final class APIUtil {
         return ApiMgtDAO.getInstance().getApplicationId(appName, userId);
     }
 
+    public static int getApplicationId(String appName, String userId, String groupId) throws APIManagementException {
+        Application application = ApiMgtDAO.getInstance().getApplicationByName(appName, userId, groupId);
+        if (application != null) {
+            return application.getId();
+        } else {
+            return 0;
+        }
+    }
+
     public static boolean isAPIManagementEnabled() {
         return Boolean.parseBoolean(CarbonUtils.getServerConfiguration().getFirstProperty("APIManagement.Enabled"));
     }
@@ -4205,7 +4218,7 @@ public final class APIUtil {
 
             String[] roles = roleName.split(",");
             for (String role : roles) {
-                if (!userStoreManager.isExistingRole(role)) {
+                if (!userStoreManager.isExistingRole(role.trim())) {
                     return false;
                 }
             }
@@ -4352,7 +4365,7 @@ public final class APIUtil {
     public static int getTenantIdFromTenantDomain(String tenantDomain) {
         RealmService realmService = ServiceReferenceHolder.getInstance().getRealmService();
 
-        if (realmService == null) {
+        if (realmService == null || tenantDomain == null) {
             return MultitenantConstants.SUPER_TENANT_ID;
         }
 
