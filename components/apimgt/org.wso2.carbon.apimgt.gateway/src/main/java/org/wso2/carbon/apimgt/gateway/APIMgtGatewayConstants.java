@@ -63,19 +63,10 @@ public class APIMgtGatewayConstants {
     public static final String AM_CORRELATION_ID = "am.correlationID";
 
     /**
-     * Constants for regex protector.
-     */
-    public static final String REGEX_PATTERN = "regex";
-    public static final String ENABLED_CHECK_BODY = "enabledCheckBody";
-    public static final String ENABLED_CHECK_PATHPARAM = "enabledCheckPathParams";
-    public static final String ENABLED_CHECK_HEADERS = "enabledCheckHeaders";
-    public static final String REST_URL_POSTFIX = "REST_URL_POSTFIX";
-    public static final String TRANSPORT_HEADERS = "TRANSPORT_HEADERS";
-
-    /**
      * Constants for handling threat protection exceptions.
      */
     public static final String HTTP_SC_CODE = "400";
+    public static final String HTTP_SC = "HTTP_SC";
     public static final String HTTP_HEADER_THREAT_MSG = "Threat detected in HTTP Headers";
     public static final String QPARAM_THREAT_MSG = "Threat detected in Query Parameters";
     public static final String PAYLOAD_THREAT_MSG = "Threat detected in Payload";
@@ -91,6 +82,15 @@ public class APIMgtGatewayConstants {
     public static final String SCHEMA_VALIDATION = "schemaValidation";
     public static final String XSD_URL = "xsdURL";
     public static final String UTF8 = "UTF-8";
+    public static final String REGEX_PATTERN = "regex";
+    public static final String ENABLED_CHECK_BODY = "enabledCheckBody";
+    public static final String ENABLED_CHECK_PATHPARAM = "enabledCheckPathParams";
+    public static final String ENABLED_CHECK_HEADERS = "enabledCheckHeaders";
+    public static final String REST_URL_POSTFIX = "REST_URL_POSTFIX";
+    public static final String TRANSPORT_HEADERS = "TRANSPORT_HEADERS";
+    public static final String API_ELECTED_RESOURCE = "API_ELECTED_RESOURCE";
+    public static final String ELECTED_REQUEST_METHOD = "api.ut.HTTP_METHOD";
+
 
     /**
      * Web socket header for jwt assertion.
@@ -101,49 +101,6 @@ public class APIMgtGatewayConstants {
     public static final String SYNAPDE_GW_LABEL = "Synapse";
     public static final String CLIENT_USER_AGENT = "clientUserAgent";
     public static final String CLIENT_IP = "clientIp";
-
-    /**
-     * Constants for swagger schema validator
-     */
-    public static final String API_ELECTED_RESOURCE = "API_ELECTED_RESOURCE";
-    public static final String ELECTED_REQUEST_METHOD = "api.ut.HTTP_METHOD";
-    public static final String SWAGGER_PATH = "paths";
-    public static final String RESPONSES = "responses";
-    public static final String SCHEMA = "schema";
-    public static final String SCHEMA_REFERENCE = "$ref";
-    public static final char LAST_INDEX = '/';
-    public static final String DEFINITIONS = "definitions";
-    public static final String PARAMETERS = "parameters";
-    public static final String REQUEST_BODY = "requestBody";
-    public static final String SCHEMA_HANDLER = "_json_schema_validator_handler_";
-    public static final String API_SWAGGER_SCHEMA = "swaggerSchemaCache";
-    public static final String COMPONENTS = "components";
-    public static final String SCHEMAS = "schemas";
-    public static final String CONTENT = "content";
-    public static final String REQUEST = "REQUEST";
-    public static final String RESPONSE = "RESPONSE";
-
-    public enum HttpStatusCode {
-        OK("200"),
-        CREATED("201"),
-        ACCEPTED("202"),
-        NON_AUTHORITATIVE_INFORMATION("203"),
-        NO_CONTENT("204"),
-        RESET_CONTENT("205"),
-        PARTIAL_CONTENT("206"),
-        MULTI_STATUS("207"),
-        ALREADY_REPORTED("208"),
-        IM_USED("226");
-        private final String code;
-
-        HttpStatusCode(String code) {
-            this.code = code;
-        }
-
-        public String getCode() {
-            return this.code;
-        }
-    }
 
     /**
      * Constants for Open Tracing

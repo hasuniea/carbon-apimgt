@@ -22,6 +22,7 @@ package org.wso2.carbon.apimgt.gateway.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
+import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 
 import javax.cache.Cache;
@@ -42,7 +43,7 @@ public class SchemaCacheUtils {
         Cache cache = null;
         try {
             javax.cache.CacheManager manager = Caching.getCacheManager(APIConstants.API_MANAGER_CACHE_MANAGER);
-            cache = manager.getCache(APIMgtGatewayConstants.API_SWAGGER_SCHEMA);
+            cache = manager.getCache(ThreatProtectorConstants.API_SWAGGER_SCHEMA);
         } catch (NullPointerException e) {
             log.error("Did not found valid API Validation Information cache configuration: " + e.getMessage(), e);
         }

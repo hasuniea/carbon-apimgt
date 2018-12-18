@@ -22,7 +22,7 @@ package org.wso2.carbon.apimgt.gateway.handlers.security.validator;
 import org.apache.synapse.Mediator;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.rest.AbstractHandler;
-import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
+import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 
 /**
  * This handler is to validate Json request/response message content against specified schemas.
@@ -31,31 +31,50 @@ public class SchemaValidator extends AbstractHandler {
 
     private String localentry;
 
+    /**
+     *
+     * @return
+     */
     public String getLocalentry() {
         return localentry;
     }
 
+    /**
+     *
+     * @param localentry
+     */
     public void setLocalentry(String localentry) {
         this.localentry = localentry;
     }
 
+    /**
+     *
+     * @param messageContext
+     * @return
+     */
     public boolean mediate(MessageContext messageContext) {
         String apiId = getLocalentry();
-        messageContext.setProperty("LocalEntryId", apiId);
+        messageContext.setProperty(ThreatProtectorConstants.LOCALENTRY_ID, apiId);
 
-        Mediator sequence = messageContext.getSequence(APIMgtGatewayConstants.SCHEMA_HANDLER);
-        if (sequence != null) {
+        Mediator sequence = messageContext.getSequence(ThreatProtectorConstants.SCHEMA_HANDLER);
+        if ( sequence != null ) {
             sequence.mediate(messageContext);
         }
         return true;
     }
 
     @Override
+    /**
+     *
+     */
     public boolean handleRequest(MessageContext messageContext) {
         return mediate(messageContext);
     }
 
     @Override
+    /**
+     *
+     */
     public boolean handleResponse(MessageContext messageContext) {
         return mediate(messageContext);
     }
