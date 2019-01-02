@@ -4128,7 +4128,7 @@ public class APIProviderHostObject extends ScriptableObject {
         provider = APIUtil.replaceEmailDomain(provider);
         String name = (String) apiData.get("name", apiData);
         String version = (String) apiData.get("version", apiData);
-        API api = null;
+        API api;
         APIIdentifier apiId = new APIIdentifier(provider, name, version);
 
         boolean isTenantFlowStarted = false;

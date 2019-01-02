@@ -348,7 +348,7 @@ public class SwaggerSchemaValidator extends AbstractMediator {
         String schema;
         if ( !messageContext.isResponse() ) {
             map = extractSchemaFromRequest(messageContext);
-             Map.Entry<String, String> entry = (Map.Entry<String, String>) map.entrySet();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
                 if ( entry.getKey().equals(ThreatProtectorConstants.KEY) ) {
                     schemaKey = entry.getValue();
                     schemaMap.put(ThreatProtectorConstants.KEY, schemaKey);
@@ -358,7 +358,7 @@ public class SwaggerSchemaValidator extends AbstractMediator {
                     schemaMap.put(ThreatProtectorConstants.SCHEMA, schema);
                     return schemaMap;
                 }
-
+            }
         } else {
             schemaKey = extractResponse(messageContext);
             if (schemaKey != null) {
@@ -435,7 +435,7 @@ public class SwaggerSchemaValidator extends AbstractMediator {
      * Extract the response schema from swagger according to the response code.
      * @param messageContext message content
      * @return response schema
-     * @throws APIManagementException
+     * @throws APIManagementException wrap and throw IOException
      */
     private String extractResponse(MessageContext messageContext) throws APIManagementException {
 

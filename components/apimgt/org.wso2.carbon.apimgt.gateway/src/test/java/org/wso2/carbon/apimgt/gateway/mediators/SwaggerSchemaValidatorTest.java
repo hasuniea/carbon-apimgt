@@ -3,7 +3,7 @@ package org.wso2.carbon.apimgt.gateway.mediators;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.soap.SOAPBody;
+import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPFactory;
 import org.apache.commons.io.FileUtils;
@@ -20,19 +20,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
-import org.wso2.carbon.apimgt.gateway.handlers.WebsocketUtilTestCase;
-import org.wso2.carbon.apimgt.gateway.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.apache.synapse.config.Entry;
 import org.wso2.carbon.apimgt.gateway.utils.SchemaCacheUtils;
 import org.wso2.carbon.apimgt.impl.APIConstants;
-import org.wso2.carbon.apimgt.impl.utils.APIUtil;
-import org.wso2.carbon.context.PrivilegedCarbonContext;
-import org.wso2.carbon.utils.multitenancy.MultitenantUtils;
-
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.util.Map;
 
@@ -78,8 +73,8 @@ public class SwaggerSchemaValidatorTest {
         SOAPFactory fac = OMAbstractFactory.getSOAP12Factory();
         SOAPEnvelope env = fac.createSOAPEnvelope();
         fac.createSOAPBody(env);
-        env.getBody().addChild(fac.createOMElement("test", "<id>0</id><category><id>0</id><name>string</name></category><name>doggie</name><photoUrls>string</photoUrls><tags><id>0</id><name>string</name></tags><status>available</status>", "testBody"));
-
+        OMElement messageStore = AXIOMUtil.stringToOM("<jsonObject><id>0</id><category><id>0</id><name>string</name></category><name>doggie</name><photoUrls>string</photoUrls><tags><id>0</id><name>string</name></tags><status>available</status></jsonObject>" );
+        env.getBody().addChild(messageStore);
         log.info(" Running the test case to validate the request content against the defined schemas.");
         String contentType = "application/json";
         String ApiId = "admin-SwaggerPetstore-1.0.0";
@@ -91,14 +86,16 @@ public class SwaggerSchemaValidatorTest {
         PowerMockito.mockStatic(Caching.class);
         PowerMockito.when(Caching.getCacheManager(APIConstants.API_MANAGER_CACHE_MANAGER)).thenReturn(cacheManager);
         cache = Mockito.mock(Cache.class);
-        Mockito.when(cacheManager.getCache(APIMgtGatewayConstants.API_SWAGGER_SCHEMA)).thenReturn(cache);
+        Mockito.when(cacheManager.getCache(ThreatProtectorConstants.API_SWAGGER_SCHEMA)).thenReturn(cache);
+
         Mockito.doReturn(env).when(messageContext).getEnvelope();
        // Mockito.when()
 
         Mockito.when(((Axis2MessageContext) messageContext).getAxis2MessageContext()).thenReturn(axis2MsgContext);
         Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.REST_CONTENT_TYPE))
                 .thenReturn(contentType);
-        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).thenReturn("POST");
+        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).
+                thenReturn("POST");
         Mockito.when(messageContext.getProperty(ThreatProtectorConstants.LOCALENTRY_ID)).thenReturn(ApiId);
         // Mock Entry
         Entry entry = Mockito.mock(Entry.class);
@@ -106,16 +103,80 @@ public class SwaggerSchemaValidatorTest {
         Map map = Mockito.mock(Map.class);
 
         Mockito.when(messageContext.getConfiguration()).thenReturn(synapseConfiguration);
-        Mockito.when((String)messageContext.getProperty((APIMgtGatewayConstants.API_ELECTED_RESOURCE))).thenReturn("/pet");
+        Mockito.when((String)messageContext.getProperty((APIMgtGatewayConstants.API_ELECTED_RESOURCE))).
+                thenReturn("/pet");
         Mockito.when(synapseConfiguration.getLocalRegistry()).thenReturn(map);
         Mockito.when(map.get(ApiId)).thenReturn(entry);
         Mockito.when((String)entry.getValue()).thenReturn(swaggerValue);
-        Mockito.when((String)messageContext.getProperty(APIMgtGatewayConstants.ELECTED_REQUEST_METHOD)).thenReturn("POST");
-        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).thenReturn("POST");
+        Mockito.when((String)messageContext.getProperty(APIMgtGatewayConstants.ELECTED_REQUEST_METHOD)).
+                thenReturn("POST");
+        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).
+                thenReturn("POST");
+
+        swaggerSchemaValidator = new SwaggerSchemaValidator();
+        swaggerSchemaValidator.mediate(messageContext);
+
+    }
+
+    @Test
+    public void testBadRequest() throws Exception {
+        SOAPFactory fac = OMAbstractFactory.getSOAP12Factory();
+        SOAPEnvelope env = fac.createSOAPEnvelope();
+        fac.createSOAPBody(env);
+        OMElement messageStore = AXIOMUtil.stringToOM("<jsonObject><id>0</id><category><id>dededededededed</id><name>string</name></category><name>doggie</name><photoUrls>string</photoUrls><tags><id>0</id><name>string</name></tags><status>available</status></jsonObject>" );
+        env.getBody().addChild(messageStore);
+        log.info(" Running the test case to validate the request content against the defined schemas.");
+        String contentType = "application/json";
+        String ApiId = "admin-SwaggerPetstore-1.0.0";
+        File swaggerJsonFile = new File(Thread.currentThread().getContextClassLoader().
+                getResource("swaggerEntry/swagger.json").getFile());
+        String swaggerValue = FileUtils.readFileToString(swaggerJsonFile);
+
+        cacheManager = Mockito.mock(CacheManager.class);
+        PowerMockito.mockStatic(Caching.class);
+        PowerMockito.when(Caching.getCacheManager(APIConstants.API_MANAGER_CACHE_MANAGER)).thenReturn(cacheManager);
+        cache = Mockito.mock(Cache.class);
+        Mockito.when(cacheManager.getCache(ThreatProtectorConstants.API_SWAGGER_SCHEMA)).thenReturn(cache);
+
+        Mockito.doReturn(env).when(messageContext).getEnvelope();
+        // Mockito.when()
+
+        Mockito.when(((Axis2MessageContext) messageContext).getAxis2MessageContext()).thenReturn(axis2MsgContext);
+        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.REST_CONTENT_TYPE))
+                .thenReturn(contentType);
+        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).
+                thenReturn("POST");
+        Mockito.when(messageContext.getProperty(ThreatProtectorConstants.LOCALENTRY_ID)).thenReturn(ApiId);
+        // Mock Entry
+        Entry entry = Mockito.mock(Entry.class);
+        SynapseConfiguration synapseConfiguration = Mockito.mock(SynapseConfiguration.class);
+        Map map = Mockito.mock(Map.class);
+
+        Mockito.when(messageContext.getConfiguration()).thenReturn(synapseConfiguration);
+        Mockito.when((String)messageContext.getProperty((APIMgtGatewayConstants.API_ELECTED_RESOURCE))).
+                thenReturn("/pet");
+        Mockito.when(synapseConfiguration.getLocalRegistry()).thenReturn(map);
+        Mockito.when(map.get(ApiId)).thenReturn(entry);
+        Mockito.when((String)entry.getValue()).thenReturn(swaggerValue);
+        Mockito.when((String)messageContext.getProperty(APIMgtGatewayConstants.ELECTED_REQUEST_METHOD)).
+                thenReturn("POST");
+        Mockito.when((String) axis2MsgContext.getProperty(ThreatProtectorConstants.HTTP_REQUEST_METHOD)).
+                thenReturn("POST");
 
         swaggerSchemaValidator = new SwaggerSchemaValidator();
         swaggerSchemaValidator.mediate(messageContext);
 
 
     }
+
+//    @Test
+//    public void testGetCacheSchema() {
+//        cacheManager = Mockito.mock(CacheManager.class);
+//        PowerMockito.mockStatic(Caching.class);
+//        PowerMockito.when(Caching.getCacheManager(APIConstants.API_MANAGER_CACHE_MANAGER)).thenReturn(cacheManager);
+//        cache = Mockito.mock(Cache.class);
+//        Mockito.when(cacheManager.getCache(ThreatProtectorConstants.API_SWAGGER_SCHEMA)).thenReturn(cache);
+//       // SchemaCacheUtils.getCacheSchema("")
+//
+//    }
 }

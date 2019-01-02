@@ -1423,7 +1423,8 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.2.3</version>
+                <version>${fasterxml.jackson.version}</version>
+                <!--<version>2.2.3</version>-->
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.apimgt</groupId>
@@ -1477,8 +1478,14 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>2.9.3</version>
+                <version>${fasterxml.jackson.version}</version>
+                <!--<version>2.9.3</version>-->
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.re2j</groupId>
+                <artifactId>re2j</artifactId>
+                <version>${re2j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -1680,6 +1687,7 @@
         <httpcore.version>4.3.3.wso2v1</httpcore.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <ballerina.lang.version>0.970.0</ballerina.lang.version>
+        <re2j.version>1.2.wso2v1</re2j.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
         <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
         <swagger-codegen-maven-plugin.version>2.3.1</swagger-codegen-maven-plugin.version>

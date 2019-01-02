@@ -63,6 +63,12 @@ public class APIMgtGatewayConstants {
     public static final String AM_CORRELATION_ID = "am.correlationID";
 
     /**
+     * Constants for regex protector.
+     */
+    public static final String REGEX_THREAT_PROTECTOR_ENABLED_TENANTS = "regexThreatProtectorEnabledTenants";
+    public static final String PAYLOAD_SIZE_LIMIT_FOR_REGEX_TREAT_PROTECTOR = "payloadSizeLimitForRegexThreatProtector";
+
+    /**
      * Constants for handling threat protection exceptions.
      */
     public static final String HTTP_SC_CODE = "400";

@@ -21,7 +21,6 @@ package org.wso2.carbon.apimgt.gateway.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants;
 import org.wso2.carbon.apimgt.gateway.threatprotection.utils.ThreatProtectorConstants;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 
