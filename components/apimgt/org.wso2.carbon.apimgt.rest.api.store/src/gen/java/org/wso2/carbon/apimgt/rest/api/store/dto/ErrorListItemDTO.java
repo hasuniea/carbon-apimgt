@@ -1,6 +1,7 @@
 package org.wso2.carbon.apimgt.rest.api.store.dto;
 
 
+<<<<<<< HEAD
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,6 +16,30 @@ public class ErrorListItemDTO   {
 
   @SerializedName("message")
   private String message = null;
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class ErrorListItemDTO  {
+  
+  
+  @NotNull
+  private String code = null;
+  
+  @NotNull
+  private String message = null;
+
+  private String lastUpdatedTime = null;
+
+  private String createdTime = null;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
   public ErrorListItemDTO code(String code) {
     this.code = code;
@@ -25,6 +50,21 @@ public class ErrorListItemDTO   {
    * Get code
    * @return code
   **/
+<<<<<<< HEAD
+=======
+
+  @JsonIgnore
+  public String getCreatedTime(){
+    return createdTime;
+  }
+  public void setCreatedTime(String createdTime){
+    this.createdTime=createdTime;
+  }
+
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public String getCode() {
     return code;
@@ -34,6 +74,7 @@ public class ErrorListItemDTO   {
     this.code = code;
   }
 
+<<<<<<< HEAD
   public ErrorListItemDTO message(String message) {
     this.message = message;
     return this;
@@ -44,6 +85,14 @@ public class ErrorListItemDTO   {
    * @return message
   **/
   @ApiModelProperty(required = true, value = "Description about individual errors occurred ")
+=======
+  
+  /**
+   * Description about Individual errors occurred\n
+   **/
+  @ApiModelProperty(required = true, value = "Description about Individual errors occurred\n")
+  @JsonProperty("message")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getMessage() {
     return message;
   }

@@ -21,6 +21,7 @@ public class BlockingConditionDTO   {
   @SerializedName("conditionValue")
   private String conditionValue = null;
 
+<<<<<<< HEAD
   @SerializedName("status")
   private Boolean status = null;
 
@@ -37,6 +38,14 @@ public class BlockingConditionDTO   {
    * @return conditionId
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Id of the blocking condition
+   **/
+  @ApiModelProperty(value = "Id of the blocking condition")
+  @JsonProperty("conditionId")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getConditionId() {
     return conditionId;
   }
@@ -45,6 +54,7 @@ public class BlockingConditionDTO   {
     this.conditionId = conditionId;
   }
 
+<<<<<<< HEAD
   public BlockingConditionDTO conditionType(String conditionType) {
     this.conditionType = conditionType;
     return this;
@@ -55,6 +65,14 @@ public class BlockingConditionDTO   {
    * @return conditionType
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Type of the blocking condition
+   **/
+  @ApiModelProperty(required = true, value = "Type of the blocking condition")
+  @JsonProperty("conditionType")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getConditionType() {
     return conditionType;
   }
@@ -63,6 +81,7 @@ public class BlockingConditionDTO   {
     this.conditionType = conditionType;
   }
 
+<<<<<<< HEAD
   public BlockingConditionDTO conditionValue(String conditionValue) {
     this.conditionValue = conditionValue;
     return this;
@@ -73,6 +92,14 @@ public class BlockingConditionDTO   {
    * @return conditionValue
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Value of the blocking condition
+   **/
+  @ApiModelProperty(required = true, value = "Value of the blocking condition")
+  @JsonProperty("conditionValue")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getConditionValue() {
     return conditionValue;
   }

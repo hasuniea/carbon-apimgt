@@ -16,6 +16,7 @@ public class CustomAttributeDTO   {
   @SerializedName("value")
   private String value = null;
 
+<<<<<<< HEAD
   public CustomAttributeDTO name(String name) {
     this.name = name;
     return this;
@@ -26,6 +27,14 @@ public class CustomAttributeDTO   {
    * @return name
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Name of the custom attribute
+   **/
+  @ApiModelProperty(required = true, value = "Name of the custom attribute")
+  @JsonProperty("name")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getName() {
     return name;
   }
@@ -34,6 +43,7 @@ public class CustomAttributeDTO   {
     this.name = name;
   }
 
+<<<<<<< HEAD
   public CustomAttributeDTO value(String value) {
     this.value = value;
     return this;
@@ -44,6 +54,14 @@ public class CustomAttributeDTO   {
    * @return value
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Value of the custom attribute
+   **/
+  @ApiModelProperty(required = true, value = "Value of the custom attribute")
+  @JsonProperty("value")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getValue() {
     return value;
   }

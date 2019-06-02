@@ -16,6 +16,7 @@ public class JWTClaimsConditionDTO   {
   @SerializedName("attribute")
   private String attribute = null;
 
+<<<<<<< HEAD
   public JWTClaimsConditionDTO claimUrl(String claimUrl) {
     this.claimUrl = claimUrl;
     return this;
@@ -26,6 +27,14 @@ public class JWTClaimsConditionDTO   {
    * @return claimUrl
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * JWT claim URL
+   **/
+  @ApiModelProperty(value = "JWT claim URL")
+  @JsonProperty("claimUrl")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getClaimUrl() {
     return claimUrl;
   }
@@ -34,6 +43,7 @@ public class JWTClaimsConditionDTO   {
     this.claimUrl = claimUrl;
   }
 
+<<<<<<< HEAD
   public JWTClaimsConditionDTO attribute(String attribute) {
     this.attribute = attribute;
     return this;
@@ -44,6 +54,14 @@ public class JWTClaimsConditionDTO   {
    * @return attribute
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Attribute to be matched
+   **/
+  @ApiModelProperty(value = "Attribute to be matched")
+  @JsonProperty("attribute")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getAttribute() {
     return attribute;
   }

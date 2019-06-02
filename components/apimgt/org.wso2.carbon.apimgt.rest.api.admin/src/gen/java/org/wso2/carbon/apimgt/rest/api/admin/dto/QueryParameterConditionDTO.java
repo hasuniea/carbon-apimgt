@@ -16,6 +16,7 @@ public class QueryParameterConditionDTO   {
   @SerializedName("parameterValue")
   private String parameterValue = null;
 
+<<<<<<< HEAD
   public QueryParameterConditionDTO parameterName(String parameterName) {
     this.parameterName = parameterName;
     return this;
@@ -26,6 +27,14 @@ public class QueryParameterConditionDTO   {
    * @return parameterName
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Name of the query parameter
+   **/
+  @ApiModelProperty(value = "Name of the query parameter")
+  @JsonProperty("parameterName")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getParameterName() {
     return parameterName;
   }
@@ -34,6 +43,7 @@ public class QueryParameterConditionDTO   {
     this.parameterName = parameterName;
   }
 
+<<<<<<< HEAD
   public QueryParameterConditionDTO parameterValue(String parameterValue) {
     this.parameterValue = parameterValue;
     return this;
@@ -44,6 +54,14 @@ public class QueryParameterConditionDTO   {
    * @return parameterValue
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Value of the query parameter to be matched
+   **/
+  @ApiModelProperty(value = "Value of the query parameter to be matched")
+  @JsonProperty("parameterValue")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getParameterValue() {
     return parameterValue;
   }

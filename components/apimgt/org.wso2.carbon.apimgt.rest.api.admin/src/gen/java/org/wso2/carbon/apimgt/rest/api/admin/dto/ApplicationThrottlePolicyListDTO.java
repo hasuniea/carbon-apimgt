@@ -19,6 +19,7 @@ public class ApplicationThrottlePolicyListDTO   {
   @SerializedName("list")
   private List<ApplicationThrottlePolicyDTO> list = new ArrayList<ApplicationThrottlePolicyDTO>();
 
+<<<<<<< HEAD
   public ApplicationThrottlePolicyListDTO count(Integer count) {
     this.count = count;
     return this;
@@ -29,6 +30,14 @@ public class ApplicationThrottlePolicyListDTO   {
    * @return count
   **/
   @ApiModelProperty(example = "1", value = "Number of Application throttle policies returned. ")
+=======
+  
+  /**
+   * Number of Application Throttling Policies returned.\n
+   **/
+  @ApiModelProperty(value = "Number of Application Throttling Policies returned.\n")
+  @JsonProperty("count")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Integer getCount() {
     return count;
   }

@@ -8,8 +8,13 @@ import org.wso2.msf4j.formparam.FileInfo;
 import org.wso2.msf4j.Request;
 
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.ErrorDTO;
+<<<<<<< HEAD
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.SubscriptionDTO;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.SubscriptionListDTO;
+=======
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.SubscriptionListDTO;
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.ExtendedSubscriptionDTO;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
 import java.util.List;
 import org.wso2.carbon.apimgt.rest.api.publisher.NotFoundException;

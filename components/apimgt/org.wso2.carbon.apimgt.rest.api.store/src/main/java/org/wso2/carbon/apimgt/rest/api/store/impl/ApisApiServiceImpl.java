@@ -1,5 +1,6 @@
 package org.wso2.carbon.apimgt.rest.api.store.impl;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,10 +29,26 @@ import org.wso2.carbon.apimgt.core.util.ETagUtils;
 import org.wso2.carbon.apimgt.rest.api.common.RestApiConstants;
 import org.wso2.carbon.apimgt.rest.api.common.dto.ErrorDTO;
 import org.wso2.carbon.apimgt.rest.api.common.util.RestApiUtil;
+=======
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.apimgt.api.APIConsumer;
+import org.wso2.carbon.apimgt.api.APIManagementException;
+import org.wso2.carbon.apimgt.api.model.API;
+import org.wso2.carbon.apimgt.api.model.APIIdentifier;
+import org.wso2.carbon.apimgt.api.model.Documentation;
+import org.wso2.carbon.apimgt.api.model.ResourceFile;
+import org.wso2.carbon.apimgt.impl.APIClientGenerationException;
+import org.wso2.carbon.apimgt.impl.APIClientGenerationManager;
+import org.wso2.carbon.apimgt.impl.APIConstants;
+import org.wso2.carbon.apimgt.impl.utils.APIUtil;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 import org.wso2.carbon.apimgt.rest.api.store.ApisApiService;
 import org.wso2.carbon.apimgt.rest.api.store.NotFoundException;
 import org.wso2.carbon.apimgt.rest.api.store.dto.APIDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.APIListDTO;
+<<<<<<< HEAD
 import org.wso2.carbon.apimgt.rest.api.store.dto.CommentDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.CommentListDTO;
 import org.wso2.carbon.apimgt.rest.api.store.dto.DocumentDTO;
@@ -43,6 +60,29 @@ import org.wso2.carbon.apimgt.rest.api.store.mappings.CommentMappingUtil;
 import org.wso2.carbon.apimgt.rest.api.store.mappings.DocumentationMappingUtil;
 import org.wso2.carbon.apimgt.rest.api.store.mappings.RatingMappingUtil;
 import org.wso2.msf4j.Request;
+=======
+import org.wso2.carbon.apimgt.rest.api.store.dto.APIListPaginationDTO;
+import org.wso2.carbon.apimgt.rest.api.store.dto.DocumentDTO;
+import org.wso2.carbon.apimgt.rest.api.store.dto.DocumentListDTO;
+import org.wso2.carbon.apimgt.rest.api.store.utils.mappings.APIMappingUtil;
+import org.wso2.carbon.apimgt.rest.api.store.utils.mappings.DocumentationMappingUtil;
+import org.wso2.carbon.apimgt.rest.api.util.RestApiConstants;
+import org.wso2.carbon.apimgt.rest.api.util.utils.RestApiUtil;
+import org.wso2.carbon.apimgt.rest.api.util.utils.RestAPIStoreUtils;
+import org.wso2.carbon.user.api.UserStoreException;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
 /**
  * Implementation of APIs resource
@@ -75,7 +115,55 @@ public class ApisApiServiceImpl extends ApisApiService {
                     .contains(existingFingerprint)) {
                 return Response.status(Response.Status.PRECONDITION_FAILED).build();
             }
+<<<<<<< HEAD
             apiStore.deleteComment(commentId, apiId, username);
+=======
+            String newSearchQuery = APIUtil.constructNewSearchQuery(query);
+
+            //revert content search back to normal search by name to avoid doc result complexity and to comply with REST api practices
+            if (newSearchQuery.startsWith(APIConstants.CONTENT_SEARCH_TYPE_PREFIX + "=")) {
+                newSearchQuery = newSearchQuery
+                        .replace(APIConstants.CONTENT_SEARCH_TYPE_PREFIX + "=", APIConstants.NAME_TYPE_PREFIX + "=");
+            }
+            // Append LC state query criteria if the search is not doc or subcontext
+            // based
+            if (!APIConstants.DOCUMENTATION_SEARCH_TYPE_PREFIX_WITH_EQUALS.startsWith(newSearchQuery) &&
+                    !APIConstants.SUBCONTEXT_SEARCH_TYPE_PREFIX.startsWith(newSearchQuery)) {
+                boolean displayAPIsWithMultipleStatus = APIUtil.isAllowDisplayAPIsWithMultipleStatus();
+
+                String [] statusList = {APIConstants.PUBLISHED, APIConstants.PROTOTYPED};
+                if (displayAPIsWithMultipleStatus) {
+                    statusList = new String[]{APIConstants.PUBLISHED, APIConstants.PROTOTYPED, APIConstants.DEPRECATED};
+                }
+
+                String lcCriteria = APIConstants.LCSTATE_SEARCH_TYPE_KEY;
+                lcCriteria = lcCriteria + APIUtil.getORBasedSearchCriteria(statusList);
+
+                newSearchQuery = newSearchQuery + APIConstants.SEARCH_AND_TAG + lcCriteria;
+            }
+
+            Map allMatchedApisMap = apiConsumer
+                    .searchPaginatedAPIs(newSearchQuery, requestedTenantDomain, offset, limit, false);
+            Set<API> sortedSet = (Set<API>) allMatchedApisMap.get("apis"); // This is a SortedSet
+            ArrayList<API> allMatchedApis = new ArrayList<>(sortedSet);
+
+            apiListDTO = APIMappingUtil.fromAPIListToDTO(allMatchedApis);
+            APIMappingUtil.setPaginationParams(apiListDTO, query, offset, limit, allMatchedApis.size());
+
+            //Add pagination section in the response
+            Object totalLength = allMatchedApisMap.get("length");
+            Integer length = 0;
+            if(totalLength != null) {
+                length = (Integer) totalLength;
+            }
+            APIListPaginationDTO paginationDTO = new APIListPaginationDTO();
+            paginationDTO.setOffset(offset);
+            paginationDTO.setLimit(limit);
+            paginationDTO.setTotal(length);
+            apiListDTO.setPagination(paginationDTO);
+
+            return Response.ok().entity(apiListDTO).build();
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         } catch (APIManagementException e) {
             String errorMessage = "Error while deleting comment with commentId: " + commentId + " of apiID :" + apiId;
             Map<String, String> paramList = new HashMap<String, String>();
@@ -111,6 +199,7 @@ public class ApisApiServiceImpl extends ApisApiService {
                     .contains(existingFingerprint)) {
                 return Response.notModified().build();
             }
+<<<<<<< HEAD
             Comment comment = apiStore.getCommentByUUID(commentId, apiId);
             CommentDTO commentDTO = CommentMappingUtil.fromCommentToDTO(comment);
             return Response.ok().header(HttpHeaders.ETAG,
@@ -123,6 +212,33 @@ public class ApisApiServiceImpl extends ApisApiService {
             ErrorDTO errorDTO = RestApiUtil.getErrorDTO(e.getErrorHandler(), paramList);
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
+=======
+
+            API api;
+            if (RestApiUtil.isUUID(apiId)) {
+                api = apiConsumer.getAPIbyUUID(apiId, requestedTenantDomain);
+            } else {
+                APIIdentifier apiIdentifier = APIMappingUtil.getAPIIdentifierFromApiId(apiId);
+                api = apiConsumer.getAPI(apiIdentifier);
+            }
+            apiToReturn = APIMappingUtil.fromAPItoDTO(api, requestedTenantDomain);
+            return Response.ok().entity(apiToReturn).build();
+        } catch (APIManagementException e) {
+            if (RestApiUtil.isDueToAuthorizationFailure(e)) {
+                RestApiUtil.handleAuthorizationFailure(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else if (RestApiUtil.isDueToResourceNotFound(e)) {
+                RestApiUtil.handleResourceNotFoundError(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else {
+                String errorMessage = "Error while retrieving API : " + apiId;
+                RestApiUtil.handleInternalServerError(errorMessage, e, log);
+            }
+        } catch (UserStoreException e) {
+            String errorMessage = "Error while checking availability of tenant " + requestedTenantDomain;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        } catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
     }
 
@@ -212,12 +328,28 @@ public class ApisApiServiceImpl extends ApisApiService {
             CommentListDTO commentListDTO = CommentMappingUtil.fromCommentListToDTO(commentList, limit, offset);
             return Response.ok().entity(commentListDTO).build();
         } catch (APIManagementException e) {
+<<<<<<< HEAD
             String errorMessage = "Error while retrieving comments for api : " + apiId;
             Map<String, String> paramList = new HashMap<String, String>();
             paramList.put(APIMgtConstants.ExceptionsConstants.API_ID, apiId);
             ErrorDTO errorDTO = RestApiUtil.getErrorDTO(e.getErrorHandler(), paramList);
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
+=======
+            if (RestApiUtil.isDueToAuthorizationFailure(e)) {
+                RestApiUtil.handleAuthorizationFailure(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else if (RestApiUtil.isDueToResourceNotFound(e)) {
+                RestApiUtil.handleResourceNotFoundError(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else {
+                RestApiUtil.handleInternalServerError("Error while getting API " + apiId, e, log);
+            }
+        } catch (UserStoreException e) {
+            String errorMessage = "Error while checking availability of tenant " + requestedTenantDomain;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        } catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
     }
 
@@ -267,6 +399,7 @@ public class ApisApiServiceImpl extends ApisApiService {
 
     }
 
+<<<<<<< HEAD
     /**
      * @param commentId         Comment ID
      * @param apiId             API ID
@@ -288,6 +421,11 @@ public class ApisApiServiceImpl extends ApisApiService {
             if (!StringUtils.isEmpty(ifMatch) && !StringUtils.isEmpty(existingFingerprint) && !ifMatch
                     .contains(existingFingerprint)) {
                 return Response.status(Response.Status.PRECONDITION_FAILED).build();
+=======
+            if (!org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils
+                    .isUserAccessAllowedForAPI(apiId, requestedTenantDomain)) {
+                RestApiUtil.handleAuthorizationFailure(RestApiConstants.RESOURCE_API, apiId, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
             }
             Comment comment = CommentMappingUtil.fromDTOToComment(body, username);
             apiStore.updateComment(comment, commentId, apiId, username);
@@ -343,8 +481,13 @@ public class ApisApiServiceImpl extends ApisApiService {
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
                         .header(HttpHeaders.ETAG, "\"" + existingFingerprint + "\"")
                         .build();
+<<<<<<< HEAD
             } else if (DocumentInfo.SourceType.INLINE.equals(documentInfo.getSourceType())) {
                 String content = documentationContent.getInlineContent();
+=======
+            } else if (documentation.getSourceType().equals(Documentation.DocumentSourceType.INLINE) || documentation.getSourceType().equals(Documentation.DocumentSourceType.MARKDOWN)) {
+                String content = apiConsumer.getDocumentationContent(apiIdentifier, documentation.getName());
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
                 return Response.ok(content)
                         .header(RestApiConstants.HEADER_CONTENT_TYPE, MediaType.TEXT_PLAIN)
                         .header(HttpHeaders.ETAG, "\"" + existingFingerprint + "\"")
@@ -364,9 +507,19 @@ public class ApisApiServiceImpl extends ApisApiService {
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
         } catch (URISyntaxException e) {
             String errorMessage = "Error while retrieving source URI location of " + documentId;
+<<<<<<< HEAD
             ErrorDTO errorDTO = RestApiUtil.getErrorDTO(errorMessage, 900313L, errorMessage);
             log.error(errorMessage, e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorDTO).build();
+=======
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        } catch (UserStoreException e) {
+            String errorMessage = "Error while checking availability of tenant " + requestedTenantDomain;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        }catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
         return null;
     }
@@ -385,6 +538,7 @@ public class ApisApiServiceImpl extends ApisApiService {
                                                                     String ifModifiedSince, Request request) {
         String username = RestApiUtil.getLoggedInUsername(request);
         try {
+<<<<<<< HEAD
             String lastUpdatedTime = RestApiUtil.getConsumer(username)
                     .getLastUpdatedTimeOfDocumentContent(apiId, documentId);
             return ETagUtils.generateETag(lastUpdatedTime);
@@ -395,14 +549,49 @@ public class ApisApiServiceImpl extends ApisApiService {
                             + apiId;
             log.error(errorMessage, e);
             return null;
+=======
+            APIConsumer apiConsumer = RestApiUtil.getLoggedInUserConsumer();
+
+            if (!RestApiUtil.isTenantAvailable(requestedTenantDomain)) {
+                RestApiUtil.handleBadRequest("Provided tenant domain '" + xWSO2Tenant + "' is invalid", log);
+            }
+
+            //this will fail if user does not have access to the API or the API does not exist
+            APIIdentifier apiIdentifier = APIMappingUtil.getAPIIdentifierFromApiIdOrUUID(apiId, requestedTenantDomain);
+
+            String apiSwagger = apiConsumer.getOpenAPIDefinition(apiIdentifier);
+            apiSwagger = APIUtil.removeXMediationScriptsFromSwagger(apiSwagger);
+            return Response.ok().entity(apiSwagger).build();
+        } catch (APIManagementException e) {
+            if (RestApiUtil.isDueToAuthorizationFailure(e)) {
+                RestApiUtil.handleAuthorizationFailure(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else if (RestApiUtil.isDueToResourceNotFound(e)) {
+                RestApiUtil.handleResourceNotFoundError(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else {
+                String errorMessage = "Error while retrieving API : " + apiId;
+                RestApiUtil.handleInternalServerError(errorMessage, e, log);
+            }
+        } catch (UserStoreException e) {
+            String errorMessage = "Error while checking availability of tenant " + requestedTenantDomain;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        }catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
     }
 
     /**
      * Retrives the document identified by the API's ID and the document's ID
      *
+<<<<<<< HEAD
      * @param apiId           UUID of API
      * @param documentId      UUID of the document
+=======
+     * @param apiId           API Id
+     * @param xWSO2Tenant     requested tenant domain for cross tenant invocations
+     * @param accept          Accept header value
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
      * @param ifNoneMatch     If-None-Match header value
      * @param ifModifiedSince If-Modified-Since header value
      * @param request         minor version header
@@ -410,6 +599,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @throws NotFoundException When the particular resource does not exist in the system
      */
     @Override
+<<<<<<< HEAD
     public Response apisApiIdDocumentsDocumentIdGet(String apiId, String documentId, String ifNoneMatch,
                                                     String ifModifiedSince, Request request) throws NotFoundException {
         DocumentDTO documentDTO = null;
@@ -421,6 +611,26 @@ public class ApisApiServiceImpl extends ApisApiService {
             if (!StringUtils.isEmpty(ifNoneMatch) && !StringUtils.isEmpty(existingFingerprint) && ifNoneMatch
                     .contains(existingFingerprint)) {
                 return Response.notModified().build();
+=======
+    public Response apisApiIdThumbnailGet(String apiId, String xWSO2Tenant, String accept, String ifNoneMatch,
+            String ifModifiedSince) {
+        String requestedTenantDomain = RestApiUtil.getRequestedTenantDomain(xWSO2Tenant);
+        try {
+            APIConsumer apiConsumer = RestApiUtil.getLoggedInUserConsumer();
+            if (!RestApiUtil.isTenantAvailable(requestedTenantDomain)) {
+                RestApiUtil.handleBadRequest("Provided tenant domain '" + xWSO2Tenant + "' is invalid", log);
+            }
+            //this will fail if user does not have access to the API or the API does not exist
+            APIIdentifier apiIdentifier = APIMappingUtil.getAPIIdentifierFromApiIdOrUUID(apiId, requestedTenantDomain);
+            ResourceFile thumbnailResource = apiConsumer.getIcon(apiIdentifier);
+
+            if (thumbnailResource != null) {
+                return Response
+                        .ok(thumbnailResource.getContent(), MediaType.valueOf(thumbnailResource.getContentType()))
+                        .build();
+            } else {
+                return Response.noContent().build();
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
             }
 
             DocumentInfo documentInfo = apiStore.getDocumentationSummary(documentId);
@@ -428,6 +638,7 @@ public class ApisApiServiceImpl extends ApisApiService {
             return Response.ok().entity(documentDTO)
                     .header(HttpHeaders.ETAG, "\"" + existingFingerprint + "\"").build();
         } catch (APIManagementException e) {
+<<<<<<< HEAD
             String errorMessage =
                     "Error while retrieving documentation for given apiId " + apiId + "with docId " + documentId;
             HashMap<String, String> paramList = new HashMap<String, String>();
@@ -436,6 +647,22 @@ public class ApisApiServiceImpl extends ApisApiService {
             ErrorDTO errorDTO = RestApiUtil.getErrorDTO(e.getErrorHandler(), paramList);
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
+=======
+            //Auth failure occurs when cross tenant accessing APIs. Sends 404, since we don't need to expose the
+            // existence of the resource
+            if (RestApiUtil.isDueToResourceNotFound(e) || RestApiUtil.isDueToAuthorizationFailure(e)) {
+                RestApiUtil.handleResourceNotFoundError(RestApiConstants.RESOURCE_API, apiId, e, log);
+            } else {
+                String errorMessage = "Error while retrieving thumbnail of API : " + apiId;
+                RestApiUtil.handleInternalServerError(errorMessage, e, log);
+            }
+        } catch (UserStoreException e) {
+            String errorMessage = "Error while checking availability of tenant " + requestedTenantDomain;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        }catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
     }
 
@@ -458,11 +685,35 @@ public class ApisApiServiceImpl extends ApisApiService {
                     .getLastUpdatedTimeOfDocument(documentId);
             return ETagUtils.generateETag(lastUpdatedTime);
         } catch (APIManagementException e) {
+<<<<<<< HEAD
             //gives a warning and let it continue the execution
             String errorMessage =
                     "Error while retrieving last updated time of document " + documentId + " of API " + apiId;
             log.error(errorMessage, e);
             return null;
+=======
+            RestApiUtil.handleResourceNotFoundInTenantError(RestApiConstants.RESOURCE_API, apiId, log, xWSO2Tenant);
+        } catch (UnsupportedEncodingException e) {
+            String errorMessage = "Error while Decoding apiId" + apiId;
+            RestApiUtil.handleInternalServerError(errorMessage, e, log);
+        }
+        if (apiIdentifier == null) {
+            RestApiUtil.handleResourceNotFoundInTenantError(RestApiConstants.RESOURCE_API, apiId, log, xWSO2Tenant);
+        }
+        APIClientGenerationManager apiClientGenerationManager = new APIClientGenerationManager();
+        String supportedSDKLanguages = apiClientGenerationManager.getSupportedSDKLanguages();
+        //this condition is to evaluate if the supported language list is non empty
+        if (StringUtils.isNotBlank(supportedSDKLanguages)) {
+            //this boolean checks if the required language is in the supported language list for SDK generation
+            boolean isLanguageSupported = Arrays.asList(supportedSDKLanguages.split(",")).contains(language);
+            if (!isLanguageSupported) {
+                String errorMessage = "SDK generation is not supported for language : " + language;
+                RestApiUtil.handleBadRequest(errorMessage, log);
+            }
+        } else {
+            String errorMessage = "No supported languages for SDK generation.";
+            RestApiUtil.handleInternalServerError(errorMessage, log);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         }
     }
 
@@ -513,6 +764,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @throws NotFoundException If failed to get the API
      */
     @Override
+<<<<<<< HEAD
     public Response apisApiIdGet(String apiId, String ifNoneMatch, String ifModifiedSince, Request request)
             throws NotFoundException {
 
@@ -544,6 +796,12 @@ public class ApisApiServiceImpl extends ApisApiService {
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
         }
+=======
+    public String apisApiIdDocumentsDocumentIdContentGetGetLastUpdatedTime(String apiId, String documentId,
+            String xWSO2Tenant, String accept, String ifNoneMatch, String ifModifiedSince) {
+        return org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils
+                .apisApiIdDocumentIdGetLastUpdated(documentId, xWSO2Tenant);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 
     /**
@@ -557,6 +815,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @throws NotFoundException if failed to find method implementation
      */
     @Override
+<<<<<<< HEAD
     public Response apisApiIdRatingsGet(String apiId, Integer limit, Integer offset, Request request)
             throws NotFoundException {
         double avgRating;
@@ -582,6 +841,12 @@ public class ApisApiServiceImpl extends ApisApiService {
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
         }
+=======
+    public String apisApiIdDocumentsDocumentIdGetGetLastUpdatedTime(String apiId, String documentId, String xWSO2Tenant,
+            String accept, String ifNoneMatch, String ifModifiedSince) {
+        return org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils
+                .apisApiIdDocumentIdGetLastUpdated(documentId, xWSO2Tenant);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 
     @Override
@@ -725,6 +990,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @throws NotFoundException
      */
     @Override
+<<<<<<< HEAD
     public Response apisApiIdWsdlGet(String apiId, String labelName, String ifNoneMatch,
                                      String ifModifiedSince, Request request) throws NotFoundException {
         String username = RestApiUtil.getLoggedInUsername(request);
@@ -789,6 +1055,12 @@ public class ApisApiServiceImpl extends ApisApiService {
                 }
             }*/
         }
+=======
+    public String apisApiIdGetGetLastUpdatedTime(String apiId, String accept, String ifNoneMatch,
+            String ifModifiedSince, String xWSO2Tenant) {
+        return org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils
+                .apisApiIdGetLastUpdated(apiId, xWSO2Tenant);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 
     /**
@@ -800,6 +1072,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @param request         msf4j request object
      * @return Fingerprint of the API
      */
+<<<<<<< HEAD
     public String apisApiIdGetFingerprint(String apiId, String ifNoneMatch, String ifModifiedSince,
                                           Request request) {
         String username = RestApiUtil.getLoggedInUsername(request);
@@ -812,6 +1085,13 @@ public class ApisApiServiceImpl extends ApisApiService {
             log.error(errorMessage, e);
             return null;
         }
+=======
+    @Override
+    public String apisApiIdSwaggerGetGetLastUpdatedTime(String apiId, String accept, String ifNoneMatch,
+            String ifModifiedSince, String xWSO2Tenant) {
+        return org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils
+                .apisApiIdSwaggerGetLastUpdated(xWSO2Tenant, apiId);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 
 
@@ -826,6 +1106,7 @@ public class ApisApiServiceImpl extends ApisApiService {
      * @throws NotFoundException When the particular resource does not exist in the system
      */
     @Override
+<<<<<<< HEAD
     public Response apisApiIdSwaggerGet(String apiId, String ifNoneMatch, String ifModifiedSince,
                                         Request request) throws NotFoundException {
         String username = RestApiUtil.getLoggedInUsername(request);
@@ -847,6 +1128,11 @@ public class ApisApiServiceImpl extends ApisApiService {
             log.error(errorMessage, e);
             return Response.status(e.getErrorHandler().getHttpStatusCode()).entity(errorDTO).build();
         }
+=======
+    public String apisApiIdThumbnailGetGetLastUpdatedTime(String apiId, String xWSO2Tenant, String accept,
+            String ifNoneMatch, String ifModifiedSince) {
+        return org.wso2.carbon.apimgt.rest.api.store.utils.RestAPIStoreUtils.apisApiIdThumbnailGetLastUpdated(apiId);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 
 

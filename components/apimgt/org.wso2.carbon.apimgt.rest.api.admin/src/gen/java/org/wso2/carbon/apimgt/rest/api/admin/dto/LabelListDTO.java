@@ -1,5 +1,6 @@
 package org.wso2.carbon.apimgt.rest.api.admin.dto;
 
+<<<<<<< HEAD
 
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
@@ -33,10 +34,45 @@ public class LabelListDTO   {
     return count;
   }
 
+=======
+import java.util.ArrayList;
+import java.util.List;
+import org.wso2.carbon.apimgt.rest.api.admin.dto.LabelDTO;
+
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class LabelListDTO  {
+  
+  
+  
+  private Integer count = null;
+  
+  
+  private List<LabelDTO> list = new ArrayList<LabelDTO>();
+
+  
+  /**
+   * Number of Labels returned.\n
+   **/
+  @ApiModelProperty(value = "Number of Labels returned.\n")
+  @JsonProperty("count")
+  public Integer getCount() {
+    return count;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setCount(Integer count) {
     this.count = count;
   }
 
+<<<<<<< HEAD
   public LabelListDTO list(List<LabelDTO> list) {
     this.list = list;
     return this;
@@ -56,10 +92,21 @@ public class LabelListDTO   {
     return list;
   }
 
+=======
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("list")
+  public List<LabelDTO> getList() {
+    return list;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setList(List<LabelDTO> list) {
     this.list = list;
   }
 
+<<<<<<< HEAD
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -102,3 +149,18 @@ public class LabelListDTO   {
   }
 }
 
+=======
+  
+
+  @Override
+  public String toString()  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class LabelListDTO {\n");
+    
+    sb.append("  count: ").append(count).append("\n");
+    sb.append("  list: ").append(list).append("\n");
+    sb.append("}\n");
+    return sb.toString();
+  }
+}
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7

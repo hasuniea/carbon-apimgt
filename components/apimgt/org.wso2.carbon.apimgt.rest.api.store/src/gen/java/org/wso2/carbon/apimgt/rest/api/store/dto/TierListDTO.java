@@ -9,18 +9,39 @@ import java.util.List;
 import org.wso2.carbon.apimgt.rest.api.store.dto.TierDTO;
 import java.util.Objects;
 
+<<<<<<< HEAD
 /**
  * TierListDTO
  */
 public class TierListDTO   {
   @SerializedName("count")
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class TierListDTO  {
+  
+  
+  
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   private Integer count = null;
 
+<<<<<<< HEAD
   @SerializedName("next")
   private String next = null;
 
   @SerializedName("previous")
   private String previous = null;
+=======
+  private String lastUpdatedTime = null;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
   @SerializedName("list")
   private List<TierDTO> list = new ArrayList<TierDTO>();
@@ -34,7 +55,25 @@ public class TierListDTO   {
    * Number of Tiers returned. 
    * @return count
   **/
+<<<<<<< HEAD
   @ApiModelProperty(value = "Number of Tiers returned. ")
+=======
+
+  @JsonIgnore
+  public String getCreatedTime(){
+    return createdTime;
+  }
+  public void setCreatedTime(String createdTime){
+    this.createdTime=createdTime;
+  }
+
+  
+  /**
+   * Number of Tiers returned.\n
+   **/
+  @ApiModelProperty(value = "Number of Tiers returned.\n")
+  @JsonProperty("count")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Integer getCount() {
     return count;
   }
@@ -43,6 +82,7 @@ public class TierListDTO   {
     this.count = count;
   }
 
+<<<<<<< HEAD
   public TierListDTO next(String next) {
     this.next = next;
     return this;
@@ -53,6 +93,14 @@ public class TierListDTO   {
    * @return next
   **/
   @ApiModelProperty(value = "Link to the next subset of resources qualified. Empty if no more resources are to be returned. ")
+=======
+  
+  /**
+   * Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n
+   **/
+  @ApiModelProperty(value = "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n")
+  @JsonProperty("next")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getNext() {
     return next;
   }
@@ -61,6 +109,7 @@ public class TierListDTO   {
     this.next = next;
   }
 
+<<<<<<< HEAD
   public TierListDTO previous(String previous) {
     this.previous = previous;
     return this;
@@ -71,6 +120,14 @@ public class TierListDTO   {
    * @return previous
   **/
   @ApiModelProperty(value = "Link to the previous subset of resources qualified. Empty if current subset is the first subset returned. ")
+=======
+  
+  /**
+   * Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n
+   **/
+  @ApiModelProperty(value = "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n")
+  @JsonProperty("previous")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getPrevious() {
     return previous;
   }
@@ -79,6 +136,7 @@ public class TierListDTO   {
     this.previous = previous;
   }
 
+<<<<<<< HEAD
   public TierListDTO list(List<TierDTO> list) {
     this.list = list;
     return this;
@@ -93,6 +151,11 @@ public class TierListDTO   {
    * Get list
    * @return list
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public List<TierDTO> getList() {
     return list;

@@ -23,6 +23,7 @@ public class ConditionalGroupDTO   {
   @SerializedName("limit")
   private ThrottleLimitDTO limit = null;
 
+<<<<<<< HEAD
   public ConditionalGroupDTO description(String description) {
     this.description = description;
     return this;
@@ -33,6 +34,14 @@ public class ConditionalGroupDTO   {
    * @return description
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Description of the Conditional Group
+   **/
+  @ApiModelProperty(value = "Description of the Conditional Group")
+  @JsonProperty("description")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getDescription() {
     return description;
   }
@@ -41,6 +50,7 @@ public class ConditionalGroupDTO   {
     this.description = description;
   }
 
+<<<<<<< HEAD
   public ConditionalGroupDTO conditions(List<ThrottleConditionDTO> conditions) {
     this.conditions = conditions;
     return this;
@@ -56,6 +66,14 @@ public class ConditionalGroupDTO   {
    * @return conditions
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\nPlease see schemas of each of those throttling condition in Definitions section.\n
+   **/
+  @ApiModelProperty(required = true, value = "Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\nPlease see schemas of each of those throttling condition in Definitions section.\n")
+  @JsonProperty("conditions")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public List<ThrottleConditionDTO> getConditions() {
     return conditions;
   }

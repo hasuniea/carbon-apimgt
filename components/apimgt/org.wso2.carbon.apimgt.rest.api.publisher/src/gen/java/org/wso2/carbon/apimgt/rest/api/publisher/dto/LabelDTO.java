@@ -1,6 +1,7 @@
 package org.wso2.carbon.apimgt.rest.api.publisher.dto;
 
 
+<<<<<<< HEAD
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -56,10 +57,40 @@ public class LabelDTO   {
     return name;
   }
 
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class LabelDTO  {
+  
+  
+  @NotNull
+  private String name = null;
+  
+  
+  private String description = null;
+
+  
+  /**
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @JsonProperty("name")
+  public String getName() {
+    return name;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setName(String name) {
     this.name = name;
   }
 
+<<<<<<< HEAD
   public LabelDTO type(String type) {
     this.type = type;
     return this;
@@ -147,3 +178,30 @@ public class LabelDTO   {
   }
 }
 
+=======
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("description")
+  public String getDescription() {
+    return description;
+  }
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  
+
+  @Override
+  public String toString()  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class LabelDTO {\n");
+    
+    sb.append("  name: ").append(name).append("\n");
+    sb.append("  description: ").append(description).append("\n");
+    sb.append("}\n");
+    return sb.toString();
+  }
+}
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7

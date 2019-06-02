@@ -28,6 +28,7 @@ public class ErrorDTO   {
   @SerializedName("error")
   private List<ErrorListItemDTO> error = new ArrayList<ErrorListItemDTO>();
 
+<<<<<<< HEAD
   public ErrorDTO code(Integer code) {
     this.code = code;
     return this;
@@ -39,6 +40,15 @@ public class ErrorDTO   {
   **/
   @ApiModelProperty(required = true, value = "")
   public Integer getCode() {
+=======
+  
+  /**
+   * Error code
+   **/
+  @ApiModelProperty(required = true, value = "Error code")
+  @JsonProperty("code")
+  public Long getCode() {
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return code;
   }
 

@@ -16,6 +16,7 @@ public class HeaderConditionDTO   {
   @SerializedName("headerValue")
   private String headerValue = null;
 
+<<<<<<< HEAD
   public HeaderConditionDTO headerName(String headerName) {
     this.headerName = headerName;
     return this;
@@ -26,6 +27,14 @@ public class HeaderConditionDTO   {
    * @return headerName
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Name of the header
+   **/
+  @ApiModelProperty(value = "Name of the header")
+  @JsonProperty("headerName")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getHeaderName() {
     return headerName;
   }
@@ -34,6 +43,7 @@ public class HeaderConditionDTO   {
     this.headerName = headerName;
   }
 
+<<<<<<< HEAD
   public HeaderConditionDTO headerValue(String headerValue) {
     this.headerValue = headerValue;
     return this;
@@ -44,6 +54,14 @@ public class HeaderConditionDTO   {
    * @return headerValue
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Value of the header
+   **/
+  @ApiModelProperty(value = "Value of the header")
+  @JsonProperty("headerValue")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getHeaderValue() {
     return headerValue;
   }

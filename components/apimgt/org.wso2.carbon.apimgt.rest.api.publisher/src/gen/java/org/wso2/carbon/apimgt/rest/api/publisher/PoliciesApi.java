@@ -51,6 +51,7 @@ public class PoliciesApi implements Microservice  {
     @Path("/{tierLevel}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Get all policies", notes = "This operation can be used to list the available policies for a given policy level. Tier level should be specified as a path parameter and should be one of `api`, `application` and `resource`. ", response = TierListDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:api_update", description = "Update API")
@@ -58,9 +59,15 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Throttling Tier (Collection)", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK. List of policies returned. ", response = TierListDTO.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Get all global level mediation policies\n", notes = "This operation provides you a list of available all global level mediation policies.\n", response = MediationListDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nList of mediation policies is returned.\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 304, message = "Not Modified. Empty body because the client has already the latest version of the requested resource (Will be supported in future). ", response = TierListDTO.class),
         
+<<<<<<< HEAD
         @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable. The requested media type is not supported ", response = TierListDTO.class) })
     public Response policiesTierLevelGet(@ApiParam(value = "List API or Application or Resource type policies. ",required=true, allowableValues="api, application, resource") @PathParam("tierLevel") String tierLevel
 ,@ApiParam(value = "Maximum size of resource array to return. ", defaultValue="25") @DefaultValue("25") @QueryParam("limit") Integer limit
@@ -99,5 +106,16 @@ public class PoliciesApi implements Microservice  {
     throws NotFoundException {
         
         return delegate.policiesTierLevelTierNameGet(tierName,tierLevel,ifNoneMatch,ifModifiedSince,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable.\nThe requested media type is not supported\n") })
+
+    public Response policiesMediationGet(@ApiParam(value = "Maximum size of resource array to return.\n", defaultValue="25") @QueryParam("limit")  Integer limit,
+    @ApiParam(value = "Starting point within the complete list of items qualified.\n", defaultValue="0") @QueryParam("offset")  Integer offset,
+    @ApiParam(value = "-Not supported yet-") @QueryParam("query")  String query,
+    @ApiParam(value = "Media types acceptable for the response. Default is application/json.\n"  , defaultValue="application/json")@HeaderParam("Accept") String accept,
+    @ApiParam(value = "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource (Will be supported in future).\n"  )@HeaderParam("If-None-Match") String ifNoneMatch)
+    {
+    return delegate.policiesMediationGet(limit,offset,query,accept,ifNoneMatch);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 }

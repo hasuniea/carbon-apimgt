@@ -1,10 +1,17 @@
 package org.wso2.carbon.apimgt.rest.api.store.dto;
 
 
+<<<<<<< HEAD
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
 /**
  * DocumentDTO
@@ -66,6 +73,7 @@ public class DocumentDTO   {
 
   @SerializedName("summary")
   private String summary = null;
+<<<<<<< HEAD
 
   /**
    * Gets or Sets sourceType
@@ -81,6 +89,22 @@ public class DocumentDTO   {
     FILE("FILE");
 
     private String value;
+=======
+  
+  public enum SourceTypeEnum {
+     INLINE, MARKDOWN, URL, FILE,
+  };
+  @NotNull
+  private SourceTypeEnum sourceType = null;
+  
+  
+  private String sourceUrl = null;
+  
+  
+  private String otherTypeName = null;
+
+  private String lastUpdatedTime = null;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
     SourceTypeEnum(String value) {
       this.value = value;
@@ -117,10 +141,16 @@ public class DocumentDTO   {
     return this;
   }
 
+<<<<<<< HEAD
    /**
    * Get documentId
    * @return documentId
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public String getDocumentId() {
     return documentId;
@@ -130,6 +160,7 @@ public class DocumentDTO   {
     this.documentId = documentId;
   }
 
+<<<<<<< HEAD
   public DocumentDTO name(String name) {
     this.name = name;
     return this;
@@ -139,6 +170,11 @@ public class DocumentDTO   {
    * Get name
    * @return name
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public String getName() {
     return name;
@@ -148,6 +184,7 @@ public class DocumentDTO   {
     this.name = name;
   }
 
+<<<<<<< HEAD
   public DocumentDTO type(TypeEnum type) {
     this.type = type;
     return this;
@@ -157,6 +194,11 @@ public class DocumentDTO   {
    * Get type
    * @return type
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public TypeEnum getType() {
     return type;
@@ -166,6 +208,7 @@ public class DocumentDTO   {
     this.type = type;
   }
 
+<<<<<<< HEAD
   public DocumentDTO summary(String summary) {
     this.summary = summary;
     return this;
@@ -175,6 +218,11 @@ public class DocumentDTO   {
    * Get summary
    * @return summary
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public String getSummary() {
     return summary;
@@ -184,6 +232,7 @@ public class DocumentDTO   {
     this.summary = summary;
   }
 
+<<<<<<< HEAD
   public DocumentDTO sourceType(SourceTypeEnum sourceType) {
     this.sourceType = sourceType;
     return this;
@@ -193,6 +242,11 @@ public class DocumentDTO   {
    * Get sourceType
    * @return sourceType
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public SourceTypeEnum getSourceType() {
     return sourceType;
@@ -202,6 +256,7 @@ public class DocumentDTO   {
     this.sourceType = sourceType;
   }
 
+<<<<<<< HEAD
   public DocumentDTO sourceUrl(String sourceUrl) {
     this.sourceUrl = sourceUrl;
     return this;
@@ -211,6 +266,11 @@ public class DocumentDTO   {
    * Get sourceUrl
    * @return sourceUrl
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public String getSourceUrl() {
     return sourceUrl;
@@ -220,6 +280,7 @@ public class DocumentDTO   {
     this.sourceUrl = sourceUrl;
   }
 
+<<<<<<< HEAD
   public DocumentDTO inlineContent(String inlineContent) {
     this.inlineContent = inlineContent;
     return this;
@@ -247,6 +308,11 @@ public class DocumentDTO   {
    * Get otherTypeName
    * @return otherTypeName
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public String getOtherTypeName() {
     return otherTypeName;

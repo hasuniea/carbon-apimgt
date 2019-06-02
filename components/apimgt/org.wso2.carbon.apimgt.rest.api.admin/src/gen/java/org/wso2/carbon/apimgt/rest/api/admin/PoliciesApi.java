@@ -57,6 +57,7 @@ public class PoliciesApi implements Microservice  {
     @Path("/throttling/advanced")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Get all Advanced level throttle policies", notes = "Get all Advanced level throttle policies ", response = AdvancedThrottlePolicyListDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:tier_view", description = "View Tier")
@@ -64,9 +65,15 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Advanced Policies", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK. Policies returned ", response = AdvancedThrottlePolicyListDTO.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Get all global mediation policies\n", notes = "This operation provides you a list of available all global level mediation policies.\n", response = MediationListDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nList of mediation policies is returned.\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 304, message = "Not Modified. Empty body because the client has already the latest version of the requested resource. ", response = AdvancedThrottlePolicyListDTO.class),
         
+<<<<<<< HEAD
         @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable. The requested media type is not supported. ", response = AdvancedThrottlePolicyListDTO.class) })
     public Response policiesThrottlingAdvancedGet(@ApiParam(value = "Validator for conditional requests; based on the ETag of the formerly retrieved variant of the resourec. " )@HeaderParam("If-None-Match") String ifNoneMatch
 ,@ApiParam(value = "Validator for conditional requests; based on Last Modified header of the formerly retrieved variant of the resource. " )@HeaderParam("If-Modified-Since") String ifModifiedSince
@@ -74,12 +81,24 @@ public class PoliciesApi implements Microservice  {
     throws NotFoundException {
         
         return delegate.policiesThrottlingAdvancedGet(ifNoneMatch,ifModifiedSince,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable.\nThe requested media type is not supported\n") })
+
+    public Response policiesMediationGet(@ApiParam(value = "Maximum size of resource array to return.\n", defaultValue="25") @QueryParam("limit") Integer limit,
+    @ApiParam(value = "Starting point within the complete list of items qualified.\n", defaultValue="0") @QueryParam("offset") Integer offset,
+    @ApiParam(value = "-Not supported yet-") @QueryParam("query") String query,
+    @ApiParam(value = "Media types acceptable for the response. Default is application/json.\n"  , defaultValue="application/json")@HeaderParam("Accept") String accept,
+    @ApiParam(value = "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource (Will be supported in future).\n"  )@HeaderParam("If-None-Match") String ifNoneMatch)
+    {
+    return delegate.policiesMediationGet(limit,offset,query,accept,ifNoneMatch);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
     @OPTIONS
     @DELETE
     @Path("/throttling/advanced/{id}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Delete an Advanced level throttle policy", notes = "Delete an Advanced level throttle policy ", response = void.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:tier_manage", description = "Manage Tier")
@@ -87,6 +106,11 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Advanced Policies", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK. Resource successfully deleted. ", response = void.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Delete a global mediation policy", notes = "This operation can be used to delete an existing global mediation policy providing the Id of the mediation policy.\n", response = void.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nMediation policy successfully deleted.\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found. Resource to be deleted does not exist. ", response = void.class),
         
@@ -97,13 +121,24 @@ public class PoliciesApi implements Microservice  {
  ,@Context Request request)
     throws NotFoundException {
         
+<<<<<<< HEAD
         return delegate.policiesThrottlingAdvancedIdDelete(id,ifMatch,ifUnmodifiedSince,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 412, message = "Precondition Failed.\nThe request has not been performed because one of the preconditions is not met.\n") })
+
+    public Response policiesMediationMediationPolicyIdDelete(@ApiParam(value = "Mediation policy Id\n",required=true ) @PathParam("mediationPolicyId") String mediationPolicyId,
+    @ApiParam(value = "Validator for conditional requests; based on ETag (Will be supported in future).\n"  )@HeaderParam("If-Match") String ifMatch,
+    @ApiParam(value = "Validator for conditional requests; based on Last Modified header (Will be supported in future).\n"  )@HeaderParam("If-Unmodified-Since") String ifUnmodifiedSince)
+    {
+    return delegate.policiesMediationMediationPolicyIdDelete(mediationPolicyId,ifMatch,ifUnmodifiedSince);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
     @OPTIONS
     @GET
     @Path("/throttling/advanced/{id}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Retrieve an Advanced Policy", notes = "Retrieve a Advanced Policy providing the policy name. ", response = AdvancedThrottlePolicyDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:tier_view", description = "View Tier")
@@ -111,11 +146,17 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Advanced Policies", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK. Policy returned ", response = AdvancedThrottlePolicyDTO.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Get a global mediation policy", notes = "This operation can be used to retrieve a particular global mediation policy.\n", response = MediationDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nMediation Policy returned.\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 304, message = "Not Modified. Empty body because the client has already the latest version of the requested resource. ", response = AdvancedThrottlePolicyDTO.class),
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found. Requested Policy does not exist. ", response = AdvancedThrottlePolicyDTO.class),
         
+<<<<<<< HEAD
         @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable. The requested media type is not supported. ", response = AdvancedThrottlePolicyDTO.class) })
     public Response policiesThrottlingAdvancedIdGet(@ApiParam(value = "Thorttle policy UUID ",required=true) @PathParam("id") String id
 ,@ApiParam(value = "Validator for conditional requests; based on the ETag of the formerly retrieved variant of the resourec. " )@HeaderParam("If-None-Match") String ifNoneMatch
@@ -124,12 +165,23 @@ public class PoliciesApi implements Microservice  {
     throws NotFoundException {
         
         return delegate.policiesThrottlingAdvancedIdGet(id,ifNoneMatch,ifModifiedSince,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable.\nThe requested media type is not supported\n") })
+
+    public Response policiesMediationMediationPolicyIdGet(@ApiParam(value = "Mediation policy Id\n",required=true ) @PathParam("mediationPolicyId") String mediationPolicyId,
+    @ApiParam(value = "Media types acceptable for the response. Default is application/json.\n"  , defaultValue="application/json")@HeaderParam("Accept") String accept,
+    @ApiParam(value = "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource (Will be supported in future).\n"  )@HeaderParam("If-None-Match") String ifNoneMatch,
+    @ApiParam(value = "Validator for conditional requests; based on Last Modified header of the\nformerly retrieved variant of the resource (Will be supported in future).\n"  )@HeaderParam("If-Modified-Since") String ifModifiedSince)
+    {
+    return delegate.policiesMediationMediationPolicyIdGet(mediationPolicyId,accept,ifNoneMatch,ifModifiedSince);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
     @OPTIONS
     @PUT
     @Path("/throttling/advanced/{id}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Update an Advanced level throttle policy", notes = "Update an Advanced level throttle policy ", response = AdvancedThrottlePolicyDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:tier_manage", description = "Manage Tier")
@@ -137,6 +189,11 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Advanced Policies", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK. Policy updated. ", response = AdvancedThrottlePolicyDTO.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Update a global mediation policy", notes = "This operation can be used to update an existing global mediation policy.\n", response = MediationDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nSuccessful response with updated mediation policy object\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request. Invalid request or validation error. ", response = AdvancedThrottlePolicyDTO.class),
         
@@ -150,13 +207,26 @@ public class PoliciesApi implements Microservice  {
  ,@Context Request request)
     throws NotFoundException {
         
+<<<<<<< HEAD
         return delegate.policiesThrottlingAdvancedIdPut(id,body,ifMatch,ifUnmodifiedSince,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 412, message = "Precondition Failed.\nThe request has not been performed because one of the preconditions is not met.\n") })
+
+    public Response policiesMediationMediationPolicyIdPut(@ApiParam(value = "Mediation policy Id\n",required=true ) @PathParam("mediationPolicyId") String mediationPolicyId,
+    @ApiParam(value = "Mediation policy object that needs to be added\n" ,required=true ) MediationDTO body,
+    @ApiParam(value = "Media type of the entity in the body. Default is application/json.\n" ,required=true , defaultValue="application/json")@HeaderParam("Content-Type") String contentType,
+    @ApiParam(value = "Validator for conditional requests; based on ETag (Will be supported in future).\n"  )@HeaderParam("If-Match") String ifMatch,
+    @ApiParam(value = "Validator for conditional requests; based on Last Modified header (Will be supported in future).\n"  )@HeaderParam("If-Unmodified-Since") String ifUnmodifiedSince)
+    {
+    return delegate.policiesMediationMediationPolicyIdPut(mediationPolicyId,body,contentType,ifMatch,ifUnmodifiedSince);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
     @OPTIONS
     @POST
     @Path("/throttling/advanced")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Add an Advanced level throttle policy", notes = "Add an Advanced level throttle policy ", response = AdvancedThrottlePolicyDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:tier_manage", description = "Manage Tier")
@@ -164,6 +234,11 @@ public class PoliciesApi implements Microservice  {
     }, tags={ "Advanced Policies", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "Created. Successful response with the newly created object as entity in the body. Location header contains URL of newly created entity. ", response = AdvancedThrottlePolicyDTO.class),
+=======
+    @io.swagger.annotations.ApiOperation(value = "Add a global mediation policy", notes = "This operation can be used to add a new global mediation policy.\n", response = MediationDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nMediation policy added successfully.\n"),
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request. Invalid request or validation error ", response = AdvancedThrottlePolicyDTO.class),
         
@@ -172,6 +247,7 @@ public class PoliciesApi implements Microservice  {
  ,@Context Request request)
     throws NotFoundException {
         
+<<<<<<< HEAD
         return delegate.policiesThrottlingAdvancedPost(body,request);
     }
     @OPTIONS
@@ -539,5 +615,15 @@ public class PoliciesApi implements Microservice  {
     throws NotFoundException {
         
         return delegate.policiesThrottlingSubscriptionPost(body,request);
+=======
+        @io.swagger.annotations.ApiResponse(code = 412, message = "Precondition Failed.\nThe request has not been performed because one of the preconditions is not met (Will be supported in future).\n") })
+
+    public Response policiesMediationPost(@ApiParam(value = "mediation policy to upload" ,required=true ) MediationDTO body,
+    @ApiParam(value = "Media type of the entity in the body. Default is application/json.\n" ,required=true , defaultValue="application/json")@HeaderParam("Content-Type") String contentType,
+    @ApiParam(value = "Validator for conditional requests; based on ETag (Will be supported in future).\n"  )@HeaderParam("If-Match") String ifMatch,
+    @ApiParam(value = "Validator for conditional requests; based on Last Modified header (Will be supported in future).\n"  )@HeaderParam("If-Unmodified-Since") String ifUnmodifiedSince)
+    {
+    return delegate.policiesMediationPost(body,contentType,ifMatch,ifUnmodifiedSince);
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     }
 }

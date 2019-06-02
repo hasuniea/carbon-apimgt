@@ -22,6 +22,7 @@ public class IPConditionDTO   {
   @SerializedName("endingIP")
   private String endingIP = null;
 
+<<<<<<< HEAD
   public IPConditionDTO ipConditionType(String ipConditionType) {
     this.ipConditionType = ipConditionType;
     return this;
@@ -33,6 +34,15 @@ public class IPConditionDTO   {
   **/
   @ApiModelProperty(value = "IPRange and IPSpecific are the supported values ")
   public String getIpConditionType() {
+=======
+  
+  /**
+   * Type of the IP condition. Allowed values are \"IPRange\" and \"IPSpecific\"
+   **/
+  @ApiModelProperty(value = "Type of the IP condition. Allowed values are \"IPRange\" and \"IPSpecific\"")
+  @JsonProperty("ipConditionType")
+  public IpConditionTypeEnum getIpConditionType() {
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return ipConditionType;
   }
 
@@ -40,6 +50,7 @@ public class IPConditionDTO   {
     this.ipConditionType = ipConditionType;
   }
 
+<<<<<<< HEAD
   public IPConditionDTO specificIP(String specificIP) {
     this.specificIP = specificIP;
     return this;
@@ -50,6 +61,14 @@ public class IPConditionDTO   {
    * @return specificIP
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Specific IP when \"IPSpecific\" is used as the ipConditionType
+   **/
+  @ApiModelProperty(value = "Specific IP when \"IPSpecific\" is used as the ipConditionType")
+  @JsonProperty("specificIP")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getSpecificIP() {
     return specificIP;
   }
@@ -58,6 +77,7 @@ public class IPConditionDTO   {
     this.specificIP = specificIP;
   }
 
+<<<<<<< HEAD
   public IPConditionDTO startingIP(String startingIP) {
     this.startingIP = startingIP;
     return this;
@@ -68,6 +88,14 @@ public class IPConditionDTO   {
    * @return startingIP
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Staring IP when \"IPRange\" is used as the ipConditionType
+   **/
+  @ApiModelProperty(value = "Staring IP when \"IPRange\" is used as the ipConditionType")
+  @JsonProperty("startingIP")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getStartingIP() {
     return startingIP;
   }
@@ -76,6 +104,7 @@ public class IPConditionDTO   {
     this.startingIP = startingIP;
   }
 
+<<<<<<< HEAD
   public IPConditionDTO endingIP(String endingIP) {
     this.endingIP = endingIP;
     return this;
@@ -86,6 +115,14 @@ public class IPConditionDTO   {
    * @return endingIP
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Ending IP when \"IPRange\" is used as the ipConditionType
+   **/
+  @ApiModelProperty(value = "Ending IP when \"IPRange\" is used as the ipConditionType")
+  @JsonProperty("endingIP")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getEndingIP() {
     return endingIP;
   }

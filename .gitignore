@@ -10,8 +10,13 @@ target
 *~
 .idea
 *.DS_Store
+<<<<<<< HEAD
 *osgi-imports
 features/apimgt/org.wso2.carbon.apimgt.core.feature/src/main/resources/repository/database/WSO2AM_DB.h2.db
+=======
+WSO2AM_DB.trace.db
+node_modules
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 features/apimgt/org.wso2.carbon.apimgt.gateway.feature/src/main/resources/am#sample#calculator#*.war
 features/apimgt/org.wso2.carbon.apimgt.gateway.feature/src/main/resources/am#sample#pizzashack#*.war
 features/apimgt/org.wso2.carbon.apimgt.rest.api.dcr.feature/src/main/resources/client-registration#*.war
@@ -19,10 +24,12 @@ features/apimgt/org.wso2.carbon.apimgt.rest.api.publisher.feature/src/main/resou
 features/apimgt/org.wso2.carbon.apimgt.rest.api.store.feature/src/main/resources/api#am#store#*.war
 features/apimgt/org.wso2.carbon.apimgt.rest.api.admin.feature/src/main/resources/api#am#admin#*.war
 features/apimgt/org.wso2.carbon.apimgt.core.feature/src/main/resources/throttle#data#*.war
+features/apimgt/org.wso2.carbon.apimgt.micro.gateway.default.feature/src/main/resources/micro-gateway#*.war
 features/apimgt/org.wso2.carbon.apimgt.rest.api.publisher.feature/src/main/resources/api-docs/main.js
 features/apimgt/org.wso2.carbon.apimgt.rest.api.publisher.feature/src/main/resources/api-docs/package.json
 features/apimgt/org.wso2.carbon.apimgt.rest.api.store.feature/src/main/resources/api-docs/main.js
 features/apimgt/org.wso2.carbon.apimgt.rest.api.store.feature/src/main/resources/api-docs/package.json
+<<<<<<< HEAD
 features/org.wso2.carbon.apimgt.lifecycle.manager.feature/resources/database/
 features/apimgt/org.wso2.carbon.apimgt.core.feature/resources/database/
 lcm/features/org.wso2.carbon.apimgt.lifecycle.manager.feature/resources/database/WSO2LIFECYCLE_DB.h2.db
@@ -41,3 +48,12 @@ npm-debug.log
 ### VS_CODE
 ##################
 .vscode
+=======
+features/apimgt/org.wso2.carbon.apimgt.rest.api.admin.feature/src/main/resources/api-docs/main.js
+features/apimgt/org.wso2.carbon.apimgt.rest.api.admin.feature/src/main/resources/api-docs/package.json
+components/apimgt/org.wso2.carbon.apimgt.hybrid.gateway/org.wso2.carbon.apimgt.hybrid.gateway.usage.publisher/src/test/resources/carbon-home/api-usage-data/api-usage-data.dat
+components/apimgt/org.wso2.carbon.apimgt.rest.api.util/src/main/resources/publisher-api.yaml
+components/apimgt/org.wso2.carbon.apimgt.rest.api.util/src/main/resources/store-api.yaml
+components/apimgt/org.wso2.carbon.apimgt.rest.api.store.v1/swagger.json
+components/apimgt/org.wso2.carbon.apimgt.rest.api.publisher.v1/swagger.json
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7

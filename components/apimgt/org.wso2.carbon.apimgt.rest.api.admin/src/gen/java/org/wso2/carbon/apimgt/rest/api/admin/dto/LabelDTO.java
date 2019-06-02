@@ -1,5 +1,6 @@
 package org.wso2.carbon.apimgt.rest.api.admin.dto;
 
+<<<<<<< HEAD
 
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
@@ -59,10 +60,61 @@ public class LabelDTO   {
     return name;
   }
 
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class LabelDTO  {
+  
+  
+  
+  private String id = null;
+  
+  @NotNull
+  private String name = null;
+  
+  
+  private String description = null;
+  
+  
+  private List<String> accessUrls = new ArrayList<String>();
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @JsonProperty("name")
+  public String getName() {
+    return name;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setName(String name) {
     this.name = name;
   }
 
+<<<<<<< HEAD
   public LabelDTO description(String description) {
     this.description = description;
     return this;
@@ -77,10 +129,21 @@ public class LabelDTO   {
     return description;
   }
 
+=======
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("description")
+  public String getDescription() {
+    return description;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setDescription(String description) {
     this.description = description;
   }
 
+<<<<<<< HEAD
   public LabelDTO type(String type) {
     this.type = type;
     return this;
@@ -118,10 +181,21 @@ public class LabelDTO   {
     return accessUrls;
   }
 
+=======
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("accessUrls")
+  public List<String> getAccessUrls() {
+    return accessUrls;
+  }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public void setAccessUrls(List<String> accessUrls) {
     this.accessUrls = accessUrls;
   }
 
+<<<<<<< HEAD
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -170,3 +244,20 @@ public class LabelDTO   {
   }
 }
 
+=======
+  
+
+  @Override
+  public String toString()  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class LabelDTO {\n");
+    
+    sb.append("  id: ").append(id).append("\n");
+    sb.append("  name: ").append(name).append("\n");
+    sb.append("  description: ").append(description).append("\n");
+    sb.append("  accessUrls: ").append(accessUrls).append("\n");
+    sb.append("}\n");
+    return sb.toString();
+  }
+}
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7

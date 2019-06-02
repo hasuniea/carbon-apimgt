@@ -1,6 +1,7 @@
 package org.wso2.carbon.apimgt.rest.api.store.dto;
 
 
+<<<<<<< HEAD
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,6 +12,22 @@ import java.util.Objects;
  */
 public class SubscriptionDTO   {
   @SerializedName("subscriptionId")
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class SubscriptionDTO  {
+  
+  
+  
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   private String subscriptionId = null;
 
   @SerializedName("applicationId")
@@ -19,11 +36,15 @@ public class SubscriptionDTO   {
   @SerializedName("apiIdentifier")
   private String apiIdentifier = null;
 
+<<<<<<< HEAD
   @SerializedName("apiName")
   private String apiName = null;
 
   @SerializedName("apiVersion")
   private String apiVersion = null;
+=======
+  private String lastUpdatedTime = null;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
   @SerializedName("policy")
   private String policy = null;
@@ -75,11 +96,20 @@ public class SubscriptionDTO   {
     return this;
   }
 
+<<<<<<< HEAD
    /**
    * Get subscriptionId
    * @return subscriptionId
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * The UUID of the subscription
+   **/
+  @ApiModelProperty(value = "The UUID of the subscription")
+  @JsonProperty("subscriptionId")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getSubscriptionId() {
     return subscriptionId;
   }
@@ -88,6 +118,7 @@ public class SubscriptionDTO   {
     this.subscriptionId = subscriptionId;
   }
 
+<<<<<<< HEAD
   public SubscriptionDTO applicationId(String applicationId) {
     this.applicationId = applicationId;
     return this;
@@ -98,6 +129,14 @@ public class SubscriptionDTO   {
    * @return applicationId
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * The UUID of the application
+   **/
+  @ApiModelProperty(required = true, value = "The UUID of the application")
+  @JsonProperty("applicationId")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getApplicationId() {
     return applicationId;
   }
@@ -106,6 +145,7 @@ public class SubscriptionDTO   {
     this.applicationId = applicationId;
   }
 
+<<<<<<< HEAD
   public SubscriptionDTO apiIdentifier(String apiIdentifier) {
     this.apiIdentifier = apiIdentifier;
     return this;
@@ -116,6 +156,14 @@ public class SubscriptionDTO   {
    * @return apiIdentifier
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * The unique identifier of the API.
+   **/
+  @ApiModelProperty(required = true, value = "The unique identifier of the API.")
+  @JsonProperty("apiIdentifier")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getApiIdentifier() {
     return apiIdentifier;
   }
@@ -124,6 +172,7 @@ public class SubscriptionDTO   {
     this.apiIdentifier = apiIdentifier;
   }
 
+<<<<<<< HEAD
   public SubscriptionDTO apiName(String apiName) {
     this.apiName = apiName;
     return this;
@@ -169,6 +218,11 @@ public class SubscriptionDTO   {
    * Get policy
    * @return policy
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public String getPolicy() {
     return policy;
@@ -183,10 +237,16 @@ public class SubscriptionDTO   {
     return this;
   }
 
+<<<<<<< HEAD
    /**
    * Get lifeCycleStatus
    * @return lifeCycleStatus
   **/
+=======
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(value = "")
   public LifeCycleStatusEnum getLifeCycleStatus() {
     return lifeCycleStatus;

@@ -27,6 +27,7 @@ public class ThrottleLimitDTO   {
   @SerializedName("unitTime")
   private Integer unitTime = null;
 
+<<<<<<< HEAD
   public ThrottleLimitDTO bandwidthLimit(BandwidthLimitDTO bandwidthLimit) {
     this.bandwidthLimit = bandwidthLimit;
     return this;
@@ -74,6 +75,15 @@ public class ThrottleLimitDTO   {
   **/
   @ApiModelProperty(required = true, value = "BandwidthLimit and RequestCountLimit are the supported values. ")
   public String getType() {
+=======
+  
+  /**
+   * Type of the throttling limit. Allowed values are \"RequestCountLimit\" and \"BandwidthLimit\".\nPlease see schemas of each of those throttling limit types in Definitions section.\n
+   **/
+  @ApiModelProperty(required = true, value = "Type of the throttling limit. Allowed values are \"RequestCountLimit\" and \"BandwidthLimit\".\nPlease see schemas of each of those throttling limit types in Definitions section.\n")
+  @JsonProperty("type")
+  public TypeEnum getType() {
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return type;
   }
 
@@ -81,6 +91,7 @@ public class ThrottleLimitDTO   {
     this.type = type;
   }
 
+<<<<<<< HEAD
   public ThrottleLimitDTO timeUnit(String timeUnit) {
     this.timeUnit = timeUnit;
     return this;
@@ -91,6 +102,14 @@ public class ThrottleLimitDTO   {
    * @return timeUnit
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Unit of the time. Allowed values are \"sec\", \"min\", \"hour\", \"day\"
+   **/
+  @ApiModelProperty(required = true, value = "Unit of the time. Allowed values are \"sec\", \"min\", \"hour\", \"day\"")
+  @JsonProperty("timeUnit")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getTimeUnit() {
     return timeUnit;
   }
@@ -99,6 +118,7 @@ public class ThrottleLimitDTO   {
     this.timeUnit = timeUnit;
   }
 
+<<<<<<< HEAD
   public ThrottleLimitDTO unitTime(Integer unitTime) {
     this.unitTime = unitTime;
     return this;
@@ -109,6 +129,14 @@ public class ThrottleLimitDTO   {
    * @return unitTime
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Time limit that the throttling limit applies.
+   **/
+  @ApiModelProperty(required = true, value = "Time limit that the throttling limit applies.")
+  @JsonProperty("unitTime")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Integer getUnitTime() {
     return unitTime;
   }

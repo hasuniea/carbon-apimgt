@@ -51,6 +51,7 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
     this.defaultLimit = defaultLimit;
   }
 
+<<<<<<< HEAD
   public SubscriptionThrottlePolicyDTO rateLimitCount(Integer rateLimitCount) {
     this.rateLimitCount = rateLimitCount;
     return this;
@@ -61,6 +62,14 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
    * @return rateLimitCount
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Burst control request count
+   **/
+  @ApiModelProperty(value = "Burst control request count")
+  @JsonProperty("rateLimitCount")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Integer getRateLimitCount() {
     return rateLimitCount;
   }
@@ -69,6 +78,7 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
     this.rateLimitCount = rateLimitCount;
   }
 
+<<<<<<< HEAD
   public SubscriptionThrottlePolicyDTO rateLimitTimeUnit(String rateLimitTimeUnit) {
     this.rateLimitTimeUnit = rateLimitTimeUnit;
     return this;
@@ -79,6 +89,14 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
    * @return rateLimitTimeUnit
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Burst control time unit
+   **/
+  @ApiModelProperty(value = "Burst control time unit")
+  @JsonProperty("rateLimitTimeUnit")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getRateLimitTimeUnit() {
     return rateLimitTimeUnit;
   }
@@ -87,6 +105,7 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
     this.rateLimitTimeUnit = rateLimitTimeUnit;
   }
 
+<<<<<<< HEAD
   public SubscriptionThrottlePolicyDTO customAttributes(List<CustomAttributeDTO> customAttributes) {
     this.customAttributes = customAttributes;
     return this;
@@ -102,6 +121,14 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
    * @return customAttributes
   **/
   @ApiModelProperty(example = "{}", value = "Custom attributes added to the Subscription Throttle policy ")
+=======
+  
+  /**
+   * Custom attributes added to the Subscription Throttling Policy\n
+   **/
+  @ApiModelProperty(value = "Custom attributes added to the Subscription Throttling Policy\n")
+  @JsonProperty("customAttributes")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public List<CustomAttributeDTO> getCustomAttributes() {
     return customAttributes;
   }
@@ -110,6 +137,7 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
     this.customAttributes = customAttributes;
   }
 
+<<<<<<< HEAD
   public SubscriptionThrottlePolicyDTO stopOnQuotaReach(Boolean stopOnQuotaReach) {
     this.stopOnQuotaReach = stopOnQuotaReach;
     return this;
@@ -120,6 +148,14 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
    * @return stopOnQuotaReach
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * This indicates the action to be taken when a user goes beyond the allocated quota. If checked, the user's requests will be dropped. If unchecked, the requests will be allowed to pass through.\n
+   **/
+  @ApiModelProperty(value = "This indicates the action to be taken when a user goes beyond the allocated quota. If checked, the user's requests will be dropped. If unchecked, the requests will be allowed to pass through.\n")
+  @JsonProperty("stopOnQuotaReach")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Boolean getStopOnQuotaReach() {
     return stopOnQuotaReach;
   }
@@ -128,6 +164,7 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
     this.stopOnQuotaReach = stopOnQuotaReach;
   }
 
+<<<<<<< HEAD
   public SubscriptionThrottlePolicyDTO billingPlan(String billingPlan) {
     this.billingPlan = billingPlan;
     return this;
@@ -138,6 +175,14 @@ public class SubscriptionThrottlePolicyDTO extends ThrottlePolicyDTO  {
    * @return billingPlan
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * define whether this is Paid or a Free plan. Allowed values are FREE or COMMERCIAL.\n
+   **/
+  @ApiModelProperty(value = "define whether this is Paid or a Free plan. Allowed values are FREE or COMMERCIAL.\n")
+  @JsonProperty("billingPlan")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getBillingPlan() {
     return billingPlan;
   }

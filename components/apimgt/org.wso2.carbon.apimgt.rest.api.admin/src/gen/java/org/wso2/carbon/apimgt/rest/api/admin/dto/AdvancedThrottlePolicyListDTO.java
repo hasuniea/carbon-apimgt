@@ -24,11 +24,20 @@ public class AdvancedThrottlePolicyListDTO   {
     return this;
   }
 
+<<<<<<< HEAD
    /**
    * Number of Advanced throttle policies returned. 
    * @return count
   **/
   @ApiModelProperty(example = "1", value = "Number of Advanced throttle policies returned. ")
+=======
+  
+  /**
+   * Number of Advanced Throttling Policies returned.\n
+   **/
+  @ApiModelProperty(value = "Number of Advanced Throttling Policies returned.\n")
+  @JsonProperty("count")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Integer getCount() {
     return count;
   }

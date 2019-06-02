@@ -16,6 +16,7 @@ public class ErrorListItemDTO   {
   @SerializedName("message")
   private String message = null;
 
+<<<<<<< HEAD
   public ErrorListItemDTO code(String code) {
     this.code = code;
     return this;
@@ -26,6 +27,14 @@ public class ErrorListItemDTO   {
    * @return code
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Error code
+   **/
+  @ApiModelProperty(required = true, value = "Error code")
+  @JsonProperty("code")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getCode() {
     return code;
   }

@@ -33,6 +33,7 @@ public class ThrottleConditionDTO   {
   @SerializedName("invertCondition")
   private Boolean invertCondition = false;
 
+<<<<<<< HEAD
   public ThrottleConditionDTO headerCondition(HeaderConditionDTO headerCondition) {
     this.headerCondition = headerCondition;
     return this;
@@ -116,6 +117,15 @@ public class ThrottleConditionDTO   {
   **/
   @ApiModelProperty(required = true, value = "")
   public String getType() {
+=======
+  
+  /**
+   * Type of the thottling condition.\nAllowed values are HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\n
+   **/
+  @ApiModelProperty(required = true, value = "Type of the thottling condition.\nAllowed values are HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\n")
+  @JsonProperty("type")
+  public TypeEnum getType() {
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return type;
   }
 
@@ -123,6 +133,7 @@ public class ThrottleConditionDTO   {
     this.type = type;
   }
 
+<<<<<<< HEAD
   public ThrottleConditionDTO invertCondition(Boolean invertCondition) {
     this.invertCondition = invertCondition;
     return this;
@@ -133,6 +144,14 @@ public class ThrottleConditionDTO   {
    * @return invertCondition
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Specifies whether inversion of the condition to be matched against the request
+   **/
+  @ApiModelProperty(value = "Specifies whether inversion of the condition to be matched against the request")
+  @JsonProperty("invertCondition")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Boolean getInvertCondition() {
     return invertCondition;
   }

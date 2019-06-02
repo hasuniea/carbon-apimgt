@@ -71,6 +71,7 @@ public class DocumentDTO   {
    * Gets or Sets sourceType
    */
   public enum SourceTypeEnum {
+<<<<<<< HEAD
     @SerializedName("INLINE")
     INLINE("INLINE"),
     
@@ -101,6 +102,11 @@ public class DocumentDTO   {
   }
 
   @SerializedName("sourceType")
+=======
+     INLINE, MARKDOWN, URL, FILE,
+  };
+  @NotNull
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   private SourceTypeEnum sourceType = null;
 
   @SerializedName("sourceUrl")

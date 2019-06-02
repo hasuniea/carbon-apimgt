@@ -9,21 +9,42 @@ import java.util.List;
 import org.wso2.carbon.apimgt.rest.api.store.dto.ErrorListItemDTO;
 import java.util.Objects;
 
+<<<<<<< HEAD
 /**
  * ErrorDTO
  */
 public class ErrorDTO   {
   @SerializedName("code")
+=======
+import io.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+
+
+
+
+@ApiModel(description = "")
+public class ErrorDTO  {
+  
+  
+  @NotNull
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   private Long code = null;
 
   @SerializedName("message")
   private String message = null;
 
+<<<<<<< HEAD
   @SerializedName("description")
   private String description = null;
 
   @SerializedName("moreInfo")
   private String moreInfo = null;
+=======
+  private String lastUpdatedTime = null;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
   @SerializedName("error")
   private List<ErrorListItemDTO> error = new ArrayList<ErrorListItemDTO>();
@@ -37,6 +58,21 @@ public class ErrorDTO   {
    * Get code
    * @return code
   **/
+<<<<<<< HEAD
+=======
+
+  @JsonIgnore
+  public String getCreatedTime(){
+    return createdTime;
+  }
+  public void setCreatedTime(String createdTime){
+    this.createdTime=createdTime;
+  }
+
+  
+  /**
+   **/
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   @ApiModelProperty(required = true, value = "")
   public Long getCode() {
     return code;
@@ -46,12 +82,17 @@ public class ErrorDTO   {
     this.code = code;
   }
 
+<<<<<<< HEAD
   public ErrorDTO message(String message) {
     this.message = message;
     return this;
   }
 
    /**
+=======
+  
+  /**
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
    * Error message.
    * @return message
   **/
@@ -64,6 +105,7 @@ public class ErrorDTO   {
     this.message = message;
   }
 
+<<<<<<< HEAD
   public ErrorDTO description(String description) {
     this.description = description;
     return this;
@@ -74,6 +116,14 @@ public class ErrorDTO   {
    * @return description
   **/
   @ApiModelProperty(value = "A detail description about the error message. ")
+=======
+  
+  /**
+   * A detail description about the error message.\n
+   **/
+  @ApiModelProperty(value = "A detail description about the error message.\n")
+  @JsonProperty("description")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getDescription() {
     return description;
   }
@@ -82,6 +132,7 @@ public class ErrorDTO   {
     this.description = description;
   }
 
+<<<<<<< HEAD
   public ErrorDTO moreInfo(String moreInfo) {
     this.moreInfo = moreInfo;
     return this;
@@ -92,6 +143,14 @@ public class ErrorDTO   {
    * @return moreInfo
   **/
   @ApiModelProperty(value = "Preferably an url with more details about the error. ")
+=======
+  
+  /**
+   * Preferably an url with more details about the error.\n
+   **/
+  @ApiModelProperty(value = "Preferably an url with more details about the error.\n")
+  @JsonProperty("moreInfo")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getMoreInfo() {
     return moreInfo;
   }
@@ -100,6 +159,7 @@ public class ErrorDTO   {
     this.moreInfo = moreInfo;
   }
 
+<<<<<<< HEAD
   public ErrorDTO error(List<ErrorListItemDTO> error) {
     this.error = error;
     return this;
@@ -115,6 +175,14 @@ public class ErrorDTO   {
    * @return error
   **/
   @ApiModelProperty(value = "If there are more than one error list them out. For example, list out validation errors by each field. ")
+=======
+  
+  /**
+   * If there are more than one error list them out.\nFor example, list out validation errors by each field.\n
+   **/
+  @ApiModelProperty(value = "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n")
+  @JsonProperty("error")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public List<ErrorListItemDTO> getError() {
     return error;
   }

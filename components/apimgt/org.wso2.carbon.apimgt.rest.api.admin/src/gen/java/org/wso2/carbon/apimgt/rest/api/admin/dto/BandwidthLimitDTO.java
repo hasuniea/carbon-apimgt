@@ -13,6 +13,7 @@ public class BandwidthLimitDTO   {
   @SerializedName("dataAmount")
   private Integer dataAmount = 0;
 
+<<<<<<< HEAD
   @SerializedName("dataUnit")
   private String dataUnit = null;
 
@@ -27,6 +28,29 @@ public class BandwidthLimitDTO   {
   **/
   @ApiModelProperty(required = true, value = "")
   public Integer getDataAmount() {
+=======
+
+
+
+
+@ApiModel(description = "")
+public class BandwidthLimitDTO extends ThrottleLimitDTO {
+  
+  
+  
+  private Long dataAmount = null;
+  
+  
+  private String dataUnit = null;
+
+  
+  /**
+   * Amount of data allowed to be transfered
+   **/
+  @ApiModelProperty(value = "Amount of data allowed to be transfered")
+  @JsonProperty("dataAmount")
+  public Long getDataAmount() {
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return dataAmount;
   }
 
@@ -34,6 +58,7 @@ public class BandwidthLimitDTO   {
     this.dataAmount = dataAmount;
   }
 
+<<<<<<< HEAD
   public BandwidthLimitDTO dataUnit(String dataUnit) {
     this.dataUnit = dataUnit;
     return this;
@@ -44,6 +69,14 @@ public class BandwidthLimitDTO   {
    * @return dataUnit
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"
+   **/
+  @ApiModelProperty(value = "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"")
+  @JsonProperty("dataUnit")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getDataUnit() {
     return dataUnit;
   }

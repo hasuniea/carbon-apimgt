@@ -7,7 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIInfoDTO;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+import org.wso2.carbon.apimgt.rest.api.publisher.dto.APIListPaginationDTO;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
 /**
  * APIListDTO
@@ -24,6 +28,9 @@ public class APIListDTO   {
 
   @SerializedName("list")
   private List<APIInfoDTO> list = new ArrayList<APIInfoDTO>();
+  
+  
+  private APIListPaginationDTO pagination = null;
 
   public APIListDTO count(Integer count) {
     this.count = count;
@@ -102,6 +109,22 @@ public class APIListDTO   {
     this.list = list;
   }
 
+<<<<<<< HEAD
+=======
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("pagination")
+  public APIListPaginationDTO getPagination() {
+    return pagination;
+  }
+  public void setPagination(APIListPaginationDTO pagination) {
+    this.pagination = pagination;
+  }
+
+  
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -128,11 +151,20 @@ public class APIListDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class APIListDTO {\n");
     
+<<<<<<< HEAD
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    next: ").append(toIndentedString(next)).append("\n");
     sb.append("    previous: ").append(toIndentedString(previous)).append("\n");
     sb.append("    list: ").append(toIndentedString(list)).append("\n");
     sb.append("}");
+=======
+    sb.append("  count: ").append(count).append("\n");
+    sb.append("  next: ").append(next).append("\n");
+    sb.append("  previous: ").append(previous).append("\n");
+    sb.append("  list: ").append(list).append("\n");
+    sb.append("  pagination: ").append(pagination).append("\n");
+    sb.append("}\n");
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     return sb.toString();
   }
 

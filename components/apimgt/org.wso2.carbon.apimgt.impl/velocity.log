@@ -1,0 +1,3 @@
+2019-05-29 16:47:25,364 - Velocimacro : added #getKey(  ) : source = repository/resources/policy_templates/throttle_policy_template_resource_default.xml
+2019-05-29 16:47:25,364 - Velocimacro : added #getRule(  policy ) : source = repository/resources/policy_templates/throttle_policy_template_resource_default.xml
+2019-05-29 16:47:25,365 - ResourceManager : found repository/resources/policy_templates/throttle_policy_template_resource_default.xml with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader

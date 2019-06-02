@@ -1,5 +1,6 @@
 package org.wso2.carbon.apimgt.rest.api.admin;
 
+<<<<<<< HEAD
 
 import io.swagger.annotations.ApiParam;
 
@@ -47,10 +48,40 @@ public class LabelsApi implements Microservice  {
    private final LabelsApiService delegate = LabelsApiServiceFactory.getLabelsApi();
 
     @OPTIONS
+=======
+import org.wso2.carbon.apimgt.rest.api.admin.dto.*;
+import org.wso2.carbon.apimgt.rest.api.admin.LabelsApiService;
+import org.wso2.carbon.apimgt.rest.api.admin.factories.LabelsApiServiceFactory;
+
+import io.swagger.annotations.ApiParam;
+
+import org.wso2.carbon.apimgt.rest.api.admin.dto.LabelListDTO;
+import org.wso2.carbon.apimgt.rest.api.admin.dto.ErrorDTO;
+import org.wso2.carbon.apimgt.rest.api.admin.dto.LabelDTO;
+
+import java.util.List;
+
+import java.io.InputStream;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+
+@Path("/labels")
+@Consumes({ "application/json" })
+@Produces({ "application/json" })
+@io.swagger.annotations.Api(value = "/labels", description = "the labels API")
+public class LabelsApi  {
+
+   private final LabelsApiService delegate = LabelsApiServiceFactory.getLabelsApi();
+
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     @GET
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Get all registered Labels", notes = "Get all registered Labels ", response = LabelListDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:label_manage", description = "Label manage")
@@ -68,10 +99,21 @@ public class LabelsApi implements Microservice  {
         return delegate.labelsGet(request);
     }
     @OPTIONS
+=======
+    @io.swagger.annotations.ApiOperation(value = "Get all registered Labels", notes = "Get all registered Labels\n", response = LabelListDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nLabels returned\n") })
+
+    public Response labelsGet()
+    {
+    return delegate.labelsGet();
+    }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     @DELETE
     @Path("/{labelId}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Delete a Label", notes = "Delete a Label by label Id ", response = void.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:label_manage", description = "Label manage")
@@ -118,10 +160,25 @@ public class LabelsApi implements Microservice  {
         return delegate.labelsLabelIdGet(labelId,ifNoneMatch,ifModifiedSince,request);
     }
     @OPTIONS
+=======
+    @io.swagger.annotations.ApiOperation(value = "Delete a Label", notes = "Delete a Label by label Id\n", response = void.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nLabel successfully deleted.\n"),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found.\nLabel to be deleted does not exist.\n") })
+
+    public Response labelsLabelIdDelete(@ApiParam(value = "Label UUID\n",required=true ) @PathParam("labelId")  String labelId,
+    @ApiParam(value = "Validator for conditional requests; based on ETag (Will be supported in future).\n"  )@HeaderParam("If-Match") String ifMatch,
+    @ApiParam(value = "Validator for conditional requests; based on Last Modified header (Will be supported in future).\n"  )@HeaderParam("If-Unmodified-Since") String ifUnmodifiedSince)
+    {
+    return delegate.labelsLabelIdDelete(labelId,ifMatch,ifUnmodifiedSince);
+    }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     @PUT
     @Path("/{labelId}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Update a Label", notes = "Update a Label by label Id ", response = LabelDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:label_manage", description = "Label manage")
@@ -143,10 +200,26 @@ public class LabelsApi implements Microservice  {
         return delegate.labelsLabelIdPut(labelId,body,request);
     }
     @OPTIONS
+=======
+    @io.swagger.annotations.ApiOperation(value = "Update a Label", notes = "Update a Label by label Id\n", response = LabelDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK.\nLabel updated.\n"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request.\nInvalid request or validation error.\n"),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found.\nThe resource to be updated does not exist.\n") })
+
+    public Response labelsLabelIdPut(@ApiParam(value = "Label UUID\n",required=true ) @PathParam("labelId")  String labelId,
+    @ApiParam(value = "Label object with updated information\n" ,required=true ) LabelDTO body)
+    {
+    return delegate.labelsLabelIdPut(labelId,body);
+    }
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
     @POST
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Add a Label", notes = "Add a new gateway/store Label ", response = LabelDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:label_manage", description = "Label manage")
@@ -165,3 +238,17 @@ public class LabelsApi implements Microservice  {
         return delegate.labelsPost(body,request);
     }
 }
+=======
+    @io.swagger.annotations.ApiOperation(value = "Add a Label", notes = "Add a new gateway Label\n", response = LabelDTO.class)
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "Created.\nSuccessful response with the newly created object as entity in the body.\n"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request.\nInvalid request or validation error\n") })
+
+    public Response labelsPost(@ApiParam(value = "Label object that should to be added\n" ,required=true ) LabelDTO body)
+    {
+    return delegate.labelsPost(body);
+    }
+}
+
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7

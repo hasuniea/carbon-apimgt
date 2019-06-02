@@ -17,6 +17,7 @@ public class CustomRuleDTO extends ThrottlePolicyDTO  {
   @SerializedName("keyTemplate")
   private String keyTemplate = null;
 
+<<<<<<< HEAD
   public CustomRuleDTO siddhiQuery(String siddhiQuery) {
     this.siddhiQuery = siddhiQuery;
     return this;
@@ -27,6 +28,14 @@ public class CustomRuleDTO extends ThrottlePolicyDTO  {
    * @return siddhiQuery
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Siddhi query which represents the custom throttling policy
+   **/
+  @ApiModelProperty(value = "Siddhi query which represents the custom throttling policy")
+  @JsonProperty("siddhiQuery")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getSiddhiQuery() {
     return siddhiQuery;
   }
@@ -35,6 +44,7 @@ public class CustomRuleDTO extends ThrottlePolicyDTO  {
     this.siddhiQuery = siddhiQuery;
   }
 
+<<<<<<< HEAD
   public CustomRuleDTO keyTemplate(String keyTemplate) {
     this.keyTemplate = keyTemplate;
     return this;
@@ -45,6 +55,14 @@ public class CustomRuleDTO extends ThrottlePolicyDTO  {
    * @return keyTemplate
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * The specific combination of attributes that are checked in the policy.
+   **/
+  @ApiModelProperty(value = "The specific combination of attributes that are checked in the policy.")
+  @JsonProperty("keyTemplate")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getKeyTemplate() {
     return keyTemplate;
   }

@@ -25,6 +25,7 @@ public class ThrottlePolicyDTO   {
   @SerializedName("isDeployed")
   private Boolean isDeployed = false;
 
+<<<<<<< HEAD
   @SerializedName("type")
   private String type = null;
 
@@ -44,6 +45,16 @@ public class ThrottlePolicyDTO   {
 
   public void setId(String id) {
     this.id = id;
+=======
+  
+  /**
+   * Id of policy
+   **/
+  @ApiModelProperty(value = "Id of policy")
+  @JsonProperty("policyId")
+  public String getPolicyId() {
+    return policyId;
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   }
 
   public ThrottlePolicyDTO policyName(String policyName) {
@@ -51,11 +62,20 @@ public class ThrottlePolicyDTO   {
     return this;
   }
 
+<<<<<<< HEAD
    /**
    * Get policyName
    * @return policyName
   **/
   @ApiModelProperty(required = true, value = "")
+=======
+  
+  /**
+   * Name of policy
+   **/
+  @ApiModelProperty(required = true, value = "Name of policy")
+  @JsonProperty("policyName")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getPolicyName() {
     return policyName;
   }
@@ -64,6 +84,7 @@ public class ThrottlePolicyDTO   {
     this.policyName = policyName;
   }
 
+<<<<<<< HEAD
   public ThrottlePolicyDTO displayName(String displayName) {
     this.displayName = displayName;
     return this;
@@ -74,6 +95,14 @@ public class ThrottlePolicyDTO   {
    * @return displayName
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Display name of the policy
+   **/
+  @ApiModelProperty(value = "Display name of the policy")
+  @JsonProperty("displayName")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getDisplayName() {
     return displayName;
   }
@@ -82,6 +111,7 @@ public class ThrottlePolicyDTO   {
     this.displayName = displayName;
   }
 
+<<<<<<< HEAD
   public ThrottlePolicyDTO description(String description) {
     this.description = description;
     return this;
@@ -92,6 +122,14 @@ public class ThrottlePolicyDTO   {
    * @return description
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Description of the policy
+   **/
+  @ApiModelProperty(value = "Description of the policy")
+  @JsonProperty("description")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public String getDescription() {
     return description;
   }
@@ -100,6 +138,7 @@ public class ThrottlePolicyDTO   {
     this.description = description;
   }
 
+<<<<<<< HEAD
   public ThrottlePolicyDTO isDeployed(Boolean isDeployed) {
     this.isDeployed = isDeployed;
     return this;
@@ -110,6 +149,14 @@ public class ThrottlePolicyDTO   {
    * @return isDeployed
   **/
   @ApiModelProperty(value = "")
+=======
+  
+  /**
+   * Indicates whether the policy is deployed successfully or not.
+   **/
+  @ApiModelProperty(value = "Indicates whether the policy is deployed successfully or not.")
+  @JsonProperty("isDeployed")
+>>>>>>> 1899f307df4c4483e795b6eaf896954a12742bb7
   public Boolean getIsDeployed() {
     return isDeployed;
   }
