@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import static org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants.REQUEST_TYPE_FAIL_MSG;
+
 /**
  * This mediator would protect the backend resources from the JSON threat vulnerabilities by validating the
  * JSON schema.
@@ -105,8 +107,9 @@ public class JsonSchemaValidator extends AbstractMediator {
                 AnalyzerHolder.returnObject(apimThreatAnalyzer);
             }
         } else {
-            GatewayUtils.handleThreat(messageContext, APIMgtGatewayConstants.HTTP_SC_CODE,
-                    APIMgtGatewayConstants.REQUEST_TYPE_FAIL_MSG);
+            if (logger.isDebugEnabled()) {
+                logger.debug("JSON Schema Validator: " + APIMgtGatewayConstants.REQUEST_TYPE_FAIL_MSG);
+            }
         }
         GatewayUtils.setOriginalInputStream(inputStreams, axis2MC);
         if (validRequest) {
