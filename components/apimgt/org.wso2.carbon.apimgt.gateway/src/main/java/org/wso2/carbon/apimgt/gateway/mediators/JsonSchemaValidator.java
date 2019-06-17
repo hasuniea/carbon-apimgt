@@ -41,8 +41,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import static org.wso2.carbon.apimgt.gateway.APIMgtGatewayConstants.REQUEST_TYPE_FAIL_MSG;
-
 /**
  * This mediator would protect the backend resources from the JSON threat vulnerabilities by validating the
  * JSON schema.
