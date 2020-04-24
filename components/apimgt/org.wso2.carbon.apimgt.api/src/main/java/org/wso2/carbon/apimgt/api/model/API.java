@@ -163,6 +163,19 @@ public class API implements Serializable {
      */
     private boolean enableSchemaValidation = false;
 
+    /**
+     * Property to hold enable/disable status of the store visibility.
+     */
+    private boolean enableStore = true;
+
+    public boolean isEnableStore() {
+        return enableStore;
+    }
+
+    public void setEnableStore(boolean enableStore) {
+        this.enableStore = enableStore;
+    }
+
     private List<APICategory> apiCategories;
 
 

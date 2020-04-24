@@ -137,6 +137,8 @@ public class APIManagerComponent {
 
     public static final String ENABLE_SCHEMA_VALIDATION = "Enable Schema Validation";
 
+    public static final String ENABLE_STORE = "Enable Store";
+
     @Activate
     protected void activate(ComponentContext componentContext) throws Exception {
         if (log.isDebugEnabled()) {

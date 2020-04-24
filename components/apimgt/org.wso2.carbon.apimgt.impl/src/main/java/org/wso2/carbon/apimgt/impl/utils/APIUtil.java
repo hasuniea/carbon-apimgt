@@ -462,6 +462,8 @@ public final class APIUtil {
             api.setLatest(Boolean.parseBoolean(artifact.getAttribute(APIConstants.API_OVERVIEW_IS_LATEST)));
             api.setEnableSchemaValidation(Boolean.parseBoolean(
                     artifact.getAttribute(APIConstants.API_OVERVIEW_ENABLE_JSON_SCHEMA)));
+            api.setEnableStore(Boolean.parseBoolean(
+                    artifact.getAttribute(APIConstants.API_OVERVIEW_ENABLE_STORE)));
 
             Set<Scope> scopes = ApiMgtDAO.getInstance().getAPIScopes(api.getId());
             api.setScopes(scopes);
@@ -647,6 +649,7 @@ public final class APIUtil {
             api.setLatest(Boolean.parseBoolean(artifact.getAttribute(APIConstants.API_OVERVIEW_IS_LATEST)));
             api.setEnableSchemaValidation(Boolean.parseBoolean(artifact.getAttribute(
                     APIConstants.API_OVERVIEW_ENABLE_JSON_SCHEMA)));
+            api.setEnableStore(Boolean.parseBoolean(artifact.getAttribute(APIConstants.API_OVERVIEW_ENABLE_STORE)));
 
             Set<Scope> scopes = ApiMgtDAO.getInstance().getAPIScopes(api.getId());
             api.setScopes(scopes);
@@ -1206,6 +1209,7 @@ public final class APIUtil {
             artifact.setAttribute(APIConstants.API_OVERVIEW_API_SECURITY, api.getApiSecurity());
             artifact.setAttribute(APIConstants.API_OVERVIEW_ENABLE_JSON_SCHEMA,
                     Boolean.toString(api.isEnabledSchemaValidation()));
+            artifact.setAttribute(APIConstants.API_OVERVIEW_ENABLE_STORE, Boolean.toString(api.isEnableStore()));
 
             //Validate if the API has an unsupported context before setting it in the artifact
             String tenantDomain = PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantDomain();

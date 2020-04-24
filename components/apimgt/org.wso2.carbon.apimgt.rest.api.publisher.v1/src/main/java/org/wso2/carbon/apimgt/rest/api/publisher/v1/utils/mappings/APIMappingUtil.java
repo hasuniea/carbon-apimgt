@@ -189,6 +189,9 @@ public class APIMappingUtil {
         } else {
             model.setCacheTimeout(APIConstants.API_RESPONSE_CACHE_TIMEOUT);
         }
+        if (dto.isEnableStore() != null) {
+            model.setEnableStore(dto.isEnableStore());
+        }
 
         if (dto.getMediationPolicies() != null) {
             List<MediationPolicyDTO> policies = dto.getMediationPolicies();
@@ -765,6 +768,7 @@ public class APIMappingUtil {
 
         dto.setIsDefaultVersion(model.isDefaultVersion());
         dto.setEnableSchemaValidation(model.isEnabledSchemaValidation());
+        dto.setEnableStore(model.isEnableStore());
         if (APIConstants.ENABLED.equals(model.getResponseCache())) {
             dto.setResponseCachingEnabled(Boolean.TRUE);
         } else {

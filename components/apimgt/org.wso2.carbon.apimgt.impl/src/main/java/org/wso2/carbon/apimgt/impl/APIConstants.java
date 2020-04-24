@@ -354,6 +354,8 @@ public final class APIConstants {
     public static final String API_OVERVIEW_DESTINATION_BASED_STATS_ENABLED = "overview_destinationStatsEnabled";
     public static final String API_OVERVIEW_WEBSOCKET = "overview_ws";
 
+    public static final String API_OVERVIEW_ENABLE_STORE = "overview_enableStore";
+
     //This constant is used in Json schema validator
     public static final String API_OVERVIEW_ENABLE_JSON_SCHEMA = "overview_enableSchemaValidation";
 
@@ -1536,6 +1538,7 @@ public final class APIConstants {
     public static final String TYPE_SEARCH_TYPE_PREFIX = "type";
     public static final String LABEL_SEARCH_TYPE_PREFIX = "label";
     public static final String CATEGORY_SEARCH_TYPE_PREFIX = "api-category";
+    public static final String ENABLE_STORE = "enableStore";
 
     //api-product related constants
     public static final String API_PRODUCT_VERSION = "1.0.0";
@@ -1744,7 +1747,7 @@ public final class APIConstants {
             NAME_TYPE_PREFIX, SUBCONTEXT_SEARCH_TYPE_PREFIX, PROVIDER_SEARCH_TYPE_PREFIX, CONTEXT_SEARCH_TYPE_PREFIX,
             VERSION_SEARCH_TYPE_PREFIX, LCSTATE_SEARCH_KEY.toLowerCase(), API_DESCRIPTION.toLowerCase(),
             API_STATUS.toLowerCase(), CONTENT_SEARCH_TYPE_PREFIX, TYPE_SEARCH_TYPE_PREFIX, LABEL_SEARCH_TYPE_PREFIX,
-            CATEGORY_SEARCH_TYPE_PREFIX };
+            CATEGORY_SEARCH_TYPE_PREFIX, ENABLE_STORE.toLowerCase() };
     // Prefix for registry attributes.
     public static final String OVERVIEW_PREFIX = "overview_";
     /**
