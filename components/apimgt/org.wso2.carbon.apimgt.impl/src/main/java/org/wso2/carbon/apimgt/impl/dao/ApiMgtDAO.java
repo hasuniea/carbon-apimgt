@@ -48,6 +48,7 @@ import org.wso2.carbon.apimgt.api.model.Application;
 import org.wso2.carbon.apimgt.api.model.ApplicationConstants;
 import org.wso2.carbon.apimgt.api.model.BlockConditionsDTO;
 import org.wso2.carbon.apimgt.api.model.Comment;
+import org.wso2.carbon.apimgt.api.model.EndpointRegistryInfo;
 import org.wso2.carbon.apimgt.api.model.Identifier;
 import org.wso2.carbon.apimgt.api.model.KeyManager;
 import org.wso2.carbon.apimgt.api.model.Label;
@@ -117,6 +118,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -4663,17 +4665,17 @@ public class ApiMgtDAO {
             } else {
                 if (forceCaseInsensitiveComparisons) {
                     sqlQuery = SQLConstantManagerFactory.
-                            getSQlString("GET_APPLICATIONS_PREFIX_CASESENSITVE_WITHGROUPID");
+                            getSQlString("GET_APPLICATIONS_PREFIX_NONE_CASESENSITVE_WITHGROUPID");
                 } else {
                     sqlQuery = SQLConstantManagerFactory.
-                            getSQlString("GET_APPLICATIONS_PREFIX_NONE_CASESENSITVE_WITHGROUPID");
+                            getSQlString("GET_APPLICATIONS_PREFIX_CASESENSITVE_WITHGROUPID");
                 }
             }
         } else {
             if (forceCaseInsensitiveComparisons) {
-                sqlQuery = SQLConstantManagerFactory.getSQlString("GET_APPLICATIONS_PREFIX_CASESENSITVE");
-            } else {
                 sqlQuery = SQLConstantManagerFactory.getSQlString("GET_APPLICATIONS_PREFIX_NONE_CASESENSITVE");
+            } else {
+                sqlQuery = SQLConstantManagerFactory.getSQlString("GET_APPLICATIONS_PREFIX_CASESENSITVE");
             }
         }
 
@@ -9862,7 +9864,7 @@ public class ApiMgtDAO {
         try {
             conn = APIMgtDBUtil.getConnection();
             ps = conn.prepareStatement(sqlQuery);
-            ps.setString(1, contextTemplate);
+            ps.setString(1, contextTemplate.toLowerCase());
 
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
@@ -10400,6 +10402,17 @@ public class ApiMgtDAO {
             policyStatement.executeUpdate();
 
             conn.commit();
+        } catch (SQLIntegrityConstraintViolationException e){
+            boolean isAppPolicyExists = isPolicyExist(conn, PolicyConstants.POLICY_LEVEL_APP, policy.getTenantId(),
+                    policy.getPolicyName());
+
+            if (isAppPolicyExists) {
+                log.warn(
+                        "Application Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                                + " is already persisted");
+            } else {
+                handleException("Failed to add Application Policy: " + policy, e);
+            }
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -10410,7 +10423,17 @@ public class ApiMgtDAO {
                     log.error("Failed to rollback the add Application Policy: " + policy.toString(), ex);
                 }
             }
-            handleException("Failed to add Application Policy: " + policy, e);
+            if (StringUtils.containsIgnoreCase(e.getMessage(), "Violation of UNIQUE KEY constraint")) {
+                boolean isAppPolicyExists = isPolicyExist(conn, PolicyConstants.POLICY_LEVEL_APP, policy.getTenantId(),
+                        policy.getPolicyName());
+
+                if (isAppPolicyExists) {
+                    log.warn("Application Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                            + " is already persisted");
+                }
+            } else {
+                handleException("Failed to add Application Policy: " + policy, e);
+            }
         } finally {
             APIMgtDBUtil.closeAllConnections(policyStatement, conn, null);
         }
@@ -10461,6 +10484,17 @@ public class ApiMgtDAO {
             policyStatement.executeUpdate();
 
             conn.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            boolean isSubscriptionPolicyExists = isPolicyExist(conn, PolicyConstants.POLICY_LEVEL_SUB, policy.getTenantId(),
+                    policy.getPolicyName());
+
+            if (isSubscriptionPolicyExists) {
+                log.warn(
+                        "Subscription Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                                + " is already persisted");
+            } else {
+                handleException("Failed to add Subscription Policy: " + policy, e);
+            }
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -10471,7 +10505,17 @@ public class ApiMgtDAO {
                     log.error("Failed to rollback the add Subscription Policy: " + policy.toString(), ex);
                 }
             }
-            handleException("Failed to add Subscription Policy: " + policy, e);
+            if (StringUtils.containsIgnoreCase(e.getMessage(), "Violation of UNIQUE KEY constraint")) {
+                boolean isSubscriptionPolicyExists = isPolicyExist(conn, PolicyConstants.POLICY_LEVEL_SUB, policy.getTenantId(),
+                        policy.getPolicyName());
+
+                if (isSubscriptionPolicyExists) {
+                    log.warn("Subscription Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                            + " is already persisted");
+                }
+            } else {
+                handleException("Failed to add Subscription Policy: " + policy, e);
+            }
         } finally {
             APIMgtDBUtil.closeAllConnections(policyStatement, conn, null);
         }
@@ -10492,6 +10536,17 @@ public class ApiMgtDAO {
             connection.setAutoCommit(false);
             addAPIPolicy(policy, connection);
             connection.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            boolean isAPIPolicyExists = isPolicyExist(connection, PolicyConstants.POLICY_LEVEL_API, policy.getTenantId(),
+                    policy.getPolicyName());
+
+            if (isAPIPolicyExists) {
+                log.warn(
+                        "API Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                                + " is already persisted");
+            } else {
+                handleException("Failed to add API Policy: " + policy, e);
+            }
         } catch (SQLException e) {
             if (connection != null) {
                 try {
@@ -10502,7 +10557,17 @@ public class ApiMgtDAO {
                     log.error("Failed to rollback the add Api Policy: " + policy.toString(), ex);
                 }
             }
-            handleException("Failed to add Api Policy: " + policy, e);
+            if (StringUtils.containsIgnoreCase(e.getMessage(), "Violation of UNIQUE KEY constraint")) {
+                boolean isAPIPolicyExists = isPolicyExist(connection, PolicyConstants.POLICY_LEVEL_API, policy.getTenantId(),
+                        policy.getPolicyName());
+
+                if (isAPIPolicyExists) {
+                    log.warn("API Policy " + policy.getPolicyName() + " in tenant domain " + policy.getTenantId()
+                            + " is already persisted");
+                }
+            } else {
+                handleException("Failed to add Api Policy: " + policy, e);
+            }
         } finally {
             APIMgtDBUtil.closeAllConnections(null, connection, null);
         }
@@ -12282,7 +12347,16 @@ public class ApiMgtDAO {
     }
 
     public boolean isPolicyExist(String policyType, int tenantId, String policyName) throws APIManagementException {
-        Connection connection = null;
+        try (Connection connection = APIMgtDBUtil.getConnection();) {
+            return isPolicyExist(connection, policyType, tenantId, policyName);
+        } catch (SQLException e) {
+            handleException("Error while checking policy existence " + policyName + "-" + tenantId, e);
+        }
+        return false;
+    }
+
+    public boolean isPolicyExist(Connection connection, String policyType, int tenantId, String policyName)
+            throws APIManagementException {
         PreparedStatement isExistStatement = null;
 
         boolean isExist = false;
@@ -12297,8 +12371,8 @@ public class ApiMgtDAO {
             policyTable = PolicyConstants.POLICY_SUBSCRIPTION_TABLE;
         }
         try {
-            String query = "SELECT " + PolicyConstants.POLICY_ID + " FROM " + policyTable + " WHERE TENANT_ID =? AND NAME = ? ";
-            connection = APIMgtDBUtil.getConnection();
+            String query = "SELECT " + PolicyConstants.POLICY_ID + " FROM " + policyTable
+                    + " WHERE TENANT_ID =? AND NAME = ? ";
             connection.setAutoCommit(true);
             isExistStatement = connection.prepareStatement(query);
             isExistStatement.setInt(1, tenantId);
@@ -14649,5 +14723,123 @@ public class ApiMgtDAO {
             APIMgtDBUtil.closeAllConnections(ps, conn, resultSet);
         }
         return list;
+    }
+
+    /**
+     * Add a new endpoint registry
+     *
+     * @param endpointRegistry EndpointRegistryInfo
+     * @param tenantID  ID of the owner's tenant
+     * @return registryId
+     */
+    public String addEndpointRegistry(EndpointRegistryInfo endpointRegistry, int tenantID) throws APIManagementException {
+        String query = SQLConstants.ADD_ENDPOINT_REGISTRY_SQL;
+        String uuid = UUID.randomUUID().toString();
+        try (Connection connection = APIMgtDBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
+            ps.setString(1, uuid);
+            ps.setString(2, endpointRegistry.getName());
+            ps.setString(3, endpointRegistry.getType());
+            ps.setString(4, endpointRegistry.getMode());
+            ps.setInt(5, tenantID);
+            ps.setString(6, endpointRegistry.getOwner());
+            // Need to update the role names
+            ps.setString(7, "");
+            ps.setString(8, "");
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            handleException("Error while adding new endpoint registry: " + endpointRegistry.getName(), e);
+        }
+        return uuid;
+    }
+
+    /**
+     * Return the details of an Endpoint Registry
+     *
+     * @param registryId Endpoint Registry Identifier
+     * @return Endpoint Registry Object
+     * @throws APIManagementException
+     */
+    public EndpointRegistryInfo getEndpointRegistryByUUID(String registryId) throws APIManagementException {
+        String query = SQLConstants.GET_ENDPOINT_REGISTRY_BY_UUID;
+        try (Connection connection = APIMgtDBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, registryId);
+            ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    EndpointRegistryInfo endpointRegistry = new EndpointRegistryInfo();
+                    endpointRegistry.setUuid(rs.getString("UUID"));
+                    endpointRegistry.setName(rs.getString("REG_NAME"));
+                    endpointRegistry.setType(rs.getString("REG_TYPE"));
+                    endpointRegistry.setMode(rs.getString("MODE"));
+                    endpointRegistry.setOwner(rs.getString("REG_OWNER"));
+                    return endpointRegistry;
+                }
+            }
+        } catch (SQLException e) {
+            handleException("Error while retrieving details of endpoint registry with Id: "
+                    + registryId, e);
+        }
+        return null;
+    }
+
+    /**
+     * Checks whether the given endpoint registry name is already available under given tenant domain
+     *
+     * @param registryName
+     * @param tenantID
+     * @return boolean
+     */
+    public boolean isEndpointRegistryNameExists(String registryName, int tenantID) throws APIManagementException {
+        String sql = SQLConstants.IS_ENDPOINT_REGISTRY_NAME_EXISTS;
+        try (Connection connection = APIMgtDBUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, registryName);
+            statement.setInt(2, tenantID);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("ENDPOINT_REGISTRY_COUNT");
+                if (count > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            handleException("Failed to check the existence of Endpoint Registry: " + registryName + " exists", e);
+        }
+        return false;
+    }
+
+    /**
+     * Returns details of all Endpoint Registries belong to a given tenant
+     *
+     * @param tenantID
+     * @return A list of EndpointRegistryInfo object
+     * @throws APIManagementException if failed get details of an Endpoint Registries
+     */
+    public List<EndpointRegistryInfo> getEndpointRegistries(int tenantID) throws APIManagementException {
+        List<EndpointRegistryInfo> endpointRegistryInfoList = new ArrayList<>();
+        String query = SQLConstants.GET_ALL_ENDPOINT_REGISTRIES_OF_TENANT;
+        try (Connection connection = APIMgtDBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, tenantID);
+            ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    EndpointRegistryInfo endpointRegistry = new EndpointRegistryInfo();
+                    endpointRegistry.setUuid(rs.getString("UUID"));
+                    endpointRegistry.setName(rs.getString("REG_NAME"));
+                    endpointRegistry.setType(rs.getString("REG_TYPE"));
+                    endpointRegistry.setMode(rs.getString("MODE"));
+                    endpointRegistry.setOwner(rs.getString("REG_OWNER"));
+                    endpointRegistryInfoList.add(endpointRegistry);
+                }
+            }
+        } catch (SQLException e) {
+            handleException("Error while retrieving details of endpoint registries", e);
+        }
+        return endpointRegistryInfoList;
     }
 }
