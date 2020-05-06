@@ -816,6 +816,7 @@
   "Apis.Details.index.api.not.found.body": "Cannot find the API with the given id",
   "Apis.Details.index.api.not.found.title": "API is not found in the {environmentLabel} Environment",
   "Apis.Details.index.business.info": "business info",
+  "Apis.Details.index.Tryout": "Try out",
   "Apis.Details.index.design.configs": "Design Configurations",
   "Apis.Details.index.documents": "documents",
   "Apis.Details.index.endpoints": "endpoints",
