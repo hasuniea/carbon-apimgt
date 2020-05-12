@@ -1,13 +1,13 @@
 {
-    "name": "wso2_apim_developer_portal",
+    "name": "devportal",
     "version": "1.0.0",
     "description": "WSO2 API Manager Developer Portal Web App Note: reverted the swagger-ui version from 3.24.3 to 3.22.2 as POST was not working within swagger console",
-    "main": "app.js",
+    "main": "source/src/index.js",
     "scripts": {
         "test": "shx jest",
         "test:integration": "jest -c source/Tests/Integration/jest.config.js",
         "test:coverage": "jest --coverage",
-        "build:prod": "rimraf site/public/dist/ && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 webpack -p --display errors-only --hide-modules",
+        "build:prod": "rimraf site/public/dist/ && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 webpack -p --display errors-only --hide-modules & ./node_modules/.bin/babel source -d dist --copy-files",
         "build:dev": "rimraf site/public/dist/ && cross-env NODE_ENV=development webpack -d --watch ",
         "analysis": "cross-env NODE_ENV=development webpack --env.analysis -p --progress",
         "lint": "eslint source/**/*.js source/**/*.jsx source/src/app/**/*.jsx",
@@ -72,7 +72,8 @@
         "swagger-ui-react": "^3.25.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.4.4",
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.9.6",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
         "@babel/preset-env": "^7.4.4",

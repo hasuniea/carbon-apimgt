@@ -70,7 +70,8 @@
         "swagger-ui": "^3.25.0",
         "swagger-ui-react": "^3.25.0",
         "typeface-roboto": "0.0.35",
-        "url-loader": "^0.5.9"
+        "url-loader": "^0.5.9",
+        "devportal": "^1.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.6.4",
@@ -91,7 +92,7 @@
         "enzyme-adapter-react-16": "^1.15.1",
         "eslint": "^6.6.0",
         "eslint-config-airbnb": "^18.0.1",
-        "eslint-loader": "^3.0.2",
+        "eslint-loader": "^3.0.4",
         "eslint-plugin-import": "^2.18.2",
         "eslint-plugin-jest": "^23.0.3",
         "eslint-plugin-jsx-a11y": "^6.0.3",

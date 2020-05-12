@@ -83,7 +83,8 @@ const config = {
     externals: {
         Themes: 'AppThemes', // Should use long names for preventing global scope JS variable conflicts
         MaterialIcons: 'MaterialIcons',
-        Config: 'AppConfig',
+        Settings: 'Settings',
+        Config: 'AppConfig'
     },
     plugins: [new MonacoWebpackPlugin({ languages: ['xml', 'json', 'yaml'], features: [] })],
 };
@@ -97,6 +98,8 @@ if (process.env.NODE_ENV === 'development') {
         enforce: 'pre',
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
+        exclude: /node_modules/,
+        exclude: /devportal/,
         options: {
             failOnError: true,
             quiet: true,
