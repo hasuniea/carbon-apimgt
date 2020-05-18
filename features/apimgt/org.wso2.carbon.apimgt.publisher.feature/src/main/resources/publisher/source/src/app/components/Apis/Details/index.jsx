@@ -75,6 +75,7 @@ import Monetization from './Monetization';
 import ExternalStores from './ExternalStores/ExternalStores';
 import { APIProvider } from './components/ApiContext';
 import CreateNewVersion from './NewVersion/NewVersion';
+import Tryout from './TestConsole/TestConsole';
 
 const styles = (theme) => ({
     LeftMenu: {
@@ -519,7 +520,7 @@ class Details extends Component {
                                 id: 'Apis.Details.index.overview',
                                 defaultMessage: 'overview',
                             })}
-                            to={pathPrefix + 'overview'}
+                            iconText='overview'
                         />
                         <LeftMenuItem
                             text={intl.formatMessage({
@@ -636,6 +637,14 @@ class Details extends Component {
                                 Icon={<StoreIcon />}
                             />
                         )}
+                        <LeftMenuItem
+                            text={intl.formatMessage({
+                                id: 'Apis.Details.index.Tryout',
+                                defaultMessage: 'try out',
+                            })}
+                            to={pathPrefix + 'tryout-console'}
+                            iconText='test'
+                        />
                     </div>
                     <div className={classes.content}>
                         <APIDetailsTopMenu api={api} isAPIProduct={isAPIProduct} imageUpdate={imageUpdate} />
@@ -731,6 +740,10 @@ class Details extends Component {
                                     path={Details.subPaths.BUSINESS_INFO_PRODUCT}
                                     component={() => <BusinessInformation api={api} />}
                                 />
+                                <Route
+                                    path={Details.subPaths.TRYOUT}
+                                    component={() => <Tryout api={api} />}
+                                />
                                 <Route path={Details.subPaths.PROPERTIES} component={() => <Properties api={api} />} />
                                 <Route
                                     path={Details.subPaths.PROPERTIES_PRODUCT}
@@ -795,6 +808,7 @@ Details.subPaths = {
     MONETIZATION: '/apis/:api_uuid/monetization',
     MONETIZATION_PRODUCT: '/api-products/:apiprod_uuid/monetization',
     EXTERNAL_STORES: '/apis/:api_uuid/external-devportals',
+    TRYOUT: '/apis/:api_uuid/tryout-console',
 };
 
 // To make sure that paths will not change by outsiders, Basically an enum
