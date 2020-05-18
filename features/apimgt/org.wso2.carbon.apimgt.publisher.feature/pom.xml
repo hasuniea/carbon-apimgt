@@ -235,6 +235,20 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <workingDirectory>../</workingDirectory>
+                            <executable>${npm.executable}</executable>
+                            <arguments>
+                                <argument>ci</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>npm run build (compile)</id>
                         <goals>
                             <goal>exec</goal>
@@ -249,22 +263,22 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>node test</id>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <phase>test</phase>
-                        <configuration>
-                            <skip>${maven.test.skip}</skip>
-                            <workingDirectory>src/main/resources/publisher</workingDirectory>
-                            <executable>${npm.executable}</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>test</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>node test</id>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>test</phase>-->
+<!--                        <configuration>-->
+<!--                            <skip>${maven.test.skip}</skip>-->
+<!--                            <workingDirectory>src/main/resources/publisher</workingDirectory>-->
+<!--                            <executable>${npm.executable}</executable>-->
+<!--                            <arguments>-->
+<!--                                <argument>run</argument>-->
+<!--                                <argument>test</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                 </executions>
                 <configuration>
                     <workingDirectory>${npm.working.dir}</workingDirectory>
