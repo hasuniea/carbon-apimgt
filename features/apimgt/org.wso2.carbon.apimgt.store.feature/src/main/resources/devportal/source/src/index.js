@@ -18,6 +18,7 @@
  */
 
 import TryOutController from './app/components/Apis/Details/ApiConsole/TryOutController.jsx';
+import Api from './app/data/api.jsx';
+import ApiContext from './app/components/Apis/Details/ApiContext.jsx';
 
-
-export default TryOutController;
+export { TryOutController, Api, ApiContext };
