@@ -18,8 +18,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
-import Alert from 'AppComponents/Shared/Alert';
-import { TryOutController, Api, ApiContext } from 'developer_portal';
+import { TryOutController, ApiContext } from 'developer_portal';
 
 /**
  * @class TestConsole
@@ -32,43 +31,54 @@ class TestConsole extends React.Component {
      */
     constructor(props) {
         super(props);
-        const restApi = new Api();
-        const promisedAPI = restApi.getAPIById(this.api_uuid);
-        promisedAPI
-            .then((api) => {
-                this.setState({ api: api.body });
-                console.log('ssss');
-                console.log('API Body' + api.body);
-            })
-            .catch((error) => {
-                const { status, response } = error;
-                const { setTenantDomain, intl } = this.props;
-                const message = intl.formatMessage({
-                    defaultMessage: 'Invalid tenant domain',
-                    id: 'Apis.Details.index.invalid.tenant.domain',
-                });
-                if (response && response.body.code === 901300) {
-                    setTenantDomain('INVALID');
-                    Alert.error(message);
-                }
-                console.error('Error when getting apis', error);
-                if (status === 404 || status === 403) {
-                    Alert.error(message);
-                }
-            });
+        const { api } = props;
+        const apiObj = api;
+        console.log('API');
+        console.log(api);
+        console.log(apiObj);
+        // const restApi = new Api();
+        // const promisedAPI = restApi.getAPIById(this.api_uuid);
+        // promisedAPI
+        //     .then((api) => {
+        //         this.setState({ api: api.body });
+        //         console.log('ssss');
+        //         console.log('API Body' + api.body);
+        //     })
+        //     .catch((error) => {
+        //         const { status, response } = error;
+        //         const { setTenantDomain, intl } = this.props;
+        //         const message = intl.formatMessage({
+        //             defaultMessage: 'Invalid tenant domain',
+        //             id: 'Apis.Details.index.invalid.tenant.domain',
+        //         });
+        //         if (response && response.body.code === 901300) {
+        //             setTenantDomain('INVALID');
+        //             Alert.error(message);
+        //         }
+        //         console.error('Error when getting apis', error);
+        //         if (status === 404 || status === 403) {
+        //             Alert.error(message);
+        //         }
+        //     });
         this.state = {
-            api: null,
+            active: 'overview',
+            overviewHiden: false,
+            updateSubscriptionData: null,
+            api: props,
+            applications: null,
+            subscribedApplications: [],
+            applicationsAvailable: [],
+            item: 1,
+            xo: null,
         };
-        this.setDetailsAPI = this.setDetailsAPI.bind(this);
+        this.setAPI = this.setAPI.bind(this);
     }
 
     /**
-     *
-     *
-     * @param {*} api
-     * @memberof Details
+     * Set Username
+     * @memberof ApiConsole
      */
-    setDetailsAPI(api) {
+    setAPI(api) {
         this.setState({ api });
     }
 
@@ -77,6 +87,10 @@ class TestConsole extends React.Component {
      * @memberof ApiConsole
      */
     render() {
+        console.log('this.state----');
+        console.log(this.state);
+        console.log('render API state');
+        console.log('my sate');
         return (
             <>
                 <h1>TestConsole</h1>
@@ -86,11 +100,12 @@ class TestConsole extends React.Component {
                         defaultMessage='Try Out'
                     />
                 </Typography>
-                <ApiContext.Provider value={this.state.api}>
+                <ApiContext.Provider value={this.state}>
                     <TryOutController />
                 </ApiContext.Provider>
             </>
         );
     }
 }
+TestConsole.contextType = ApiContext;
 export default TestConsole;
