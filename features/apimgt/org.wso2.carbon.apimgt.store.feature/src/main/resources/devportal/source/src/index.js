@@ -20,5 +20,6 @@
 import TryOutController from './app/components/Apis/Details/ApiConsole/TryOutController.jsx';
 import Api from './app/data/api.jsx';
 import ApiContext from './app/components/Apis/Details/ApiContext.jsx';
+import SwaggerUI from './app/components/Apis/Details/ApiConsole/SwaggerUI.jsx';
 
-export { TryOutController, Api, ApiContext };
+export { TryOutController, Api, ApiContext, SwaggerUI };

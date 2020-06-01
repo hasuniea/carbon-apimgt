@@ -17,7 +17,7 @@
  */
 
 import React, {
-    useEffect, useState, useContext,
+    useEffect, useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Grid from '@material-ui/core/Grid';
@@ -37,7 +37,6 @@ import AuthManager from 'AppData/AuthManager';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { ApiContext } from '../ApiContext';
 import Progress from '../../../Shared/Progress';
 import Api from '../../../../data/api';
 import Application from '../../../../data/Application';
@@ -104,16 +103,14 @@ function TryOutController(props) {
         productionAccessToken, sandboxAccessToken, selectedKeyType, setKeys, setSelectedKeyType,
         setSelectedEnvironment, setProductionAccessToken, setSandboxAccessToken, scopes,
         setSecurityScheme, setUsername, setPassword, username, password,
-        setProductionApiKey, setSandboxApiKey, productionApiKey, sandboxApiKey, environmentObject, setURLs,
+        setProductionApiKey, setSandboxApiKey, productionApiKey, sandboxApiKey, environmentObject, setURLs, api,
     } = props;
     const classes = styles();
-
     const [showToken, setShowToken] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const [subscriptions, setSubscriptions] = useState([]);
     const [selectedApplication, setSelectedApplication] = useState([]);
-    const { api } = useContext(ApiContext);
     const apiID = api.id;
     const restApi = new Api();
 
@@ -362,7 +359,7 @@ function TryOutController(props) {
     let isOAuthEnabled = false;
     let authorizationHeader = api.authorizationHeader ? api.authorizationHeader : 'Authorization';
     let prefix = 'Bearer';
-    if (api && api.securityScheme) {
+    if (api.securityScheme) {
         isApiKeyEnabled = api.securityScheme.includes('api_key');
         isBasicAuthEnabled = api.securityScheme.includes('basic_auth');
         isOAuthEnabled = api.securityScheme.includes('oauth2');

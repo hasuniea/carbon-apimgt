@@ -852,6 +852,7 @@
   "Apis.Listing.ApiTableView.version": "Version",
   "Apis.Listing.ApiThumb.context": "Context",
   "Apis.Listing.ApiThumb.version": "Version",
+  "api.console.require.access.token": "You need an access token to try the API. Please log in and subscribe to the API to generate an access token. If you already have an access token, please provide it below.",
   "Apis.Listing.SampleAPI.SampleAPI.created": "Sample PizzaShackAPI API created successfully",
   "Apis.Listing.SampleAPI.SampleAPI.description": "WSO2 API Publisher enables API providers to  publish APIs, share documentation, provision API keys and gather feedback on features, quality and usage. To get started, Create an API or Publish a sample API.",
   "Apis.Listing.SampleAPI.SampleAPIProduct.create.new.api.product": "Create New API Product",

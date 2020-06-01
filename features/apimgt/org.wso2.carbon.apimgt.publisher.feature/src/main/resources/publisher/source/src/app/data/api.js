@@ -448,6 +448,26 @@ class API extends Resource {
     }
 
     /**
+     * Get the swagger of an API
+     * @param apiId {String} UUID of the API in which the swagger is needed
+     * @param callback {function} Function which needs to be called upon success of the API deletion
+     * @returns {promise} With given callback attached to the success chain else API invoke promise.
+     */
+    static getSwaggerByAPIId(apiId, callback = null) {
+        const apiClient = new APIClientFactory().getAPIClient(Utils.getCurrentEnvironment()).client;
+        const promiseGet = apiClient.then((client) => {
+            return client.apis.APIs.get_apis__apiId__swagger({ apiId }, this._requestMetaData());
+        });
+        if (callback) {
+            return promiseGet.then(callback);
+        } else {
+            console.log('original swagger Obj');
+            console.log(promiseGet);
+            return promiseGet;
+        }
+    }
+
+    /**
      * Mock sample responses for Inline Prototyping
      * of a swagger OAS defintion
      * 
@@ -1719,6 +1739,26 @@ class API extends Resource {
         return promisedAPI.then(response => {
             return new API(response.body);
         });
+    }
+
+    /**
+     * Get details of a given API
+     * @param id {string} UUID of the api.
+     * @param callback {function} A callback function to invoke after receiving successful response.
+     * @returns {promise} With given callback attached to the success chain else API invoke promise.
+     */
+    static getAPIById(id, callback = null) {
+        const apiClient = new APIClientFactory().getAPIClient(Utils.getCurrentEnvironment()).client;
+        const promiseGet = apiClient.then((client) => {
+            return client.apis.APIs.get_apis__apiId_({ apiId: id }, this._requestMetaData());
+        });
+        if (callback) {
+            return promiseGet.then(callback);
+        } else {
+            console.log('original Obj');
+            console.log(promiseGet);
+            return promiseGet;
+        }
     }
 
     /**

@@ -381,6 +381,7 @@ class ApiConsole extends React.Component {
                         selectedKeyType={selectedKeyType}
                         updateSwagger={this.updateSwagger}
                         setKeys={this.setKeys}
+                        api={this.state.api}
                     />
 
                     <Grid container>

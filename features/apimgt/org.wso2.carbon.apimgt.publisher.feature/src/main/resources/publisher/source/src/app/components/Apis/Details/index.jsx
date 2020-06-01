@@ -742,7 +742,7 @@ class Details extends Component {
                                 />
                                 <Route
                                     path={Details.subPaths.TRYOUT}
-                                    component={() => <Tryout api={api} />}
+                                    component={() => <Tryout apiObj={api} uuid={uuid} />}
                                 />
                                 <Route path={Details.subPaths.PROPERTIES} component={() => <Properties api={api} />} />
                                 <Route
