@@ -2,9 +2,6 @@
   "8+ZR29": {
     "defaultMessage": "The tag contains one or more illegal characters ( ~ ! @ # ; % ^ & * + = } | < > , ' \" \\\\ / ) ."
   },
-  "APis.Details.tryout.help.main": {
-    "defaultMessage": "Test APIs while in the Development stage."
-  },
   "Api.category.dropdown.tooltip": {
     "defaultMessage": "Allow to group APIs that have similar attributes. There has to be pre-defined API categories in the environment in order to be attached to an API."
   },
@@ -269,11 +266,17 @@
   "Apis.Details.APIDefinition.APIDefinition.btn.close": {
     "defaultMessage": "Close"
   },
+  "Apis.Details.APIDefinition.APIDefinition.btn.hide.diff": {
+    "defaultMessage": "Hide Diff"
+  },
   "Apis.Details.APIDefinition.APIDefinition.btn.no": {
     "defaultMessage": "CANCEL"
   },
   "Apis.Details.APIDefinition.APIDefinition.btn.reimport": {
     "defaultMessage": "Re-import"
+  },
+  "Apis.Details.APIDefinition.APIDefinition.btn.show.diff": {
+    "defaultMessage": "Show Diff"
   },
   "Apis.Details.APIDefinition.APIDefinition.btn.yes": {
     "defaultMessage": "SAVE"
@@ -489,6 +492,18 @@
   "Apis.Details.AccessControl.roles.help": {
     "defaultMessage": "Enter valid role and press enter"
   },
+  "Apis.Details.ApiCOnsole.generate.test.key": {
+    "defaultMessage": "GET TEST KEY"
+  },
+  "Apis.Details.ApiConsole.ApiConsole.title": {
+    "defaultMessage": "Try Out"
+  },
+  "Apis.Details.ApiConsole.SelectAppPanel.environment": {
+    "defaultMessage": "Please select an environment"
+  },
+  "Apis.Details.ApiConsole.environment": {
+    "defaultMessage": "Environment"
+  },
   "Apis.Details.BusinessInformation.BusinessInformation.APIProduct.sub.heading": {
     "defaultMessage": "Business Information of the API"
   },
@@ -583,10 +598,10 @@
     "defaultMessage": "The header name that is used to send the authorization information. \"Authorization\" is the default header."
   },
   "Apis.Details.Configuration.Configuration.Design.APIProduct.sub.heading": {
-    "defaultMessage": "Configure API Product visibility."
+    "defaultMessage": "Configure basic API Product meta informations"
   },
   "Apis.Details.Configuration.Configuration.Design.sub.heading": {
-    "defaultMessage": "Configure API visibility."
+    "defaultMessage": "Configure basic API meta information"
   },
   "Apis.Details.Configuration.Configuration.Design.topic.header": {
     "defaultMessage": "Design Configurations"
@@ -841,13 +856,13 @@
     "defaultMessage": "GitHub URL"
   },
   "Apis.Details.Configuration.components.Social.giturl.help": {
-    "defaultMessage": "You need to enable social feature to view this from devportal. Set custom.social.showSharing.active to true. Refer documentation for more information"
+    "defaultMessage": "This GitHub URL will be available in the API overview page in developer portal"
   },
   "Apis.Details.Configuration.components.Social.slack": {
     "defaultMessage": "Slack URL"
   },
   "Apis.Details.Configuration.components.Social.slack_url.help": {
-    "defaultMessage": "You need to enable social feature to view this from devportal. Set custom.social.showSharing.active to true. Refer documentation for more information"
+    "defaultMessage": "This Slack Channel URL will be available in the API overview page in developer portal"
   },
   "Apis.Details.Configuration.components.StoreVisibility.dropdown.public": {
     "defaultMessage": "Public"
@@ -1046,6 +1061,9 @@
   },
   "Apis.Details.Documents.Delete.document.delete.successfully": {
     "defaultMessage": "deleted successfully."
+  },
+  "Apis.Details.Documents.Delete.document.listing.delete": {
+    "defaultMessage": "Yes. Delete"
   },
   "Apis.Details.Documents.Delete.document.listing.delete.cancel": {
     "defaultMessage": "Cancel"
@@ -2919,12 +2937,6 @@
   "Apis.Details.Subscriptions.SubscriptionsTable.subscriptions.error": {
     "defaultMessage": "Error while retrieving the subscriptions"
   },
-  "Apis.Details.TestConsole.TestConsole.info.message": {
-    "defaultMessage": "API should be in prototype(testing) state. Please demote to created state and click on the initialize Test button in the Test Console left menu item."
-  },
-  "Apis.Details.TestConsole.TestConsole.info.title": {
-    "defaultMessage": "API should be in prototype(testing) state."
-  },
   "Apis.Details.components.APIDetailsTopMenu.created.by": {
     "defaultMessage": "Created by:"
   },
@@ -2965,19 +2977,10 @@
     "defaultMessage": "Delete {type}"
   },
   "Apis.Details.index.Tryout": {
-    "defaultMessage": "Test Console"
-  },
-  "Apis.Details.index.Tryout.menu.name": {
-    "defaultMessage": "test console"
-  },
-  "Apis.Details.index.Tryout.not.enable.for.test": {
-    "defaultMessage": "Test Console"
-  },
-  "Apis.Details.index.Tryout.not.prototyped": {
-    "defaultMessage": "Test Console"
+    "defaultMessage": "Try out"
   },
   "Apis.Details.index.api.Config": {
-    "defaultMessage": "API configuration"
+    "defaultMessage": "API configurations"
   },
   "Apis.Details.index.api.definition2": {
     "defaultMessage": "API definition"
@@ -3012,9 +3015,6 @@
   "Apis.Details.index.external-stores": {
     "defaultMessage": "external dev portals"
   },
-  "Apis.Details.index.initTest": {
-    "defaultMessage": "Initialize test"
-  },
   "Apis.Details.index.left.menu.scope": {
     "defaultMessage": "Local Scopes"
   },
@@ -3031,7 +3031,7 @@
     "defaultMessage": "overview"
   },
   "Apis.Details.index.portal.configuration": {
-    "defaultMessage": "Portal Configuration"
+    "defaultMessage": "Portal Configurations"
   },
   "Apis.Details.index.properties": {
     "defaultMessage": "properties"
@@ -3063,12 +3063,6 @@
   "Apis.Details.scopes.Edit.text.editor.edit": {
     "defaultMessage": "Edit"
   },
-  "Apis.Details.tryout.initialize.test": {
-    "defaultMessage": "Initialize the API for the testing phase"
-  },
-  "Apis.Details.tryout.title": {
-    "defaultMessage": "Start Testing"
-  },
   "Apis.Listing.ApiTableView.context": {
     "defaultMessage": "Context"
   },
@@ -3097,19 +3091,13 @@
     "defaultMessage": "Version"
   },
   "Apis.Listing.SampleAPI.SampleAPI.create.new": {
-    "defaultMessage": "Create an API"
+    "defaultMessage": "Let’s get started !"
   },
   "Apis.Listing.SampleAPI.SampleAPI.create.new.description": {
-    "defaultMessage": "API creation is the process of linking an existing backend API backend API implementation to the API Publisher, so that you can manage and monitor the API’s lifecycle, documentation, security, community, and subscriptions Alternatively, you can provide the API implementation in-line in the API Publisher itself."
+    "defaultMessage": "Monitor the API’s lifecycle, documentation, security, community, and subscriptions."
   },
   "Apis.Listing.SampleAPI.SampleAPI.created": {
     "defaultMessage": "Sample PizzaShackAPI API created successfully"
-  },
-  "Apis.Listing.SampleAPI.SampleAPI.error.errorMessage.create.revision": {
-    "defaultMessage": "Something went wrong while creating the API Revision"
-  },
-  "Apis.Listing.SampleAPI.SampleAPI.error.errorMessage.deploy.revision": {
-    "defaultMessage": "Something went wrong while deploying the API Revision"
   },
   "Apis.Listing.SampleAPI.SampleAPI.graphql.api": {
     "defaultMessage": "GraphQL"
@@ -3120,11 +3108,14 @@
   "Apis.Listing.SampleAPI.SampleAPI.graphql.import.sdl.title": {
     "defaultMessage": "Import GraphQL SDL"
   },
+  "Apis.Listing.SampleAPI.SampleAPI.published": {
+    "defaultMessage": "Sample PizzaShackAPI API published successfully"
+  },
   "Apis.Listing.SampleAPI.SampleAPI.rest.api": {
     "defaultMessage": "REST API"
   },
   "Apis.Listing.SampleAPI.SampleAPI.rest.api.import.open.content": {
-    "defaultMessage": "Upload definition or provide the url"
+    "defaultMessage": "Import OAS 3 or Swagger 2.0 definition"
   },
   "Apis.Listing.SampleAPI.SampleAPI.rest.api.import.open.title": {
     "defaultMessage": "Import Open API"
@@ -3136,16 +3127,19 @@
     "defaultMessage": "Start From Scratch"
   },
   "Apis.Listing.SampleAPI.SampleAPI.rest.d.sample.content": {
-    "defaultMessage": "This is a sample API for Pizza Shack online pizza delivery store"
+    "defaultMessage": "Sample Pizza Shack API"
   },
   "Apis.Listing.SampleAPI.SampleAPI.rest.d.sample.title": {
     "defaultMessage": "Deploy Sample API"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.service.catalog.api": {
+    "defaultMessage": "Service Catalog"
   },
   "Apis.Listing.SampleAPI.SampleAPI.soap.api": {
     "defaultMessage": "SOAP API"
   },
   "Apis.Listing.SampleAPI.SampleAPI.soap.import.wsdl.content": {
-    "defaultMessage": "Use an existing WSDL"
+    "defaultMessage": "Generate REST or create a pass-through API"
   },
   "Apis.Listing.SampleAPI.SampleAPI.soap.import.wsdl.title": {
     "defaultMessage": "Import WSDL"
@@ -3153,17 +3147,29 @@
   "Apis.Listing.SampleAPI.SampleAPI.streaming.api": {
     "defaultMessage": "Streaming API"
   },
-  "Apis.Listing.SampleAPI.SampleAPI.streaming.design.new.content": {
-    "defaultMessage": "Design and prototype a new Streaming API"
-  },
   "Apis.Listing.SampleAPI.SampleAPI.streaming.design.new.title": {
-    "defaultMessage": "Design New Streaming API"
+    "defaultMessage": "Web Socket API"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.streaming.design.new.ws.content": {
+    "defaultMessage": "Create a Web Socket API"
   },
   "Apis.Listing.SampleAPI.SampleAPI.streaming.import.content": {
-    "defaultMessage": "Upload the definition or provide the URL"
+    "defaultMessage": "Upload a file or provide an Async API URL"
   },
   "Apis.Listing.SampleAPI.SampleAPI.streaming.import.title": {
-    "defaultMessage": "Import AsyncAPI Definition"
+    "defaultMessage": "Import an AsyncAPI"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.streaming.sse.content": {
+    "defaultMessage": "Create a Server-Sent Events API"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.streaming.sse.title": {
+    "defaultMessage": "SSE API"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.streaming.websub.content": {
+    "defaultMessage": "Create a Webhook/WebSub API"
+  },
+  "Apis.Listing.SampleAPI.SampleAPI.streaming.websub.title": {
+    "defaultMessage": "Webhook API"
   },
   "Apis.Listing.SampleAPI.SampleAPIProduct.create.new.api.product": {
     "defaultMessage": "Create New API Product"
@@ -3250,10 +3256,13 @@
     "defaultMessage": "Create API"
   },
   "Apis.Listing.components.TopMenu.displaying": {
-    "defaultMessage": "Displaying"
+    "defaultMessage": "Total of"
   },
   "Apis.Listing.components.TopMenu.search.results": {
     "defaultMessage": "Search Result(s)"
+  },
+  "Apis.Listing.import.from.service.catalog.title": {
+    "defaultMessage": "Import From Service Catalog"
   },
   "Apis.Settings.Alert.AlertConfiguration.add": {
     "defaultMessage": "New Configuration"
@@ -3458,9 +3467,6 @@
   },
   "Base.Header.headersearch.HeaderSearch.tooltip.option6": {
     "defaultMessage": "Description [ Syntax - description:xxxx ]"
-  },
-  "Base.Header.headersearch.HeaderSearch.tooltip.option7": {
-    "defaultMessage": "Sub-Context [ Syntax - subcontext:xxxx ]"
   },
   "Base.Header.headersearch.HeaderSearch.tooltip.option8": {
     "defaultMessage": "Documentation Content [ Syntax - doc:xxxx ]"
@@ -3702,6 +3708,9 @@
   "ServiceCatalog.CreateApi.mandatory.field.label": {
     "defaultMessage": "Mandatory fields"
   },
+  "ServiceCatalog.CreateApi.select.protocol": {
+    "defaultMessage": "Select Protocol"
+  },
   "ServiceCatalog.CreateApi.update.btn": {
     "defaultMessage": "Create API"
   },
@@ -3888,6 +3897,18 @@
   "UnexpectedError.title": {
     "defaultMessage": "Internal Server Error"
   },
+  "api.console.gateway.heading": {
+    "defaultMessage": "Gateway"
+  },
+  "api.console.security.heading": {
+    "defaultMessage": "Security"
+  },
+  "api.console.security.type.heading": {
+    "defaultMessage": "Internal key"
+  },
+  "api.gateways": {
+    "defaultMessage": "API Gateways"
+  },
   "app.components.Shared.Banner.back": {
     "defaultMessage": "Back"
   },
@@ -3933,8 +3954,8 @@
   "error.list.500.description": {
     "defaultMessage": "The server encountered an internal error or misconfiguration and was unable to complete your request."
   },
-  "sIDiOO": {
-    "defaultMessage": "Yes. Delete"
+  "internal.token": {
+    "defaultMessage": "Internal Token"
   },
   "save": {
     "defaultMessage": "Save"
